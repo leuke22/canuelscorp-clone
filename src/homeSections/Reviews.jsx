@@ -3,11 +3,11 @@ import { reviews } from "../constants";
 const Reviews = () => {
   return (
     <section className="mx-5 my-10">
-      <div>
-        <h2 className="text-center text-3xl font-bold text-gray-800 mt-10 mb-5">
+      <div className="flex flex-col text-center px-5 gap-4 mb-4">
+        <h2 className="text-2xl font-bold md:text-3xl lg:text-4xl">
           Customer Reviews
         </h2>
-        <p className="text-center text-gray-600 mb-5">
+        <p className="text-[15px] text-gray-500 sm:text-[18px] lg:text-[20px">
           See what our clients say about our fresh chicken delivery service.
         </p>
       </div>

@@ -1,4 +1,18 @@
-import { sec3, sec4, dp1, dp2, dp3 } from "../assets/images";
+import {
+  sec3,
+  sec4,
+  dp1,
+  dp2,
+  dp3,
+  sec5,
+  sec6,
+  sec7,
+  sec8,
+  sec9,
+  sec10,
+} from "../assets/images";
+
+import { facebook, instagram, tiktok, twitter, browser } from "../assets/icons";
 
 export const navLinks = [
   { href: "#home", label: "Home" },
@@ -78,4 +92,29 @@ export const reviews = [
     reviews:
       "I love the convenience of Canuels' delivery service. The chicken always arrives fresh and on time.",
   },
+];
+
+export const galleryImages = [
+  { id: 1, image: sec5 },
+  { id: 2, image: sec6 },
+  { id: 3, image: sec7 },
+  { id: 4, image: sec8 },
+  { id: 5, image: sec9 },
+  { id: 6, image: sec10 },
+];
+
+export const socialMediaLinks = [
+  {
+    name: "Facebook",
+    icon: facebook,
+    url: "https://www.facebook.com/canuelscorp",
+  },
+  {
+    name: "Instagram",
+    icon: instagram,
+    url: "https://www.instagram.com/canuelscorp",
+  },
+  { name: "TikTok", icon: tiktok, url: "https://www.tiktok.com/@canuelscorp" },
+  { name: "Twitter", icon: twitter, url: "https://twitter.com/canuelscorp" },
+  { name: "Website", icon: browser, url: "https://www.canuelscorp.com" },
 ];
