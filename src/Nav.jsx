@@ -1,8 +1,8 @@
-import headerLogo from "../assets/canuels-logo.png";
-import { search, shoppingBag, menu } from "../assets/icons";
-import { navLinks } from "../constants";
+import headerLogo from "./assets/canuels-logo.png";
+import { search, menu } from "./assets/icons";
+import { navLinks } from "./constants";
 
-const Header = () => {
+const Nav = () => {
   return (
     <header className="px-5 fixed z-50 w-full top-0 bg-white">
       <nav className="flex flex-row justify-between items-center w-full">
@@ -31,7 +31,7 @@ const Header = () => {
         </ul>
         <section className="flex flex-row gap-5 items-center mr-10 sm:gap-14">
           <div
-            className="flex items-center w-64 border-2 border-black/60 px-3 py-1 rounded-xl transition-all duration-300 
+            className="flex items-center w-56 md:w-64 lg:w-2xs border-2 border-black/60 px-3 py-1 rounded-xl transition-all duration-300 
            focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500"
           >
             <img
@@ -46,7 +46,7 @@ const Header = () => {
             />
           </div>
 
-          <img className="w-10 h-10" src={shoppingBag} alt="shopping-bag" />
+          {/*<img className="w-10 h-10" src={shoppingBag} alt="shopping-bag" />*/}
 
           <div className="hidden max-lg:flex shrink-0 items-center w-10 h-10">
             <img src={menu} alt="menu-icon" />
@@ -57,4 +57,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Nav;

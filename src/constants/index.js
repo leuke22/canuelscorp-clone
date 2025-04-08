@@ -1,5 +1,4 @@
-import sec3 from "../assets/images/sec3.png";
-import sec4 from "../assets/images/sec4.png";
+import { sec3, sec4, dp1, dp2, dp3 } from "../assets/images";
 
 export const navLinks = [
   { href: "#home", label: "Home" },
@@ -54,5 +53,29 @@ export const deliverDescription = [
     description:
       "Quick and reliable delivery of fresh chicken right to your food service establishment.",
     images: sec4,
+  },
+];
+
+export const reviews = [
+  {
+    name: "John Doe",
+    place: "Makati City",
+    images: dp1,
+    reviews:
+      "Canuels Enterprises has been our go-to supplier for fresh chicken. Their quality is unmatched!",
+  },
+  {
+    name: "Jane Smith",
+    place: "Quezon City",
+    images: dp2,
+    reviews:
+      "The freshness and quality of Canuels' chicken have elevated our dishes to a whole new level.",
+  },
+  {
+    name: "Michael Johnson",
+    place: "Pasig City",
+    images: dp3,
+    reviews:
+      "I love the convenience of Canuels' delivery service. The chicken always arrives fresh and on time.",
   },
 ];

@@ -25,7 +25,7 @@ const Hero = () => {
               <br /> Delivery
               <br /> Service
             </h1>
-            <p className="lg:text-[20px]/tight text-[17px] pt-2">
+            <p className="lg:text-[20px]/tight text-[17px] pt-2 lg:w-2xl">
               High-quality chicken for restaurants and food services in Metro
               Manila.
             </p>

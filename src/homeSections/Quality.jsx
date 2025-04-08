@@ -3,7 +3,7 @@ import { deliverDescription } from "../constants";
 const Quality = () => {
   return (
     <section className="flex flex-col h-full w-full justify-center">
-      <div className="flex flex-col text-center px-5 gap-4 mb-8">
+      <div className="flex flex-col text-center px-5 gap-4 mb-4">
         <h1 className="text-2xl font-bold md:text-3xl lg:text-4xl">
           Quality Chicken Delivery
         </h1>
@@ -12,7 +12,7 @@ const Quality = () => {
           service providers in Metro Manila.
         </p>
       </div>
-      <div className="px-8 py-12 text-black grid gap-5 md:grid-cols-2 lg:gap-8">
+      <div className="px-8 py-5 text-black grid gap-5 md:grid-cols-2 lg:gap-8">
         {deliverDescription.map((items) => (
           <div
             key={items.title}
