@@ -14,6 +14,7 @@
   --color-textGradientDark: #771e00;
   --color-bgFooter: #f7fafc;
   --color-bgFooterDark: #1e2939;
+  --color-bgHeaderNav: #f87604;
 }
 
 @layer base {

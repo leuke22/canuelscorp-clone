@@ -1,4 +1,9 @@
 import { reviews } from "../constants";
+import { Swiper, SwiperSlide } from "swiper/react";
+
+import "swiper/css";
+import "swiper/css/navigation";
+import { Pagination } from "swiper/modules";
 
 const Reviews = () => {
   return (
@@ -12,41 +17,49 @@ const Reviews = () => {
         </p>
       </div>
 
-      <div
-        className="overflow-x-hidden hover:overflow-x-auto mx-5 transition-all duration-300"
-        style={{ scrollbarGutter: "stable" }}
+      <Swiper
+        slidesPerView={1}
+        spaceBetween={20}
+        breakpoints={{
+          640: {
+            slidesPerView: 1,
+          },
+          768: {
+            slidesPerView: 1,
+          },
+          1024: {
+            slidesPerView: 2,
+          },
+        }}
+        modules={[Pagination]}
+        className="reviewsSwiper"
       >
-        <div
-          className="grid gap-10 grid-flow-col auto-cols-[minmax(300px,_1fr)] md:auto-cols-[minmax(500px,_1fr)] 
-        mb-2"
-        >
-          {reviews.map((content) => (
-            <div className="max-w-md mx-auto bg-gray-50/60 rounded-xl shadow-md overflow-hidden">
-              <div className="md:flex">
-                <div className="md:shrink-0">
-                  <img
-                    src={content.images}
-                    alt={content.name}
-                    className="h-48 w-full object-cover object-center md:h-full md:w-48"
-                  />
-                </div>
-                <div className="py-4 px-5">
-                  <h1 className="text-gray-900 font-semibold text-xl">
-                    {content.name}{" "}
-                  </h1>
-                  <h2 className="text-gray-500 text-[15px] mb-2">
-                    {content.place}
-                  </h2>
-                  <p className="text-gray-700 text-base mb-4">
-                    {content.reviews}
-                  </p>
-                  <div className="text-yellow-500 text-lg mt-2">★★★★★</div>
-                </div>
+        {reviews.map((content) => (
+          <SwiperSlide className="max-w-md mx-auto bg-gray-50/60 rounded-xl shadow-md overflow-hidden mb-5">
+            <div className="md:flex">
+              <div className="md:shrink-0">
+                <img
+                  src={content.images}
+                  alt={content.name}
+                  className="h-48 w-full object-cover object-center md:h-full md:w-48"
+                />
+              </div>
+              <div className="py-4 px-5">
+                <h1 className="text-gray-900 font-semibold text-xl">
+                  {content.name}{" "}
+                </h1>
+                <h2 className="text-gray-500 text-[15px] mb-2">
+                  {content.place}
+                </h2>
+                <p className="text-gray-700 text-base mb-4">
+                  {content.reviews}
+                </p>
+                <div className="text-yellow-500 text-lg mt-2">★★★★★</div>
               </div>
             </div>
-          ))}
-        </div>
-      </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </section>
   );
 };

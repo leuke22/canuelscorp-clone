@@ -1,10 +1,14 @@
+import { useState } from "react";
 import headerLogo from "./assets/canuels-logo.png";
-import { search, menu } from "./assets/icons";
 import { navLinks } from "./constants";
+import { HiMenu, HiX } from "react-icons/hi";
 
 const Nav = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeLink, setActiveLink] = useState("#home");
+
   return (
-    <header className="px-5 fixed z-50 w-full top-0 bg-white">
+    <header className="px-5 fixed z-50 w-full top-0 left-0 right-0 bg-white/90 backdrop-blur-sm border-b border-gray-100 shadow-sm">
       <nav className="flex flex-row justify-between items-center w-full">
         <div className="flex-0.5 flex justify-center shrink-0">
           <a href="/">
@@ -18,41 +22,60 @@ const Nav = () => {
           </a>
         </div>
         <ul className="flex flex-1 flex-row justify-center max-lg:hidden gap-10">
-          {navLinks.map((item) => (
-            <li key={item.label}>
-              <a
-                className="hover:underline text-black text-lg"
-                href={item.href}
-              >
-                {item.label}
-              </a>
-            </li>
+          {navLinks.map((item, index) => (
+            <a
+              key={index}
+              onClick={() => setActiveLink(item.href)}
+              className={`text-[16px] font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-bgHeaderNav after:transition-all
+                ${
+                  activeLink === item.href
+                    ? "text-bgHeaderNav after:w-full  "
+                    : "text-gray-600 hover:text-gray-900"
+                }`}
+              href={item.href}
+            >
+              {item.label}
+            </a>
           ))}
         </ul>
         <section className="flex flex-row gap-5 items-center mr-10 sm:gap-14">
-          <div
-            className="flex items-center w-56 md:w-64 lg:w-2xs border-2 border-black/60 px-3 py-1 rounded-xl transition-all duration-300 
-           focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500"
+          <button
+            className="hidden max-lg:flex shrink-0 items-center"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            <img
-              className="w-5 h-5 opacity-70 shrink-0"
-              src={search}
-              alt="search-icon"
-            />
-            <input
-              type="text"
-              placeholder="Search..."
-              className="px-2 py-1 outline-none bg-transparent text-sm placeholder-gray-500"
-            />
-          </div>
-
-          {/*<img className="w-10 h-10" src={shoppingBag} alt="shopping-bag" />*/}
-
-          <div className="hidden max-lg:flex shrink-0 items-center w-10 h-10">
-            <img src={menu} alt="menu-icon" />
-          </div>
+            {isMenuOpen ? (
+              <HiX className="w-full h-8" />
+            ) : (
+              <HiMenu className="w-full h-8" />
+            )}
+          </button>
         </section>
       </nav>
+
+      {isMenuOpen && (
+        <div className="md:hidden bg-white border-t border-gray-100 py-4 text-black">
+          <div>
+            {navLinks.map((item, index) => (
+              <a
+                key={index}
+                href={item.href}
+                className={`block text-lg font-medium py-2
+                  ${
+                    activeLink === item.href
+                      ? "text-bgHeaderNav after:w-full  "
+                      : "text-gray-600 hover:text-gray-900"
+                  }`}
+                onClick={() => {
+                  setActiveLink(item.href);
+                  setIsMenuOpen(false);
+                }}
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
     </header>
   );
 };
