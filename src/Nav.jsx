@@ -1,15 +1,24 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import headerLogo from "./assets/canuels-logo.png";
 import { navLinks } from "./constants";
 import { HiMenu, HiX } from "react-icons/hi";
+import { motion } from "motion/react";
+import { fadeIn } from "./utils/motion";
 
 const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("#home");
 
   return (
-    <header className="px-5 fixed z-50 w-full top-0 left-0 right-0 bg-white/90 backdrop-blur-sm border-b border-gray-100 shadow-sm">
-      <nav className="flex flex-row justify-between items-center w-full">
+    <motion.nav
+      variants={fadeIn("down", 0.2)}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true }}
+      className="px-5 fixed z-50 w-full top-0 left-0 right-0 bg-white/90 backdrop-blur-sm border-b border-gray-100 shadow-sm"
+    >
+      <div className="flex flex-row justify-between items-center w-full">
         <div className="flex-0.5 flex justify-center shrink-0">
           <a href="/">
             <img
@@ -50,7 +59,7 @@ const Nav = () => {
             )}
           </button>
         </section>
-      </nav>
+      </div>
 
       {isMenuOpen && (
         <div className="md:hidden bg-white border-t border-gray-100 py-4 text-black">
@@ -76,7 +85,7 @@ const Nav = () => {
           </div>
         </div>
       )}
-    </header>
+    </motion.nav>
   );
 };
 

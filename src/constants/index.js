@@ -57,12 +57,14 @@ export const chickenDescription = [
 
 export const deliverDescription = [
   {
+    id: 1,
     title: "Freshness Guaranteed",
     description:
       "We ensure that all our chicken products maintain the highest standards of freshness and quality.",
     images: sec3,
   },
   {
+    id: 2,
     title: "Fast Delivery Service",
     description:
       "Quick and reliable delivery of fresh chicken right to your food service establishment.",

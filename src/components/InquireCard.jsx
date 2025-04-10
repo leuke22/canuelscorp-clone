@@ -1,10 +1,18 @@
+/* eslint-disable no-unused-vars */
 import { formFields } from "../constants/index.js";
 import TextField from "./TextField.jsx";
 import SubmitButton from "./Buttons/SubmitButton.jsx";
+import { motion } from "framer-motion";
+import { fadeIn } from "../utils/motion";
 
 const InquireCard = () => {
   return (
-    <div className="h-full w-full flex justify-center items-center lg:mt-10">
+    <motion.div
+      variants={fadeIn("left", 0.5)}
+      initial="hidden"
+      whileInView="show"
+      className="h-full w-full flex justify-center items-center lg:mt-10"
+    >
       <div className="text-white bg-white/10 rounded-xl px-5 py-8 mb-16 lg:mb-0 w-full max-w-[360px] max-h-[550px]">
         {formFields.map((components) => (
           <TextField
@@ -26,7 +34,7 @@ const InquireCard = () => {
         <br />
         <p className="inline-block">Fields with * are required.</p>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

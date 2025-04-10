@@ -5,17 +5,25 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Pagination } from "swiper/modules";
 
+import { motion } from "framer-motion";
+import { fadeIn } from "../utils/motion";
+
 const Reviews = () => {
   return (
     <section className="mx-5 my-10">
-      <div className="flex flex-col text-center px-5 gap-4 mb-4">
+      <motion.div
+        variants={fadeIn("down", 0.2)}
+        initial="hidden"
+        whileInView="show"
+        className="flex flex-col text-center px-5 gap-4 mb-4"
+      >
         <h2 className="text-2xl font-bold md:text-3xl lg:text-4xl">
           Customer Reviews
         </h2>
         <p className="text-[15px] text-gray-500 sm:text-[18px] lg:text-[20px">
           See what our clients say about our fresh chicken delivery service.
         </p>
-      </div>
+      </motion.div>
 
       <Swiper
         slidesPerView={1}
@@ -36,7 +44,12 @@ const Reviews = () => {
       >
         {reviews.map((content) => (
           <SwiperSlide className="max-w-md mx-auto bg-gray-50/60 rounded-xl shadow-md overflow-hidden mb-5">
-            <div className="md:flex">
+            <motion.div
+              variants={fadeIn("right", 0.2)}
+              initial="hidden"
+              whileInView="show"
+              className="md:flex"
+            >
               <div className="md:shrink-0">
                 <img
                   src={content.images}
@@ -56,7 +69,7 @@ const Reviews = () => {
                 </p>
                 <div className="text-yellow-500 text-lg mt-2">★★★★★</div>
               </div>
-            </div>
+            </motion.div>
           </SwiperSlide>
         ))}
       </Swiper>

@@ -1,9 +1,17 @@
 import { deliverDescription } from "../constants";
 
+import { motion } from "framer-motion";
+import { fadeIn } from "../utils/motion";
+
 const Quality = () => {
   return (
     <section className="flex flex-col h-full w-full justify-center">
-      <div className="flex flex-col text-center px-5 gap-4 mb-4">
+      <motion.div
+        variants={fadeIn("up", 0.2)}
+        initial="hidden"
+        whileInView="show"
+        className="flex flex-col text-center px-5 gap-4 mb-4"
+      >
         <h1 className="text-2xl font-bold md:text-3xl lg:text-4xl">
           Quality Chicken Delivery
         </h1>
@@ -11,11 +19,14 @@ const Quality = () => {
           Delivering fresh, premium-quality chicken to restaurants and food
           service providers in Metro Manila.
         </p>
-      </div>
+      </motion.div>
       <div className="px-8 py-5 text-black grid gap-5 md:grid-cols-2 lg:gap-8">
         {deliverDescription.map((items) => (
-          <div
-            key={items.title}
+          <motion.div
+            variants={fadeIn("up", 0.1)}
+            initial="hidden"
+            whileInView="show"
+            key={items.id}
             className="h-[180px] md:h-48 lg:h-64 relative rounded-xl overflow-hidden group transition-all duration-300"
           >
             <img
@@ -35,7 +46,7 @@ const Quality = () => {
                 {items.description}
               </p>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>
