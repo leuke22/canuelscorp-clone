@@ -14,6 +14,22 @@ import {
 
 import { facebook, instagram, tiktok, twitter, browser } from "../assets/icons";
 
+import {
+  prod1,
+  prod2,
+  prod3,
+  prod4,
+  prod5,
+  prod6,
+  prod7,
+  prod8,
+  prod9,
+  prod10,
+  prod11,
+  prod12,
+  prod13,
+} from "../assets/productImage";
+
 export const navLinks = [
   { href: "/", label: "Home" },
   { href: "/products", label: "Products" },
@@ -119,4 +135,72 @@ export const socialMediaLinks = [
   { name: "TikTok", icon: tiktok, url: "https://www.tiktok.com/@canuelscorp" },
   { name: "Twitter", icon: twitter, url: "https://twitter.com/canuelscorp" },
   { name: "Website", icon: browser, url: "https://www.canuelscorp.com" },
+];
+
+export const products = [
+  {
+    id: 1,
+    name: "Cook’s Freshly Frozen Premium Whole Chicken",
+    image: prod1,
+  },
+  {
+    id: 2,
+    name: "Cook’s Freshly Frozen Premium Chicken Wings",
+    image: prod2,
+  },
+  {
+    id: 3,
+    name: "Cook’s Freshly Frozen Premium Chicken Breast",
+    image: prod3,
+  },
+  {
+    id: 4,
+    name: "Cook’s Freshly Frozen Premium Chicken Thigh",
+    image: prod4,
+  },
+  {
+    id: 5,
+    name: "Cook’s Premium Whole Chicken",
+    image: prod5,
+  },
+  {
+    id: 6,
+    name: "Chicken Gizzards",
+    image: prod6,
+  },
+  {
+    id: 7,
+    name: "Chicken Drumsticks",
+    image: prod7,
+  },
+  {
+    id: 8,
+    name: "Chicken Neck",
+    image: prod8,
+  },
+  {
+    id: 9,
+    name: "Chicken Wings",
+    image: prod9,
+  },
+  {
+    id: 10,
+    name: "Chicken Ballotine",
+    image: prod10,
+  },
+  {
+    id: 11,
+    name: "Chicken Thigh",
+    image: prod11,
+  },
+  {
+    id: 12,
+    name: "Chicken Breast",
+    image: prod12,
+  },
+  {
+    id: 13,
+    name: "Chicken Liver",
+    image: prod13,
+  },
 ];
