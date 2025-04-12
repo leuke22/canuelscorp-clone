@@ -1,14 +1,21 @@
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation, Link } from "react-router-dom"; // Import useLocation
 import headerLogo from "./assets/canuels-logo.png";
 import { navLinks } from "./constants";
 import { HiMenu, HiX } from "react-icons/hi";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { fadeIn } from "./utils/motion";
 
 const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeLink, setActiveLink] = useState("#home");
+  const [activeLink, setActiveLink] = useState("/home");
+  const location = useLocation(); // Get the current route
+
+  // Update activeLink whenever the route changes
+  useEffect(() => {
+    setActiveLink(location.pathname);
+  }, [location]);
 
   return (
     <motion.nav
@@ -16,9 +23,10 @@ const Nav = () => {
       initial="hidden"
       whileInView="show"
       viewport={{ once: true }}
-      className="px-5 fixed z-50 w-full top-0 left-0 right-0 bg-white/90 backdrop-blur-sm border-b border-gray-100 shadow-sm"
+      className="px-5 fixed z-50 w-full top-0 left-0 right-0 bg-white/90 backdrop-blur-sm shadow-sm"
     >
       <div className="flex flex-row justify-between items-center w-full">
+        {/* Logo Section */}
         <div className="flex-0.5 flex justify-center shrink-0">
           <a href="/">
             <img
@@ -30,23 +38,26 @@ const Nav = () => {
             />
           </a>
         </div>
+
+        {/* Desktop Navigation */}
         <ul className="flex flex-1 flex-row justify-center max-lg:hidden gap-10">
           {navLinks.map((item, index) => (
             <a
               key={index}
               onClick={() => setActiveLink(item.href)}
-              className={`text-[16px] font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-bgHeaderNav after:transition-all
-                ${
-                  activeLink === item.href
-                    ? "text-bgHeaderNav after:w-full  "
-                    : "text-gray-600 hover:text-gray-900"
-                }`}
+              className={`text-[16px] font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-bgHeaderNav after:transition-all ${
+                activeLink === item.href
+                  ? "text-bgHeaderNav after:w-full"
+                  : "text-gray-600 hover:text-gray-900"
+              }`}
               href={item.href}
             >
               {item.label}
             </a>
           ))}
         </ul>
+
+        {/* Mobile Menu Button */}
         <section className="flex flex-row gap-5 items-center mr-10 sm:gap-14">
           <button
             className="hidden max-lg:flex shrink-0 items-center"
@@ -61,30 +72,29 @@ const Nav = () => {
         </section>
       </div>
 
-      {isMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 py-4 text-black">
-          <div>
-            {navLinks.map((item, index) => (
-              <a
-                key={index}
-                href={item.href}
-                className={`block text-lg font-medium py-2
-                  ${
-                    activeLink === item.href
-                      ? "text-bgHeaderNav after:w-full  "
-                      : "text-gray-600 hover:text-gray-900"
-                  }`}
-                onClick={() => {
-                  setActiveLink(item.href);
-                  setIsMenuOpen(false);
-                }}
-              >
-                {item.label}
-              </a>
-            ))}
-          </div>
+      {/* Mobile Navigation */}
+      <div
+        className={`fixed top-[100px] right-0 h-full w-64 shadow-lg transform transition-transform duration-300 ${
+          isMenuOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <div className="bg-white/90 backdrop-blur-sm shadow-sm h-dvh flex flex-col items-center gap-4 p-5">
+          {navLinks.map((item, index) => (
+            <Link
+              to={item.href}
+              key={index}
+              onClick={() => setIsMenuOpen(false)} // Close menu on click
+              className={`block text-lg font-medium py-2 w-full text-center ${
+                activeLink === item.href
+                  ? "text-bgHeaderNav"
+                  : "text-gray-600 hover:text-gray-900"
+              }`}
+            >
+              {item.label}
+            </Link>
+          ))}
         </div>
-      )}
+      </div>
     </motion.nav>
   );
 };

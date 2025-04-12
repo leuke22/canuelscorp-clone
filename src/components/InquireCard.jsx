@@ -11,7 +11,7 @@ const InquireCard = () => {
       variants={fadeIn("left", 0.5)}
       initial="hidden"
       whileInView="show"
-      className="h-full w-full flex justify-center items-center lg:mt-10"
+      className="flex justify-center items-center"
     >
       <div className="text-white bg-white/10 rounded-xl px-5 py-8 mb-16 lg:mb-0 w-full max-w-[360px] max-h-[550px]">
         {formFields.map((components) => (

@@ -1,23 +1,24 @@
 /* eslint-disable no-unused-vars */
-import { bgSec1 } from "../assets/images";
+import bgSec1 from "../assets/images/bgSec1.png";
 import { ShopButton, InquireCard } from "../components";
 import { motion } from "framer-motion";
 import { fadeIn, textVariant } from "../utils/motion";
 
 const Hero = () => {
   return (
-    <section id="home" className="w-full h-full relative mt-[100px] flex">
-      <div className="h-screen ">
-        <img
-          src={bgSec1}
-          alt="sec1"
-          className="absolute inset-0 object-cover w-full h-full"
-        />
-      </div>
+    <section className="relative w-full min-h-screen overflow-hidden">
+      {/* Background Image */}
+      <div
+        style={{
+          backgroundImage: `url(${bgSec1})`,
+        }}
+        className="absolute inset-0 w-full h-full bg-cover bg-center"
+      ></div>
 
-      <div className="relative grid gap-10 lg:grid-cols-2  w-full h-full lg:items-center">
-        <div className="w-full h-full flex lg:items-center px-5">
-          <div className="flex flex-col text-white items-baseline py-5 lg:pl-15 sm:pl-10">
+      {/* Content */}
+      <div className="relative grid gap-10 grid-cols-1 lg:grid-cols-2 w-full min-h-screen items-center">
+        <div className="w-full h-full flex items-center p-5">
+          <div className="flex flex-col text-white items-baseline lg:pl-5">
             <motion.div
               variants={fadeIn("right", 0.2)}
               initial="hidden"
@@ -46,13 +47,15 @@ const Hero = () => {
               className="lg:text-[20px]/tight text-[17px] pt-2 lg:w-2xl"
             >
               High-quality chicken for restaurants and food services in Metro
-              Manila. 
+              Manila.
             </motion.p>
 
             <ShopButton />
           </div>
         </div>
-        <InquireCard />
+        <div className="w-full">
+          <InquireCard />
+        </div>
       </div>
     </section>
   );

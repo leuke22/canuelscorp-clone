@@ -1,21 +1,23 @@
 import "./index.css";
 import Nav from "./Nav";
-import Hero from "./homeSections/Hero";
-import Suppliers from "./homeSections/Suppliers";
-import Quality from "./homeSections/Quality";
-import Reviews from "./homeSections/Reviews";
-import Gallery from "./homeSections/Gallery";
+
+import { Route, Routes } from "react-router-dom";
+
 import Footer from "./Footer";
+import { Home, Products, Services, About } from "./pages";
 
 const App = () => {
   return (
-    <main className="relative">
+    <main>
       <Nav />
-      <Hero />
-      <Suppliers />
-      <Quality />
-      <Reviews />
-      <Gallery />
+      <section className="mt-[100px]">
+        <Routes>
+          <Route path="/" element={<Home to="/home" replace />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
+      </section>
       <Footer />
     </main>
   );

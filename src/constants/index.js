@@ -15,10 +15,10 @@ import {
 import { facebook, instagram, tiktok, twitter, browser } from "../assets/icons";
 
 export const navLinks = [
-  { href: "#home", label: "Home" },
-  { href: "#products", label: "Products" },
-  { href: "#services", label: "Services" },
-  { href: "#contact", label: "Contact" },
+  { href: "/", label: "Home" },
+  { href: "/products", label: "Products" },
+  { href: "/services", label: "Services" },
+  { href: "/about", label: "About Us" },
 ];
 
 export const formFields = [
