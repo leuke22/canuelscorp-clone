@@ -11,7 +11,7 @@ const Gallery = () => {
   });
 
   return (
-    <section className="">
+    <section className="text-black">
       <motion.div
         variants={fadeIn("down", 0.2)}
         initial="hidden"

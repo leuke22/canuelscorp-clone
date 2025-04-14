@@ -3,7 +3,7 @@ import { products } from "../constants";
 
 const Products = () => {
   return (
-    <section className="pt-5">
+    <section className="pt-5 text-black">
       <div className="text-center mb-5">
         <h1 className="text-2xl font-bold">Fresh and Premium Chicken</h1>
         <p className="text-gray-600">

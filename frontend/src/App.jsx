@@ -10,7 +10,8 @@ const App = () => {
   return (
     <main>
       <Nav />
-      <section className="mt-[100px]">
+      <div className="bg-white h-[100px] w-full"></div>
+      <section>
         <Routes>
           <Route path="/" element={<Home to="/home" replace />} />
           <Route path="/products" element={<Products />} />

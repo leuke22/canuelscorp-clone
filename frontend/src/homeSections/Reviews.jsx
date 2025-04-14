@@ -10,7 +10,7 @@ import { fadeIn } from "../utils/motion";
 
 const Reviews = () => {
   return (
-    <section className="mx-5 my-10">
+    <section className="mx-5 my-10 text-black">
       <motion.div
         variants={fadeIn("down", 0.2)}
         initial="hidden"

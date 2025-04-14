@@ -5,7 +5,7 @@ import { fadeIn } from "../utils/motion";
 
 const Quality = () => {
   return (
-    <section className="flex flex-col h-full w-full justify-center">
+    <section className="flex flex-col h-full w-full justify-center text-black">
       <motion.div
         variants={fadeIn("up", 0.2)}
         initial="hidden"

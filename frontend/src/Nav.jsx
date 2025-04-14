@@ -23,7 +23,7 @@ const Nav = () => {
       initial="hidden"
       whileInView="show"
       viewport={{ once: true }}
-      className="px-5 fixed z-50 w-full top-0 left-0 right-0 bg-white/90 backdrop-blur-sm shadow-sm"
+      className="px-5 fixed z-50 w-full top-0 left-0 right-0 bg-white/90 backdrop-blur-sm shadow-sm dark:bg-gray-800 dark:text-white"
     >
       <div className="flex flex-row justify-between items-center w-full">
         {/* Logo Section */}
