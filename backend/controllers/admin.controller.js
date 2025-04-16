@@ -82,3 +82,32 @@ export const deleteUser = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+export const updateUsers = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const requestingUser = req.user;
+
+    if (requestingUser.role !== "admin") {
+      return res.status(403).json({ message: "Only admins can update users" });
+    }
+
+    if (userId === requestingUser._id.toString()) {
+      return res
+        .status(400)
+        .json({ message: "You cannot update your own admin account" });
+    }
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    await User.findByIdAndUpdate(userId, req.body, { new: true });
+
+    return res.status(200).json({ message: "User updated successfully" });
+  } catch (error) {
+    console.log("Error in updateUsers: ", error.message);
+    res.status(500).json({ error: error.message });
+  }
+};

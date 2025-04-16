@@ -2,20 +2,7 @@ import bcrypt from "bcryptjs";
 import { v2 as cloudinary } from "cloudinary";
 
 import User from "../models/user.model.js";
-
-export const getUserProfile = async (req, res) => {
-  const { username } = req.params;
-
-  try {
-    const user = await User.findOne({ username }).select("-password");
-    if (!user) return res.status(404).json({ message: "User not found" });
-
-    res.status(200).json(user);
-  } catch (error) {
-    console.log("Error in getUserProfile: ", error.message);
-    res.status(500).json({ error: error.message });
-  }
-};
+import UserInquire from "../models/userInquire.model.js";
 
 export const updateUser = async (req, res) => {
   const { username, fullname, email, currentPassword, newPassword, phone } =
@@ -76,6 +63,75 @@ export const updateUser = async (req, res) => {
     return res.status(200).json(user);
   } catch (error) {
     console.log("Error in updateUser: ", error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const getUserProfile = async (req, res) => {
+  const { username } = req.params;
+
+  try {
+    const user = await User.findOne({ username }).select("-password");
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.log("Error in getUserProfile: ", error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const userInquire = async (req, res) => {
+  try {
+    const { name, email, phone, message } = req.body;
+
+    const existingName = await UserInquire.findOne({ name });
+    if (existingName) {
+      return res.status(400).json({ error: "Name is already taken" });
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ error: "Invalid email format" });
+    }
+
+    const existingEmail = await User.findOne({ email });
+    if (existingEmail) {
+      return res.status(400).json({ error: "Email is already taken" });
+    }
+
+    if (!phone) {
+      return res.status(400).json({ error: "Phone number is required" });
+    }
+
+    const philippinePhoneRegex = /^(09|\+639)\d{9}$/;
+    if (!philippinePhoneRegex.test(phone)) {
+      return res.status(400).json({
+        error: "Invalid phone number format",
+        message:
+          "Please enter a valid Philippine mobile number (e.g., 09XXXXXXXXX or +639XXXXXXXXX)",
+      });
+    }
+
+    const existingPhone = await User.findOne({ phone });
+    if (existingPhone) {
+      return res
+        .status(400)
+        .json({ error: "Phone number is already registered" });
+    }
+
+    const userInquire = new UserInquire({
+      name,
+      email,
+      phone,
+      message,
+    });
+
+    await userInquire.save();
+
+    res.status(200).json(userInquire);
+  } catch (error) {
+    console.log("Error in userInquire: ", error.message);
     res.status(500).json({ error: error.message });
   }
 };

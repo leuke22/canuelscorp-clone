@@ -9,11 +9,13 @@ import {
   deleteUser,
   getAdminProfile,
   getUsers,
+  updateUsers,
 } from "../controllers/admin.controller.js";
 
 const router = express.Router();
 
 router.get("/users", protectRoute, adminOrSupervisor, getUsers);
+router.post("/updateUser/:userId", protectRoute, adminOnly, updateUsers);
 
 router.get("/:username", protectRoute, adminOrSupervisor, getAdminProfile);
 router.delete("/delete/:userId", protectRoute, adminOnly, deleteUser);
