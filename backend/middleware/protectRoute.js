@@ -27,3 +27,26 @@ export const protectRoute = async (req, res, next) => {
     return res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+export const adminOnly = (req, res, next) => {
+  if (req.user && req.user.role === "admin") {
+    next();
+  } else {
+    res
+      .status(403)
+      .json({ error: "Access denied. Admin privileges required." });
+  }
+};
+
+export const adminOrSupervisor = (req, res, next) => {
+  if (
+    req.user &&
+    (req.user.role === "admin" || req.user.role === "supervisor")
+  ) {
+    next();
+  } else {
+    res.status(403).json({
+      error: "Access denied. Admin or supervisor privileges required.",
+    });
+  }
+};

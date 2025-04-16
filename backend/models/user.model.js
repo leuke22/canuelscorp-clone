@@ -35,6 +35,20 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    address: {
+      street: {
+        type: String,
+      },
+      city: {
+        type: String,
+      },
+      provice: {
+        type: String,
+      },
+      postalCode: {
+        type: String,
+      },
+    },
   },
   {
     timestamps: true,
