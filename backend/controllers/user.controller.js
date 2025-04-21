@@ -81,6 +81,7 @@ export const getUserProfile = async (req, res) => {
   }
 };
 
+//This function is only inquire the customer and not having an authentication
 export const userInquire = async (req, res) => {
   try {
     const { name, email, phone, message } = req.body;
