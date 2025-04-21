@@ -21,6 +21,11 @@ const cartSchema = new mongoose.Schema(
       required: true,
     },
     items: [cartItemSchema],
+    status: {
+      type: String,
+      enum: ["Pending", "Shipped", "Delivered", "Cancelled"],
+      default: "Pending",
+    },
   },
   {
     timestamps: true,

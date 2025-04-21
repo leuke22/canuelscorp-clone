@@ -50,3 +50,14 @@ export const adminOrSupervisor = (req, res, next) => {
     });
   }
 };
+
+export const userOnly = (req, res, next) => {
+  if (req.user && req.user.role === "user") {
+    next();
+  } else {
+    res.status(403).json({
+      error:
+        "Access denied. This functionality is available only for regular users.",
+    });
+  }
+};

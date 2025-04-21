@@ -1,6 +1,6 @@
 import express from "express";
 
-import { protectRoute } from "../middleware/protectRoute.js";
+import { protectRoute, userOnly } from "../middleware/protectRoute.js";
 import {
   addToCart,
   clearCart,
@@ -11,11 +11,11 @@ import {
 
 const router = express.Router();
 
-router.get("/", protectRoute, getCart);
+router.get("/", protectRoute, userOnly, getCart);
 
-router.post("/add", protectRoute, addToCart);
-router.post("/update", protectRoute, updateCartItem);
-router.delete("/delete/:productId", protectRoute, removeFromCart);
+router.post("/add", protectRoute, userOnly, addToCart);
+router.post("/update", protectRoute, userOnly, updateCartItem);
+router.delete("/delete/:productId", protectRoute, userOnly, removeFromCart);
 router.delete("/clear", protectRoute, clearCart);
 
 export default router;
