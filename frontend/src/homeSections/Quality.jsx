@@ -36,10 +36,11 @@ const Quality = () => {
             />
 
             <div
-              className="absolute -bottom-full right-0 text-white w-full h-full 
-              bg-gradient-to-t from-black/80 to-gray-600/50
-              flex flex-col justify-center items-center p-5 gap-2 
-              transition-all duration-300 group-hover:bottom-0"
+              className="absolute inset-0 text-white w-full h-full 
+                bg-gradient-to-t from-black/80 to-gray-600/50
+                flex flex-col justify-center items-center p-5 gap-2 
+                opacity-0 group-hover:opacity-100
+                transition-all duration-300"
             >
               <h1 className="text-2xl font-bold lg:text-3xl">{items.title}</h1>
               <p className="text-[15px] lg:text-base text-center">

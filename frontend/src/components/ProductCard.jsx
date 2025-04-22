@@ -1,6 +1,6 @@
 const ProductCard = ({ productId, productName, productImage }) => {
   return (
-    <div className="w-60 h-86 shadow-md rounded-xl overflow-hidden hover:shadow-xl transition-shadow duration-300 ease-in-out flex flex-col">
+    <div className="w-60 h-96 shadow-md rounded-xl overflow-hidden hover:shadow-xl transition-shadow duration-300 ease-in-out flex flex-col">
       <div className="px-4 flex-1/2 flex place-items-center">
         <img
           className="w-full content-center"
@@ -8,18 +8,20 @@ const ProductCard = ({ productId, productName, productImage }) => {
           alt={productId}
         />
       </div>
-      <div className="p-5">
+      <div className="p-5 pb-0">
         <h1>{productName}</h1>
-        <div className="flex flex-row justify-between items-center mt-2 gap-3">
-          <input
-            className="w-14 grow-0 px-3 py-0.5 border rounded-xl"
-            type="number"
-            name="quantity"
-            id={productId}
-            min={0}
-            value={0}
-          />
-          <button className="size-10 grow-1 bg-submitButton rounded-full text-white">
+        <div className="flex flex-row justify-between mt-5 gap-3">
+          <div className="flex flex-col place-items-center">
+            <input
+              type="number"
+              className="input validator rounded-lg"
+              required
+              placeholder="Quantity"
+              min="1"
+            />
+            <p className="validator-hint">The quantity must not 0</p>
+          </div>
+          <button className="btn btn-primary border-0 rounded-xl text-gray-100">
             Add to cart
           </button>
         </div>
