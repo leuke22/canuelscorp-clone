@@ -11,6 +11,9 @@ import sec7 from "../images/sec7.png";
 import sec8 from "../images/sec8.png";
 import sec9 from "../images/sec9.png";
 import sec10 from "../images/sec10.png";
+import sec19 from "../images/sec19.png";
+import sec20 from "../images/sec20.png";
+import sec26 from "../images/sec26.png";
 
 export {
   bgSec1,
@@ -26,4 +29,7 @@ export {
   sec8,
   sec9,
   sec10,
+  sec19,
+  sec20,
+  sec26,
 };
