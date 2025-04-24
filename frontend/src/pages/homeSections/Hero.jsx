@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import bgSec1 from "../../assets/images/bgSec1.png";
+import { bgSec1 } from "../../assets/canuelsImage";
 import { ShopButton, InquireCard } from "../../components";
 import { motion } from "framer-motion";
 import { fadeIn, textVariant } from "../../utils/motion";
@@ -7,7 +7,6 @@ import { fadeIn, textVariant } from "../../utils/motion";
 const Hero = () => {
   return (
     <section className="relative w-full min-h-screen overflow-hidden">
-      {/* Background Image */}
       <div
         style={{
           backgroundImage: `url(${bgSec1})`,
@@ -15,9 +14,8 @@ const Hero = () => {
         className="absolute inset-0 w-full h-full bg-cover bg-center"
       ></div>
 
-      {/* Content */}
       <div className="relative grid gap-10 grid-cols-1 lg:grid-cols-2 w-full min-h-screen items-center">
-        <div className="w-full h-full flex items-center p-5">
+        <div className="w-full h-full flex items-center p-5 lg:ml-10">
           <div className="flex flex-col text-white items-baseline lg:pl-5">
             <motion.div
               variants={fadeIn("right", 0.2)}

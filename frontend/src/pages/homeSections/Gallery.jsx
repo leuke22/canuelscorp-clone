@@ -4,10 +4,9 @@ import { motion } from "framer-motion";
 import { fadeIn } from "../../utils/motion";
 
 const Gallery = () => {
-  // Split galleryImages into columns for the masonry layout
-  const columns = [[], [], [], []]; // Adjust the number of columns as needed
+  const columns = [[], [], [], []];
   galleryImages.forEach((image, index) => {
-    columns[index % 4].push(image); // Distribute images across columns
+    columns[index % 4].push(image);
   });
 
   return (

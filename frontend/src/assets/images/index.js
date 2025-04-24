@@ -1,35 +1,21 @@
-import bgSec1 from "../images/bgSec1.png";
-import chickens from "../images/chickens.png";
-import sec3 from "../images/sec3.png";
-import sec4 from "../images/sec4.png";
-import dp1 from "../images/dp1.jpg";
-import dp2 from "../images/dp2.jpg";
-import dp3 from "../images/dp3.jpg";
-import sec5 from "../images/sec5.png";
-import sec6 from "../images/sec6.png";
-import sec7 from "../images/sec7.png";
-import sec8 from "../images/sec8.png";
-import sec9 from "../images/sec9.png";
-import sec10 from "../images/sec10.png";
-import sec19 from "../images/sec19.png";
-import sec20 from "../images/sec20.png";
-import sec26 from "../images/sec26.png";
+import { buildSrc } from "@imagekit/javascript";
 
-export {
-  bgSec1,
-  chickens,
-  sec3,
-  sec4,
-  dp1,
-  dp2,
-  dp3,
-  sec5,
-  sec6,
-  sec7,
-  sec8,
-  sec9,
-  sec10,
-  sec19,
-  sec20,
-  sec26,
-};
+const urlEndpoint = "https://ik.imagekit.io/cx99ic1g8/assets/images";
+
+export const sec1 = buildSrc({ urlEndpoint, src: "/sec1.png" });
+export const sec2 = buildSrc({ urlEndpoint, src: "/sec2.png" });
+export const sec3 = buildSrc({ urlEndpoint, src: "/sec3.png" });
+export const sec4 = buildSrc({ urlEndpoint, src: "/sec4.png" });
+export const sec5 = buildSrc({ urlEndpoint, src: "/sec5.jpg" });
+export const sec6 = buildSrc({ urlEndpoint, src: "/sec6.jpeg" });
+export const sec7 = buildSrc({ urlEndpoint, src: "/sec7.jpeg" });
+export const sec8 = buildSrc({ urlEndpoint, src: "/sec8.png" });
+export const sec9 = buildSrc({ urlEndpoint, src: "/sec9.png" });
+export const sec10 = buildSrc({ urlEndpoint, src: "/sec10.png" });
+export const sec11 = buildSrc({ urlEndpoint, src: "/sec11.jpg" });
+export const sec12 = buildSrc({ urlEndpoint, src: "/sec12.jpg" });
+export const sec13 = buildSrc({ urlEndpoint, src: "/sec13.jpeg" });
+
+export const dp1 = buildSrc({ urlEndpoint, src: "/dp1.jpg" });
+export const dp2 = buildSrc({ urlEndpoint, src: "/dp2.jpg" });
+export const dp3 = buildSrc({ urlEndpoint, src: "/dp3.jpg" });

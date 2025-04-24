@@ -10,28 +10,9 @@ import {
   sec8,
   sec9,
   sec10,
-  sec19,
-  sec20,
+  sec11,
+  sec12,
 } from "../assets/images";
-
-import {
-  facebook,
-  instagram,
-  tiktok,
-  twitter,
-  browser,
-  service1,
-  service2,
-  service3,
-  service4,
-  service5,
-  cv1,
-  cv2,
-  cv3,
-  cv4,
-  cv5,
-  cv6,
-} from "../assets/icons";
 
 import {
   prod1,
@@ -48,6 +29,21 @@ import {
   prod12,
   prod13,
 } from "../assets/productImage";
+
+import { TbTruckDelivery } from "react-icons/tb";
+import { GiMeatCleaver, GiMeat, GiPathDistance } from "react-icons/gi";
+import { BiSolidDiscount } from "react-icons/bi";
+import { RiSecurePaymentLine } from "react-icons/ri";
+import { FaFacebook, FaInstagram, FaHandHoldingHeart } from "react-icons/fa";
+import { AiFillTikTok } from "react-icons/ai";
+import {
+  FaSquareXTwitter,
+  FaGlobe,
+  FaRegHandshake,
+  FaPeopleRoof,
+} from "react-icons/fa6";
+import { LiaHandsHelpingSolid } from "react-icons/lia";
+import { MdWorkspacePremium } from "react-icons/md";
 
 export const navLinks = [
   { href: "/", label: "Home" },
@@ -143,17 +139,25 @@ export const galleryImages = [
 export const socialMediaLinks = [
   {
     name: "Facebook",
-    icon: facebook,
+    Icons: FaFacebook,
     url: "https://www.facebook.com/canuelscorp",
   },
   {
     name: "Instagram",
-    icon: instagram,
+    Icons: FaInstagram,
     url: "https://www.instagram.com/canuelscorp",
   },
-  { name: "TikTok", icon: tiktok, url: "https://www.tiktok.com/@canuelscorp" },
-  { name: "Twitter", icon: twitter, url: "https://twitter.com/canuelscorp" },
-  { name: "Website", icon: browser, url: "https://www.canuelscorp.com" },
+  {
+    name: "TikTok",
+    Icons: AiFillTikTok,
+    url: "https://www.tiktok.com/@canuelscorp",
+  },
+  {
+    name: "Twitter",
+    Icons: FaSquareXTwitter,
+    url: "https://twitter.com/canuelscorp",
+  },
+  { name: "Website", Icons: FaGlobe, url: "https://www.canuelscorp.com" },
 ];
 
 export const products = [
@@ -230,48 +234,48 @@ export const serviceDescription = [
     title: "Fresh Chicken Supply",
     description:
       "We specialize in supplying fresh chicken to various food services, ensuring quality and satisfaction.",
-    images: sec19,
+    images: sec11,
   },
   {
     id: 2,
     title: "Fast Delivery Service",
     description:
       "Quick and reliable delivery of fresh chicken right to your food service establishment.",
-    images: sec20,
+    images: sec12,
   },
 ];
 
 export const services = [
   {
     id: 1,
-    images: service1,
+    Icons: TbTruckDelivery,
     title: "Next day Delivery",
     description: "Free delivery with minimum of 10 bags",
   },
   {
     id: 2,
-    images: service2,
+    Icons: GiMeatCleaver,
     title: "Custom / Specialty Cuts",
     description:
       "Hand-trimmed, specialty chicken cuts prepared just how you like - from fillets to custom portions",
   },
   {
     id: 3,
-    images: service3,
+    Icons: GiMeat,
     title: "Exceptional Quality",
     description:
       "Exceptional-quality chicken, custom cut to your exact specifications for premium results every time",
   },
   {
     id: 4,
-    images: service4,
+    Icons: BiSolidDiscount,
     title: "Bulk purchase discounts",
     description:
       "We offer substantial discounts for bulk purchases to our clients as they require a large quantity of frozen meat products",
   },
   {
     id: 5,
-    images: service5,
+    Icons: RiSecurePaymentLine,
     title: "Secure payment options",
     description:
       "Shop with confidence - multiple secure payment methods to protect your purchase.",
@@ -281,42 +285,42 @@ export const services = [
 export const coreValues = [
   {
     id: 1,
-    images: cv1,
+    Icons: LiaHandsHelpingSolid,
     title: "Harmony",
     description:
       "We value harmony in all aspects of our business, promoting collaboration, unity, and mutual respect among our team members, partners, and stakeholders. By fostering a harmonious environment, we can achieve greater success and collective growth.",
   },
   {
     id: 2,
-    images: cv2,
+    Icons: MdWorkspacePremium,
     title: "High-Quality",
     description:
       "We are committed to upholding the highest standards of quality in every product we distribute and sell. From sourcing premium ingredients to ensuring freshness and safety, we prioritize excellence to deliver exceptional culinary experiences.",
   },
   {
     id: 3,
-    images: cv3,
+    Icons: FaHandHoldingHeart,
     title: "Honesty",
     description:
       "Honesty and Integrity are fundamental to our operations. We uphold honesty, highest ethical standards, transparently communicating with integrity, and accountability in all our interactions, decisions, and commitments.",
   },
   {
     id: 4,
-    images: cv4,
+    Icons: FaRegHandshake,
     title: "Just",
     description:
       "We believe in just and fair-trade practices that support farmers, producers, and artisans. By fostering transparent and equitable partnerships, we contribute to a more sustainable and ethical food supply chain.",
   },
   {
     id: 5,
-    images: cv5,
+    Icons: FaPeopleRoof,
     title: "Joy",
     description:
       "We aim to bring joy to every dining experience. Whether through delicious flavors, convenient ordering processes, or exceptional customer service, we strive to create moments of culinary delight for our customers.",
   },
   {
     id: 6,
-    images: cv6,
+    Icons: GiPathDistance,
     title: "Journey",
     description:
       "Honesty and Integrity are fundamental to our operations. We uphold honesty, highest ethical standards, transparently communicating with integrity, and accountability in all our interactions, decisions, and commitments.",

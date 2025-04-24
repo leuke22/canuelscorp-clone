@@ -1,26 +1,35 @@
-import team from "../assets/team.jpg";
-import { sec26 } from "../assets/images";
+import { team } from "../assets/canuelsImage";
+import { sec13 } from "../assets/images";
 import ChooseCard from "../components/ChooseCard";
 import { coreValues } from "../constants";
+import { motion } from "framer-motion";
+import { fadeIn, slideIn } from "../utils/motion";
 
 const About = () => {
   return (
     <section className="p-10 overflow-hidden">
-      <section className="grid grid-cols-1 lg:grid-cols-2 mb-20">
-        <div className="max-w-md p-3">
-          <h1 className="mb-5 text-5xl font-bold">About us</h1>
-          <p className="mb-5">
-            Canuels Enterprises Corporation draws its name from its founders'
-            surname, Canuela, embodying a legacy of hard work, dedication, and
-            entrepreneurial vision. By integrating the family name into our
-            brand, we honor the integrity, perseverance, and community
-            commitment passed down through generations. As we grow, "Canuels"
-            remains a steadfast reminder of our origins and the people who
-            inspire our pursuit of excellence.
-          </p>
+      <motion.section
+        variants={fadeIn("up", 0.5)}
+        initial="hidden"
+        whileInView="show"
+        className="grid grid-cols-1 lg:grid-cols-2 mb-20 lg:mb-50"
+      >
+        <div className="flex lg:items-center lg:justify-end">
+          <div className="max-w-md p-3">
+            <h1 className="mb-5 text-5xl font-bold">About us</h1>
+            <p className="mb-5">
+              Canuels Enterprises Corporation draws its name from its founders'
+              surname, Canuela, embodying a legacy of hard work, dedication, and
+              entrepreneurial vision. By integrating the family name into our
+              brand, we honor the integrity, perseverance, and community
+              commitment passed down through generations. As we grow, "Canuels"
+              remains a steadfast reminder of our origins and the people who
+              inspire our pursuit of excellence.
+            </p>
+          </div>
         </div>
 
-        <div className="p-10 relative">
+        <div className="p-10 relative lg:mr-20">
           <div className="relative max-w-md mx-auto mt-12">
             <div className="absolute inset-0 w-full h-full overflow-visible">
               <svg
@@ -40,10 +49,15 @@ const About = () => {
             </div>
           </div>
         </div>
-      </section>
-      <section className="grid grid-cols-1 place-content-center lg:grid-cols-2 gap-5 mb-10">
+      </motion.section>
+      <motion.section
+        variants={fadeIn("down", 0.3)}
+        initial="hidden"
+        whileInView="show"
+        className="grid grid-cols-1 place-content-center lg:grid-cols-2 gap-5 mb-10 lg:mb-20"
+      >
         <div className="bg-white rounded-xl overflow-hidden shadow-lg w-full">
-          <img src={sec26} alt="Team" className="h-auto w-full" />
+          <img src={sec13} alt="Team" className="h-auto w-full" />
         </div>
         <div className="order-first lg:order-last">
           <div>
@@ -67,8 +81,14 @@ const About = () => {
             </p>
           </div>
         </div>
-      </section>
-      <section className="text-center">
+      </motion.section>
+      <motion.section
+        variants={slideIn("left", "spring", 0.5, 1.5)}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: false }}
+        className="text-center"
+      >
         <h1 className="text-3xl font-bold text-center">Our Core Values</h1>
         <p className="text-gray-700 text-md lg:text-lg">
           At Canuels Enterprises Corporation, our operations are guided by
@@ -77,11 +97,16 @@ const About = () => {
           everyday actions and long-term vision:
         </p>
         <div className="grid grid-cols-1 gap-5 pt-10 md:grid-cols-2 lg:grid-cols-3">
-          {coreValues.map((items) => (
-            <ChooseCard items={items} />
+          {coreValues.map(({ id, Icons, title, description }) => (
+            <ChooseCard
+              key={id}
+              Icons={Icons}
+              title={title}
+              description={description}
+            />
           ))}
         </div>
-      </section>
+      </motion.section>
     </section>
   );
 };

@@ -1,4 +1,4 @@
-import { chickens } from "../../assets/images";
+import { sec2 } from "../../assets/images";
 import { chickenDescription } from "../../constants";
 import { motion } from "framer-motion";
 import { fadeIn } from "../../utils/motion";
@@ -49,7 +49,7 @@ const Suppliers = () => {
           initial="hidden"
           whileInView="show"
           className="w-full max-h-80 object-cover opacity-85 rounded-2xl lg:mt-4 lg:max-h-100 lg:object-center"
-          src={chickens}
+          src={sec2}
           alt="sec2"
         />
       </div>

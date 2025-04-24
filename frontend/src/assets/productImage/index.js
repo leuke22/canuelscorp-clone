@@ -1,29 +1,17 @@
-import prod1 from "./prod1.png";
-import prod2 from "./prod2.png";
-import prod3 from "./prod3.png";
-import prod4 from "./prod4.png";
-import prod5 from "./prod5.png";
-import prod6 from "./prod6.png";
-import prod7 from "./prod7.png";
-import prod8 from "./prod8.png";
-import prod9 from "./prod9.png";
-import prod10 from "./prod10.png";
-import prod11 from "./prod11.png";
-import prod12 from "./prod12.png";
-import prod13 from "./prod13.png";
+import { buildSrc } from "@imagekit/javascript";
 
-export {
-  prod1,
-  prod2,
-  prod3,
-  prod4,
-  prod5,
-  prod6,
-  prod7,
-  prod8,
-  prod9,
-  prod10,
-  prod11,
-  prod12,
-  prod13,
-};
+const urlEndpoint = "https://ik.imagekit.io/cx99ic1g8/assets/productImage";
+
+export const prod1 = buildSrc({ urlEndpoint, src: "/prod1.png" });
+export const prod2 = buildSrc({ urlEndpoint, src: "/prod2.png" });
+export const prod3 = buildSrc({ urlEndpoint, src: "/prod3.png" });
+export const prod4 = buildSrc({ urlEndpoint, src: "/prod4.png" });
+export const prod5 = buildSrc({ urlEndpoint, src: "/prod5.png" });
+export const prod6 = buildSrc({ urlEndpoint, src: "/prod6.png" });
+export const prod7 = buildSrc({ urlEndpoint, src: "/prod7.png" });
+export const prod8 = buildSrc({ urlEndpoint, src: "/prod8.png" });
+export const prod9 = buildSrc({ urlEndpoint, src: "/prod9.png" });
+export const prod10 = buildSrc({ urlEndpoint, src: "/prod10.png" });
+export const prod11 = buildSrc({ urlEndpoint, src: "/prod11.png" });
+export const prod12 = buildSrc({ urlEndpoint, src: "/prod12.png" });
+export const prod13 = buildSrc({ urlEndpoint, src: "/prod13.png" });

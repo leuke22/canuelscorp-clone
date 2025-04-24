@@ -1,13 +1,5 @@
-// filepath: c:\Users\kenhm\Desktop\canuelscorp-app\src\Footer.jsx
-import canuelsLogo from "./assets/canuels-logo.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faFacebook,
-  faInstagram,
-  faTiktok,
-  faXTwitter,
-} from "@fortawesome/free-brands-svg-icons";
-import { faGlobe } from "@fortawesome/free-solid-svg-icons";
+import { canuelsLogo } from "./assets/canuelsImage";
+import { socialMediaLinks } from "./constants";
 
 const Footer = () => {
   return (
@@ -27,63 +19,16 @@ const Footer = () => {
         </div>
         <p>Delivering fresh chicken to Metro Manila restaurants.</p>
         <div className="flex flex-row gap-12 mt-7">
-          <a
-            href="https://www.facebook.com/canuelscorp"
-            className="hover-bounce"
-            target="_blank"
-          >
-            <FontAwesomeIcon
-              icon={faFacebook}
-              size="2xl"
-              style={{ color: "#1e2939" }}
-            />
-          </a>
-          <a
-            href="https://www.instagram.com/canuelscorp"
-            className="hover-bounce"
-            target="_blank"
-          >
-            <FontAwesomeIcon
-              icon={faInstagram}
-              size="2xl"
-              style={{ color: "#1e2939" }}
-            />
-          </a>
-          <a
-            href="https://www.tiktok.com/@canuelscorp"
-            className="hover-bounce"
-            target="_blank"
-          >
-            <FontAwesomeIcon
-              icon={faTiktok}
-              size="2xl"
-              style={{ color: "#1e2939" }}
-            />
-          </a>
+          {socialMediaLinks.map(({ Icons, url }, index) => {
+            const size =
+              index === 1 ? 38 : index === 2 ? 41 : index === 3 ? 38 : 35;
 
-          <a
-            href="https://twitter.com/canuelscorp"
-            className="hover-bounce"
-            target="_blank"
-          >
-            <FontAwesomeIcon
-              icon={faXTwitter}
-              size="2xl"
-              style={{ color: "#1e2939" }}
-            />
-          </a>
-
-          <a
-            href="https://www.canuelscorp.com"
-            className="hover-bounce"
-            target="_blank"
-          >
-            <FontAwesomeIcon
-              icon={faGlobe}
-              size="2xl"
-              style={{ color: "#1e2939" }}
-            />
-          </a>
+            return (
+              <a href={url} className="flex items-center" target="_blank">
+                <Icons size={size} />
+              </a>
+            );
+          })}
         </div>
       </div>
       <div className="flex flex-row justify-between mt-10">

@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import { useLocation, Link } from "react-router-dom"; // Import useLocation
-import headerLogo from "./assets/canuels-logo.png";
+import { canuelsLogo } from "./assets/canuelsImage";
 import { navLinks } from "./constants";
 import { HiMenu, HiX } from "react-icons/hi";
 import { motion } from "framer-motion";
@@ -10,9 +10,8 @@ import { fadeIn } from "./utils/motion";
 const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("/home");
-  const location = useLocation(); // Get the current route
+  const location = useLocation();
 
-  // Update activeLink whenever the route changes
   useEffect(() => {
     setActiveLink(location.pathname);
   }, [location]);
@@ -26,11 +25,10 @@ const Nav = () => {
       className="px-5 fixed z-50 w-full top-0 left-0 right-0 bg-white/90 backdrop-blur-sm shadow-sm dark:bg-gray-800 dark:text-white"
     >
       <div className="flex flex-row justify-between items-center w-full">
-        {/* Logo Section */}
         <div className="flex-0.5 flex justify-center shrink-0">
           <a href="/">
             <img
-              src={headerLogo}
+              src={canuelsLogo}
               alt="canuelscorp-logo"
               className="object-cover sm:ml-16"
               width={100}
@@ -39,7 +37,6 @@ const Nav = () => {
           </a>
         </div>
 
-        {/* Desktop Navigation */}
         <ul className="flex flex-1 flex-row justify-center max-lg:hidden gap-10">
           {navLinks.map((item, index) => (
             <a
@@ -57,7 +54,6 @@ const Nav = () => {
           ))}
         </ul>
 
-        {/* Mobile Menu Button */}
         <section className="flex flex-row gap-5 items-center mr-10 sm:gap-14">
           <button
             className="hidden max-lg:flex shrink-0 items-center"
@@ -72,7 +68,6 @@ const Nav = () => {
         </section>
       </div>
 
-      {/* Mobile Navigation */}
       <div
         className={`fixed top-[100px] right-0 h-full w-64 shadow-lg transform transition-transform duration-300 ${
           isMenuOpen ? "translate-x-0" : "translate-x-full"
@@ -83,7 +78,7 @@ const Nav = () => {
             <Link
               to={item.href}
               key={index}
-              onClick={() => setIsMenuOpen(false)} // Close menu on click
+              onClick={() => setIsMenuOpen(false)}
               className={`block text-lg font-medium py-2 w-full text-center ${
                 activeLink === item.href
                   ? "text-bgHeaderNav"
