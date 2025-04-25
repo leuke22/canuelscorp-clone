@@ -3,6 +3,8 @@ import { v2 as cloudinary } from "cloudinary";
 
 import User from "../models/user.model.js";
 import UserInquire from "../models/userInquire.model.js";
+import transporter from "../lib/utils/nodemailer.js";
+import { generateOTP } from "../lib/utils/generateOTP.js";
 
 export const updateUser = async (req, res) => {
   const { username, fullname, email, currentPassword, newPassword, phone } =
@@ -134,5 +136,87 @@ export const userInquire = async (req, res) => {
   } catch (error) {
     console.log("Error in userInquire: ", error.message);
     res.status(500).json({ error: error.message });
+  }
+};
+
+export const requestPasswordResetOtp = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ error: "Email is required" });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const otp = generateOTP();
+    const expiryTime = Date.now() + 15 * 60 * 1000;
+
+    user.resetOtp = otp;
+    user.resetOtpExpireAt = expiryTime;
+    await user.save();
+
+    await transporter.sendMail({
+      from: process.env.SMTP_EMAIL || "noreply@yourdomain.com",
+      to: email,
+      subject: "Password Reset OTP",
+      html: `
+        <h1>Password Reset</h1>
+        <p>Your password reset OTP is: <strong>${otp}</strong></p>
+        <p>This OTP will expire in 15 minutes.</p>
+        <p>If you did not request this password reset, please ignore this email.</p>
+      `,
+    });
+
+    res.status(200).json({ message: "Password reset OTP sent to your email" });
+  } catch (error) {
+    console.log("Error in requestPasswordResetOtp controller", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const resetPassword = async (req, res) => {
+  try {
+    const { email, otp, newPassword } = req.body;
+
+    if (!email || !otp || !newPassword) {
+      return res.status(400).json({
+        error: "Email, OTP, and new password are required",
+      });
+    }
+
+    if (newPassword.length < 6) {
+      return res.status(400).json({
+        error: "Password must be at least 6 characters long",
+      });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    if (user.resetOtp !== otp) {
+      return res.status(400).json({ error: "Invalid OTP" });
+    }
+
+    if (Date.now() > user.resetOtpExpireAt) {
+      return res.status(400).json({ error: "OTP has expired" });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(newPassword, salt);
+
+    user.resetOtp = "";
+    user.resetOtpExpireAt = 0;
+    await user.save();
+
+    res.status(200).json({ message: "Password reset successfully" });
+  } catch (error) {
+    console.log("Error in resetPassword controller", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };

@@ -1,6 +1,8 @@
 import { generateTokenAndSetCookie } from "../lib/utils/generateToken.js";
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
+import transporter from "../lib/utils/nodemailer.js";
+import { generateOTP } from "../lib/utils/generateOTP.js";
 
 export const signup = async (req, res) => {
   try {
@@ -50,6 +52,9 @@ export const signup = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
+    const otp = generateOTP();
+    const otpExpiry = Date.now() + 15 * 60 * 1000;
+
     const newUser = new User({
       fullname,
       username,
@@ -57,24 +62,39 @@ export const signup = async (req, res) => {
       phone,
       password: hashedPassword,
       role,
+      verifyOtp: otp,
+      verifyOtpExpireAt: otpExpiry,
     });
 
-    if (newUser) {
-      generateTokenAndSetCookie(newUser._id, res);
-      await newUser.save();
+    await newUser.save();
 
-      res.status(201).json({
-        _id: newUser._id,
-        fullname: newUser.fullname,
-        username: newUser.username,
-        email: newUser.email,
-        phone: newUser.phone,
-        profileImg: newUser.profileImg,
-        role: newUser.role,
-      });
-    } else {
-      res.status(400).json({ error: "Invalid user data" });
-    }
+    const signupMail = {
+      from: process.env.SMTP_EMAIL || "noreply@yourdomain.com",
+      to: email,
+      subject: "Account Verification OTP",
+      html: `
+        <h1>Welcome to Our Platform!</h1>
+        <p>Thank you for signing up. To verify your account, please use the following OTP:</p>
+        <p><strong>${otp}</strong></p>
+        <p>This OTP will expire in 15 minutes.</p>
+      `,
+    };
+
+    await transporter.sendMail(signupMail);
+
+    generateTokenAndSetCookie(newUser._id, res);
+
+    res.status(201).json({
+      _id: newUser._id,
+      fullname: newUser.fullname,
+      username: newUser.username,
+      email: newUser.email,
+      phone: newUser.phone,
+      profileImg: newUser.profileImg,
+      role: newUser.role,
+      isAccountVerified: newUser.isAccountVerified,
+      message: "Verification OTP has been sent to your email",
+    });
   } catch (error) {
     console.log("Error in signup controller", error.message);
     res.status(500).json({ error: "Internal Server Error" });
@@ -126,6 +146,86 @@ export const getMe = async (req, res) => {
     res.status(200).json(user);
   } catch (error) {
     console.log("Error in getMe controller", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const sendVerificationOtp = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ error: "Email is required" });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    if (user.isAccountVerified) {
+      return res.status(400).json({ error: "Account already verified" });
+    }
+
+    const otp = generateOTP();
+
+    const expiryTime = Date.now() + 15 * 60 * 1000;
+
+    user.verifyOtp = otp;
+    user.verifyOtpExpireAt = expiryTime;
+    await user.save();
+
+    await transporter.sendMail({
+      from: process.env.SMTP_EMAIL || "noreply@yourdomain.com",
+      to: email,
+      subject: "Account Verification OTP",
+      html: `
+        <h1>Account Verification</h1>
+        <p>Your verification OTP is: <strong>${otp}</strong></p>
+        <p>This OTP will expire in 15 minutes.</p>
+      `,
+    });
+
+    res.status(200).json({ message: "Verification OTP sent to your email" });
+  } catch (error) {
+    console.log("Error in sendVerificationOtp controller", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const verifyAccount = async (req, res) => {
+  try {
+    const { email, otp } = req.body;
+
+    if (!email || !otp) {
+      return res.status(400).json({ error: "Email and OTP are required" });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    if (user.isAccountVerified) {
+      return res.status(400).json({ error: "Account already verified" });
+    }
+
+    if (user.verifyOtp !== otp) {
+      return res.status(400).json({ error: "Invalid OTP" });
+    }
+
+    if (Date.now() > user.verifyOtpExpireAt) {
+      return res.status(400).json({ error: "OTP has expired" });
+    }
+
+    user.isAccountVerified = true;
+    user.verifyOtp = "";
+    user.verifyOtpExpireAt = 0;
+    await user.save();
+
+    res.status(200).json({ message: "Account verified successfully" });
+  } catch (error) {
+    console.log("Error in verifyAccount controller", error.message);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
