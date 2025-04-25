@@ -5,6 +5,9 @@ import User from "../models/user.model.js";
 import UserInquire from "../models/userInquire.model.js";
 import transporter from "../lib/utils/nodemailer.js";
 import { generateOTP } from "../lib/utils/generateOTP.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export const updateUser = async (req, res) => {
   const { username, fullname, email, currentPassword, newPassword, phone } =
@@ -159,17 +162,19 @@ export const requestPasswordResetOtp = async (req, res) => {
     user.resetOtpExpireAt = expiryTime;
     await user.save();
 
-    await transporter.sendMail({
-      from: process.env.SMTP_EMAIL || "noreply@yourdomain.com",
+    const passwordResetOtp = {
+      from: `Canuels Corp <${process.env.SMTP_EMAIL}>`,
       to: email,
       subject: "Password Reset OTP",
       html: `
-        <h1>Password Reset</h1>
-        <p>Your password reset OTP is: <strong>${otp}</strong></p>
+        <h1>Thank you for using our Platform</h1>
+        <p>Thank you for login. To verify your account, please use the following OTP:</p>
+        <p><strong>${otp}</strong></p>
         <p>This OTP will expire in 15 minutes.</p>
-        <p>If you did not request this password reset, please ignore this email.</p>
       `,
-    });
+    };
+
+    await transporter.sendMail(passwordResetOtp);
 
     res.status(200).json({ message: "Password reset OTP sent to your email" });
   } catch (error) {
