@@ -1,8 +1,8 @@
-import ChooseCard from "../components/Cards/ChooseCard";
-import FadeCard from "../components/Cards/FadeCard";
-import { serviceDescription, services } from "../constants";
+import ChooseCard from "../../components/Cards/ChooseCard";
+import FadeCard from "../../components/Cards/FadeCard";
+import { serviceDescription, services } from "../../constants";
 import { motion } from "framer-motion";
-import { fadeIn, slideIn } from "../utils/motion";
+import { fadeIn, slideIn } from "../../utils/motion";
 
 const Services = () => {
   return (

@@ -4,12 +4,16 @@ import Nav from "./Nav";
 import { Route, Routes } from "react-router-dom";
 
 import Footer from "./Footer";
-import { Home, Products, Services, About, Login, Signup } from "./pages";
+import { Home, Products, Services, About } from "./pages/userSections";
+
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 const App = () => {
+  const role = "user";
   return (
     <main>
-      <Nav />
+      <Nav role={role} />
       <div className="bg-white h-[100px] w-full"></div>
       <section>
         <Routes>

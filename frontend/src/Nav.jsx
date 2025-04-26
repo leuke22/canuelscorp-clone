@@ -2,12 +2,12 @@
 import { useState, useEffect } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { canuelsLogo } from "./assets/canuelsImage";
-import { navLinks } from "./constants";
+import { navLinks, adminLinks } from "./constants";
 import { HiMenu, HiX } from "react-icons/hi";
 import { motion } from "framer-motion";
 import { fadeIn } from "./utils/motion";
 
-const Nav = () => {
+const Nav = ({ role }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("/home");
   const location = useLocation();
@@ -38,20 +38,35 @@ const Nav = () => {
         </div>
 
         <ul className="flex flex-1 flex-row justify-center max-lg:hidden gap-10">
-          {navLinks.map((item, index) => (
-            <a
-              key={index}
-              onClick={() => setActiveLink(item.href)}
-              className={`text-[16px] font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-bgHeaderNav after:transition-all ${
-                activeLink === item.href
-                  ? "text-bgHeaderNav after:w-full"
-                  : "text-gray-600 hover:text-gray-900"
-              }`}
-              href={item.href}
-            >
-              {item.label}
-            </a>
-          ))}
+          {role === "admin"
+            ? adminLinks.map((item, index) => (
+                <Link
+                  key={index}
+                  onClick={() => setActiveLink(item.href)}
+                  className={`text-[16px] font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-bgHeaderNav after:transition-all ${
+                    activeLink === item.href
+                      ? "text-bgHeaderNav after:w-full"
+                      : "text-gray-600 hover:text-gray-900"
+                  }`}
+                  to={item.href}
+                >
+                  {item.label}
+                </Link>
+              ))
+            : navLinks.map((item, index) => (
+                <Link
+                  key={index}
+                  onClick={() => setActiveLink(item.href)}
+                  className={`text-[16px] font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 hover:after:w-full after:bg-bgHeaderNav after:transition-all ${
+                    activeLink === item.href
+                      ? "text-bgHeaderNav after:w-full"
+                      : "text-gray-600 hover:text-gray-900"
+                  }`}
+                  to={item.href}
+                >
+                  {item.label}
+                </Link>
+              ))}
         </ul>
 
         <div className="hidden lg:flex items-center justify-center gap-5">

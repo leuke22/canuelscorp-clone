@@ -52,6 +52,13 @@ export const navLinks = [
   { href: "/about", label: "About Us" },
 ];
 
+export const adminLinks = [
+  { href: "/admin", label: "Dashboard" },
+  { href: "/admin/products", label: "Products" },
+  { href: "/admin/orders", label: "Orders" },
+  { href: "/admin/users", label: "Users" },
+];
+
 export const formFields = [
   {
     id: 1,
