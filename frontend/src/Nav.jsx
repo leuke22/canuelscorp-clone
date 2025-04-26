@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
-import { useLocation, Link } from "react-router-dom"; // Import useLocation
+import { useLocation, Link } from "react-router-dom";
 import { canuelsLogo } from "./assets/canuelsImage";
 import { navLinks } from "./constants";
 import { HiMenu, HiX } from "react-icons/hi";
@@ -53,6 +53,16 @@ const Nav = () => {
             </a>
           ))}
         </ul>
+
+        <div className="hidden lg:flex items-center justify-center gap-5">
+          <Link to="/login" className="btn btn-outline btn-primary w-32">
+            Login
+          </Link>
+
+          <Link to="/signup" className="btn btn-secondary w-32">
+            Signup
+          </Link>
+        </div>
 
         <section className="flex flex-row gap-5 items-center mr-10 sm:gap-14">
           <button

@@ -2,7 +2,7 @@ import { deliverDescription } from "../../constants";
 
 import { motion } from "framer-motion";
 import { fadeIn } from "../../utils/motion";
-import FadeCard from "../../components/FadeCard";
+import FadeCard from "../../components/Cards/FadeCard";
 
 const Quality = () => {
   return (
@@ -23,7 +23,7 @@ const Quality = () => {
       </motion.div>
       <div className="px-8 py-5 text-black grid gap-5 md:grid-cols-2 lg:gap-8">
         {deliverDescription.map((items) => (
-          <FadeCard items={items} />
+          <FadeCard key={items.id} items={items} />
         ))}
       </div>
     </section>

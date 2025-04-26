@@ -1,5 +1,5 @@
-import ChooseCard from "../components/ChooseCard";
-import FadeCard from "../components/FadeCard";
+import ChooseCard from "../components/Cards/ChooseCard";
+import FadeCard from "../components/Cards/FadeCard";
 import { serviceDescription, services } from "../constants";
 import { motion } from "framer-motion";
 import { fadeIn, slideIn } from "../utils/motion";

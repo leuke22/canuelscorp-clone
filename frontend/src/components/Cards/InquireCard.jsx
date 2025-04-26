@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
-import { formFields } from "../constants/index.js";
-import TextField from "./TextField.jsx";
-import SubmitButton from "./Buttons/SubmitButton.jsx";
+import { formFields } from "../../constants/index.js";
+import TextField from "../TextField.jsx";
+import SubmitButton from "../Buttons/SubmitButton.jsx";
 import { motion } from "framer-motion";
-import { fadeIn } from "../utils/motion";
+import { fadeIn } from "../../utils/motion.js";
 
 const InquireCard = () => {
   return (
@@ -16,6 +16,7 @@ const InquireCard = () => {
       <div className="text-white bg-white/10 rounded-xl px-5 py-8 mb-16 lg:mb-0 w-full max-w-[360px] max-h-[550px]">
         {formFields.map((components) => (
           <TextField
+            key={components.id}
             name={components.name}
             type={components.type}
             label={components.label}

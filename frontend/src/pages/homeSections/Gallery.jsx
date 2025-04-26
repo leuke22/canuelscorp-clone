@@ -10,7 +10,7 @@ const Gallery = () => {
   });
 
   return (
-    <section className="text-black">
+    <section className="text-black mb-20">
       <motion.div
         variants={fadeIn("down", 0.2)}
         initial="hidden"

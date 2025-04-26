@@ -3,7 +3,7 @@ import { socialMediaLinks } from "./constants";
 
 const Footer = () => {
   return (
-    <footer className="bg-bgFooter text-gray-600 p-10 mt-10">
+    <footer className="bg-bgFooter text-gray-600 p-10">
       <div className="flex flex-col items-start mb-5">
         <div className="flex flex-row items-center mb-2">
           <div className="w-25 h-25 -ml-5">
@@ -19,12 +19,17 @@ const Footer = () => {
         </div>
         <p>Delivering fresh chicken to Metro Manila restaurants.</p>
         <div className="flex flex-row gap-12 mt-7">
-          {socialMediaLinks.map(({ Icons, url }, index) => {
+          {socialMediaLinks.map(({ id, Icons, url }, index) => {
             const size =
               index === 1 ? 38 : index === 2 ? 41 : index === 3 ? 38 : 35;
 
             return (
-              <a href={url} className="flex items-center" target="_blank">
+              <a
+                key={id}
+                href={url}
+                className="flex items-center"
+                target="_blank"
+              >
                 <Icons size={size} />
               </a>
             );

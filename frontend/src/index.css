@@ -11,6 +11,10 @@
 
   --color-primary: oklch(0.7 0.1585 63.14);
   --color-primary-focus: oklch(59.91% 0.177 49.09);
+  --color-primary-content: oklch(1 0 89.876);
+  --color-secondary: oklch(0.359 0.067 170.738);
+  --color-secondary-focus: oklch(0.281 0.05 171.463);
+  --color-secondary-content: oklch(1 0 89.876);
 }
 
 @theme {

@@ -54,22 +54,25 @@ export const navLinks = [
 
 export const formFields = [
   {
+    id: 1,
     name: "Name",
     label: "Your First Name",
     type: "text",
-    required: "false",
+    required: false,
   },
   {
+    id: 2,
     name: "Email*",
     label: "Your Email Address",
     type: "email",
-    required: "true",
+    required: true,
   },
   {
+    id: 3,
     name: "Phone Number*",
     label: "Enter your phone number",
     type: "tel",
-    required: "true",
+    required: true,
   },
 ];
 
@@ -105,6 +108,7 @@ export const deliverDescription = [
 
 export const reviews = [
   {
+    id: 1,
     name: "John Doe",
     place: "Makati City",
     images: dp1,
@@ -112,6 +116,7 @@ export const reviews = [
       "Canuels Enterprises has been our go-to supplier for fresh chicken. Their quality is unmatched!",
   },
   {
+    id: 2,
     name: "Jane Smith",
     place: "Quezon City",
     images: dp2,
@@ -119,6 +124,7 @@ export const reviews = [
       "The freshness and quality of Canuels' chicken have elevated our dishes to a whole new level.",
   },
   {
+    id: 3,
     name: "Michael Johnson",
     place: "Pasig City",
     images: dp3,
@@ -138,26 +144,35 @@ export const galleryImages = [
 
 export const socialMediaLinks = [
   {
+    id: 1,
     name: "Facebook",
     Icons: FaFacebook,
     url: "https://www.facebook.com/canuelscorp",
   },
   {
+    id: 2,
     name: "Instagram",
     Icons: FaInstagram,
     url: "https://www.instagram.com/canuelscorp",
   },
   {
+    id: 3,
     name: "TikTok",
     Icons: AiFillTikTok,
     url: "https://www.tiktok.com/@canuelscorp",
   },
   {
+    id: 4,
     name: "Twitter",
     Icons: FaSquareXTwitter,
     url: "https://twitter.com/canuelscorp",
   },
-  { name: "Website", Icons: FaGlobe, url: "https://www.canuelscorp.com" },
+  {
+    id: 5,
+    name: "Website",
+    Icons: FaGlobe,
+    url: "https://www.canuelscorp.com",
+  },
 ];
 
 export const products = [
