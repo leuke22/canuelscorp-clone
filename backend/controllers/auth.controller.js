@@ -1,9 +1,15 @@
-import { generateTokenAndSetCookie } from "../lib/utils/generateToken.js";
 import User from "../models/user.model.js";
-import bcrypt from "bcryptjs";
 import transporter from "../lib/utils/nodemailer.js";
 import { generateOTP } from "../lib/utils/generateOTP.js";
+import { redis } from "../lib/utils/redis.js";
+import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+
+import {
+  generateTokens,
+  storeRefreshToken,
+  setCookies,
+} from "../lib/utils/generateToken.js";
 
 dotenv.config();
 
@@ -46,30 +52,8 @@ export const signup = async (req, res) => {
         .json({ error: "Phone number is already registered" });
     }
 
-    if (password.length < 6) {
-      return res
-        .status(400)
-        .json({ error: "Password must be at least 6 characters long" });
-    }
-
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
     const otp = generateOTP();
     const otpExpiry = Date.now() + 15 * 60 * 1000;
-
-    const newUser = new User({
-      fullname,
-      username,
-      email,
-      phone,
-      password: hashedPassword,
-      role,
-      verifyOtp: otp,
-      verifyOtpExpireAt: otpExpiry,
-    });
-
-    await newUser.save();
 
     const signupMail = {
       from: `Canuels Corp <${process.env.SMTP_EMAIL}>`,
@@ -85,7 +69,21 @@ export const signup = async (req, res) => {
 
     await transporter.sendMail(signupMail);
 
-    generateTokenAndSetCookie(newUser._id, res);
+    const newUser = await User.create({
+      fullname,
+      username,
+      email,
+      phone,
+      password,
+      role,
+      verifyOtp: otp,
+      verifyOtpExpireAt: otpExpiry,
+    });
+
+    const { accessToken, refreshToken } = generateTokens(newUser._id);
+    await storeRefreshToken(newUser._id, refreshToken);
+
+    setCookies(res, accessToken, refreshToken);
 
     res.status(201).json({
       _id: newUser._id,
@@ -108,25 +106,23 @@ export const login = async (req, res) => {
   try {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
-    const isPasswordCorrect = await bcrypt.compare(
-      password,
-      user?.password || ""
-    );
 
-    if (!user || !isPasswordCorrect) {
-      return res.status(400).json({ error: "Invalid username or password" });
+    if (user && (await user.comparePassword(password))) {
+      const { accessToken, refreshToken } = generateTokens(user._id);
+      await storeRefreshToken(user._id, refreshToken);
+      setCookies(res, accessToken, refreshToken);
+
+      res.status(200).json({
+        _id: user._id,
+        fullname: user.fullname,
+        username: user.username,
+        email: user.email,
+        phone: user.phone,
+        profileImg: user.profileImg,
+      });
+    } else {
+      res.status(400).json({ message: "Invalid email or password" });
     }
-
-    generateTokenAndSetCookie(user._id, res);
-
-    res.status(200).json({
-      _id: user._id,
-      fullname: user.fullname,
-      username: user.username,
-      email: user.email,
-      phone: user.phone,
-      profileImg: user.profileImg,
-    });
   } catch (error) {
     console.log("Error in login controller", error.message);
     res.status(500).json({ error: "Internal Server Error" });
@@ -135,11 +131,21 @@ export const login = async (req, res) => {
 
 export const logout = async (req, res) => {
   try {
-    res.cookie("jwt", "", { maxAge: 0 });
+    const refreshToken = req.cookies.refreshToken;
+    if (refreshToken) {
+      const decoded = jwt.verify(
+        refreshToken,
+        process.env.REFRESH_TOKEN_SECRET
+      );
+      await redis.del(`refresh_token:${decoded.userId}`);
+    }
+
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
     res.status(200).json({ message: "Logged out successfully" });
   } catch (error) {
     console.log("Error in logout controller", error.message);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
 
@@ -233,5 +239,40 @@ export const verifyAccount = async (req, res) => {
   } catch (error) {
     console.log("Error in verifyAccount controller", error.message);
     res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const refreshToken = async (req, res) => {
+  try {
+    const refreshToken = req.cookies.refreshToken;
+
+    if (!refreshToken) {
+      return res.status(401).json({ message: "No refresh token provided" });
+    }
+
+    const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+    const storedToken = await redis.get(`refresh_token:${decoded.userId}`);
+
+    if (storedToken !== refreshToken) {
+      return res.status(401).json({ message: "Invalid refresh token" });
+    }
+
+    const accessToken = jwt.sign(
+      { userId: decoded.userId },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: "15m" }
+    );
+
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 15 * 60 * 1000,
+    });
+
+    res.status(200).json({ message: "Token refreshed successfully" });
+  } catch (error) {
+    console.log("Error in refreshToken controller", error.message);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };

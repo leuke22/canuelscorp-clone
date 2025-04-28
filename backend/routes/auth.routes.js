@@ -3,6 +3,7 @@ import {
   getMe,
   login,
   logout,
+  refreshToken,
   sendVerificationOtp,
   signup,
   verifyAccount,
@@ -19,5 +20,7 @@ router.post("/logout", logout);
 
 router.post("/sendVerification", sendVerificationOtp);
 router.post("/verifyAccount", verifyAccount);
+
+router.post("/refresh-token", refreshToken);
 
 export default router;

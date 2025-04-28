@@ -1,25 +1,28 @@
 import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 
 const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
-      required: true,
+      required: [true, "Username is required"],
       unique: true,
     },
     fullname: {
       type: String,
-      required: true,
+      required: [true, "Fullname is required"],
     },
     password: {
       type: String,
-      required: true,
-      minLength: 6,
+      required: [true, "Password is required"],
+      minlength: [6, "Password must be at least 6 characters long"],
     },
     email: {
       type: String,
-      required: true,
+      required: [true, "Email is required"],
       unique: true,
+      lowercase: true,
+      trim: true,
     },
     phone: {
       type: Number,
@@ -42,7 +45,7 @@ const userSchema = new mongoose.Schema(
       city: {
         type: String,
       },
-      provice: {
+      province: {
         type: String,
       },
       postalCode: {
@@ -74,6 +77,22 @@ const userSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+
+  try {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
+userSchema.methods.comparePassword = async function (password) {
+  return bcrypt.compare(password, this.password);
+};
 
 const User = mongoose.model("User", userSchema);
 export default User;
