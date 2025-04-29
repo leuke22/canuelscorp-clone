@@ -8,9 +8,10 @@ import { Home, Products, Services, About } from "./pages/userSections";
 
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import { Dashboard, Orders, Users, AdminProducts } from "./pages/adminSections";
 
 const App = () => {
-  const role = "user";
+  const role = "admin";
   return (
     <main>
       <Nav role={role} />
@@ -23,6 +24,11 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+
+          <Route path="/admin" element={<Dashboard />} />
+          <Route path="/admin/products" element={<AdminProducts />} />
+          <Route path="/admin/orders" element={<Orders />} />
+          <Route path="/admin/users" element={<Users />} />
         </Routes>
       </section>
       <Footer />

@@ -31,6 +31,8 @@
   --color-bgFooter: #f7fafc;
   --color-bgFooterDark: #1e2939;
   --color-bgHeaderNav: #f87604;
+
+  --color-headerProducts: #e9f3ff;
 }
 
 @layer base {
@@ -65,4 +67,8 @@
 
 .shared-header-footer {
   @apply text-black text-[17px] font-semibold;
+}
+
+.header-products-paragraph {
+  @apply text-[12px] md:text-[15px] lg:text-[20px] font-semibold;
 }
