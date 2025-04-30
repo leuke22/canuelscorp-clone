@@ -1,14 +1,35 @@
 const EditProduct = ({
   editDialogRef,
-  handleEditSubmit,
-  handleEditImageChange,
   editProductId,
   editName,
-  setEditName,
   editDescription,
-  setEditDescription,
   editImagePreview,
 }) => {
+  const handleEditImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => setEditImagePreview(reader.result);
+      reader.readAsDataURL(file);
+    }
+  };
+  const handleEditSubmit = (e) => {
+    e.preventDefault();
+    setProducts(
+      products.map((p) =>
+        p.id === editProductId
+          ? {
+              ...p,
+              name: editName,
+              description: editDescription,
+              image: editImagePreview,
+            }
+          : p
+      )
+    );
+    editDialogRef.current.close();
+  };
+
   return (
     <dialog ref={editDialogRef} className="modal">
       <div className="modal-box">

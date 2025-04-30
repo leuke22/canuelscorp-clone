@@ -1,12 +1,34 @@
-const AddProduct = ({
-  handleSubmit,
-  handleImageChange,
-  productName,
-  setProductName,
-  productDescription,
-  setProductDescription,
-  imagePreview,
-}) => {
+import { useState } from "react";
+
+const AddProduct = () => {
+  const [productName, setProductName] = useState("");
+  const [productDescription, setProductDescription] = useState("");
+  const [imagePreview, setImagePreview] = useState(null);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newProduct = {
+      id: String(products.length + 1).padStart(2, "0"),
+      name: productName,
+      description: productDescription,
+      image: imagePreview,
+    };
+    setProducts([...products, newProduct]);
+    setProductName("");
+    setProductDescription("");
+    setImagePreview(null);
+    document.getElementById("my_modal_3").close();
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => setImagePreview(reader.result);
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <dialog id="my_modal_3" className="modal">
       <div className="modal-box">

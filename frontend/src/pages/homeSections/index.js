@@ -2,6 +2,6 @@ import Hero from "./Hero";
 import Suppliers from "./Suppliers";
 import Quality from "./Quality";
 import Reviews from "./Reviews";
-import Gallery from "./Gallery";
+import Offerings from "./Offerings";
 
-export { Hero, Suppliers, Quality, Reviews, Gallery };
+export { Hero, Suppliers, Quality, Reviews, Offerings };

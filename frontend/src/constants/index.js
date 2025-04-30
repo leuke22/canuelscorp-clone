@@ -4,14 +4,11 @@ import {
   dp1,
   dp2,
   dp3,
-  sec5,
-  sec6,
-  sec7,
-  sec8,
-  sec9,
-  sec10,
   sec11,
   sec12,
+  beefBg,
+  chickenBg,
+  porkBg,
 } from "../assets/images";
 
 import {
@@ -140,13 +137,22 @@ export const reviews = [
   },
 ];
 
-export const galleryImages = [
-  { id: 1, image: sec5 },
-  { id: 2, image: sec6 },
-  { id: 3, image: sec7 },
-  { id: 4, image: sec8 },
-  { id: 5, image: sec9 },
-  { id: 6, image: sec10 },
+export const offers = [
+  {
+    id: 1,
+    image: beefBg,
+    name: "Beef",
+  },
+  {
+    id: 2,
+    image: chickenBg,
+    name: "Chicken",
+  },
+  {
+    id: 3,
+    image: porkBg,
+    name: "Pork",
+  },
 ];
 
 export const socialMediaLinks = [

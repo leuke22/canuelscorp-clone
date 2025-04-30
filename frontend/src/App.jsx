@@ -9,11 +9,13 @@ import { Home, Products, Services, About } from "./pages/userSections";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import { Dashboard, Orders, Users, AdminProducts } from "./pages/adminSections";
+import ScrollTop from "../ScrollTop";
 
 const App = () => {
-  const role = "admin";
+  const role = "user";
   return (
     <main>
+      <ScrollTop />
       <Nav role={role} />
       <div className="bg-white h-[100px] w-full"></div>
       <section>

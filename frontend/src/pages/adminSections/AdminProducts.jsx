@@ -6,10 +6,6 @@ import AddProduct from "../../components/Modal/AddProduct";
 import EditProduct from "../../components/Modal/EditProduct";
 
 const Products = () => {
-  const [productName, setProductName] = useState("");
-  const [productDescription, setProductDescription] = useState("");
-  const [imagePreview, setImagePreview] = useState(null);
-
   const [editProductId, setEditProductId] = useState(null);
   const [editName, setEditName] = useState("");
   const [editDescription, setEditDescription] = useState("");
@@ -39,29 +35,6 @@ const Products = () => {
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => setImagePreview(reader.result);
-      reader.readAsDataURL(file);
-    }
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const newProduct = {
-      id: String(products.length + 1).padStart(2, "0"),
-      name: productName,
-      description: productDescription,
-      image: imagePreview,
-    };
-    setProducts([...products, newProduct]);
-    setProductName("");
-    setProductDescription("");
-    setImagePreview(null);
-    document.getElementById("my_modal_3").close();
-  };
-
   const handleSelectProduct = (productId) => {
     if (selectedProducts.includes(productId))
       setSelectedProducts(selectedProducts.filter((id) => id !== productId));
@@ -85,30 +58,6 @@ const Products = () => {
     setEditDescription(product.description);
     setEditImagePreview(product.image);
     editDialogRef.current.showModal();
-  };
-  const handleEditImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => setEditImagePreview(reader.result);
-      reader.readAsDataURL(file);
-    }
-  };
-  const handleEditSubmit = (e) => {
-    e.preventDefault();
-    setProducts(
-      products.map((p) =>
-        p.id === editProductId
-          ? {
-              ...p,
-              name: editName,
-              description: editDescription,
-              image: editImagePreview,
-            }
-          : p
-      )
-    );
-    editDialogRef.current.close();
   };
 
   const isDeleteDisabled = selectedProducts.length === 0;
@@ -135,25 +84,13 @@ const Products = () => {
         </div>
       </div>
 
-      <AddProduct
-        handleSubmit={handleSubmit}
-        handleImageChange={handleImageChange}
-        productName={productName}
-        setProductName={setProductName}
-        productDescription={productDescription}
-        setProductDescription={setProductDescription}
-        imagePreview={imagePreview}
-      />
+      <AddProduct />
 
       <EditProduct
         editDialogRef={editDialogRef}
-        handleEditSubmit={handleEditSubmit}
-        handleEditImageChange={handleEditImageChange}
         editProductId={editProductId}
         editName={editName}
-        setEditName={setEditName}
         editDescription={editDescription}
-        setEditDescription={setEditDescription}
         editImagePreview={editImagePreview}
       />
 
