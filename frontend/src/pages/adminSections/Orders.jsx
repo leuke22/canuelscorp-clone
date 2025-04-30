@@ -42,7 +42,6 @@ const Orders = () => {
 
   const [selectedOrder, setSelectedOrder] = useState(null);
 
-  // Handle checkbox selection
   const handleSelectOrder = (orderId) => {
     if (selectedOrders.includes(orderId)) {
       setSelectedOrders(selectedOrders.filter((id) => id !== orderId));
@@ -51,7 +50,6 @@ const Orders = () => {
     }
   };
 
-  // Handle select all checkbox
   const handleSelectAll = () => {
     if (selectAll) {
       setSelectedOrders([]);
@@ -66,7 +64,6 @@ const Orders = () => {
       return;
     }
 
-    // Filter out the selected orders
     const remainingOrders = orders.filter(
       (order) => !selectedOrders.includes(order.id)
     );
@@ -90,12 +87,10 @@ const Orders = () => {
 
     console.log(`Deleting order: ${selectedOrderId}`);
 
-    // Remove the selected order from the orders array
     setOrders(orders.filter((order) => order.id !== selectedOrderId));
     setSelectedOrderId("");
   };
 
-  // Check if delete button should be disabled
   const isDeleteDisabled = selectedOrders.length === 0;
 
   return (
@@ -299,6 +294,23 @@ const Orders = () => {
                       <option>Cancelled</option>
                     </select>
                   </td>
+                  <td>
+                    <div
+                      className={`badge p-3 ${
+                        order.status === "Processing"
+                          ? "badge-outline badge-warning"
+                          : order.status === "Shipped"
+                          ? "badge-outline badge-info"
+                          : order.status === "Delivered"
+                          ? "badge-outline badge-success"
+                          : order.status === "Cancelled"
+                          ? "badge-outline badge-error"
+                          : "badge-outline"
+                      }`}
+                    >
+                      {order.status}
+                    </div>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -324,7 +336,21 @@ const Orders = () => {
               <div className="card-body">
                 <div className="flex justify-between items-center">
                   <h2 className="card-title">{order.id}</h2>
-                  <div className="badge badge-outline badge-secondary p-3">{order.status}</div>
+                  <div
+                    className={`badge p-3 ${
+                      order.status === "Processing"
+                        ? "badge-outline badge-warning"
+                        : order.status === "Shipped"
+                        ? "badge-outline badge-info"
+                        : order.status === "Delivered"
+                        ? "badge-outline badge-success"
+                        : order.status === "Cancelled"
+                        ? "badge-outline badge-error"
+                        : "badge-outline"
+                    }`}
+                  >
+                    {order.status}
+                  </div>
                 </div>
                 <div className="divide-y">
                   <div className="py-2">

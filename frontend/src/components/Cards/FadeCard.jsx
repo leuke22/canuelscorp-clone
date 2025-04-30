@@ -7,7 +7,6 @@ const FadeCard = ({ items }) => {
       variants={fadeIn("up", 0.2)}
       initial="hidden"
       whileInView="show"
-      key={items.id}
       className="h-[180px] md:h-48 lg:h-64 relative rounded-xl overflow-hidden group"
     >
       <img

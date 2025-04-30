@@ -22,7 +22,7 @@ const Services = () => {
 
       <div className="px-8 py-5 text-black grid gap-5 md:grid-cols-2 lg:gap-8 mb-10 lg:mb-15">
         {serviceDescription.map((items) => (
-          <FadeCard items={items} />
+          <FadeCard items={items} key={items.id} />
         ))}
       </div>
 

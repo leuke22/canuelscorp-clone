@@ -277,7 +277,7 @@ export const services = [
   {
     id: 1,
     Icons: TbTruckDelivery,
-    title: "Next day Delivery",
+    title: "3 days Delivery",
     description: "Free delivery with minimum of 10 bags",
   },
   {

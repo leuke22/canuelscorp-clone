@@ -12,7 +12,7 @@ import { Dashboard, Orders, Users, AdminProducts } from "./pages/adminSections";
 import ScrollTop from "../ScrollTop";
 
 const App = () => {
-  const role = "user";
+  const role = "admin";
   return (
     <main>
       <ScrollTop />
