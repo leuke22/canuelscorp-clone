@@ -12,20 +12,51 @@ import {
 } from "../assets/images";
 
 import {
-  prod1,
-  prod2,
-  prod3,
-  prod4,
-  prod5,
-  prod6,
-  prod7,
-  prod8,
-  prod9,
-  prod10,
-  prod11,
-  prod12,
-  prod13,
+  chicken1,
+  chicken2,
+  chicken3,
+  chicken4,
+  chicken5,
+  chicken6,
+  chicken7,
+  chicken8,
+  chicken9,
+  chicken10,
+  chicken11,
+  chicken12,
+  chicken13,
+  beef1,
+  beef2,
+  beef3,
+  beef4,
+  beef5,
+  beef6,
+  beef7,
+  beef8,
+  beef9,
+  beef10,
+  pork1,
+  pork2,
+  pork3,
+  pork4,
+  pork5,
+  pork6,
+  pork7,
+  pork8,
 } from "../assets/productImage";
+
+import {
+  topClient1,
+  topClient2,
+  topClient3,
+  topClient4,
+  topClient5,
+  topClient6,
+  topClient7,
+  topClient8,
+  topClient9,
+  topClient10,
+} from "../assets/canuelsImage";
 
 import { TbTruckDelivery } from "react-icons/tb";
 import { GiMeatCleaver, GiMeat, GiPathDistance } from "react-icons/gi";
@@ -113,27 +144,80 @@ export const deliverDescription = [
 export const reviews = [
   {
     id: 1,
-    name: "John Doe",
-    place: "Makati City",
-    images: dp1,
+    name: "MC Wilson",
+    place: "Quezon City",
+    images: topClient1,
     reviews:
       "Canuels Enterprises has been our go-to supplier for fresh chicken. Their quality is unmatched!",
   },
   {
     id: 2,
-    name: "Jane Smith",
-    place: "Quezon City",
-    images: dp2,
+    name: "Migs Litson",
+    place: "Taguig City",
+    images: topClient4,
     reviews:
       "The freshness and quality of Canuels' chicken have elevated our dishes to a whole new level.",
   },
   {
     id: 3,
-    name: "Michael Johnson",
-    place: "Pasig City",
-    images: dp3,
+    name: "Pa Chix",
+    place: "Caloocan City",
+    images: topClient5,
     reviews:
       "I love the convenience of Canuels' delivery service. The chicken always arrives fresh and on time.",
+  },
+];
+
+export const topClients = [
+  {
+    id: 1,
+    name: "McWilson",
+    images: topClient1,
+  },
+  {
+    id: 2,
+    name: "CafeFrance",
+    images: topClient2,
+  },
+  {
+    id: 3,
+    name: "Moment the Grocer",
+    images: topClient3,
+  },
+  {
+    id: 4,
+    name: "Migs Litsong Manok at Liempo",
+    images: topClient4,
+  },
+  {
+    id: 5,
+    name: "Pa Chix",
+    images: topClient5,
+  },
+  {
+    id: 6,
+    name: "Artemis",
+    images: topClient6,
+  },
+  {
+    id: 7,
+    name: "Family Fried Chicken",
+    images: topClient7,
+  },
+  {
+    id: 8,
+    name: "Fondre",
+    images: topClient8,
+  },
+  {
+    id: 9,
+    name: "Arancia",
+    images: topClient9,
+  },
+  {
+    id: 10,
+    name: "Gordo's Crispy Pata",
+    images: topClient10,
   },
 ];
 
@@ -188,71 +272,167 @@ export const socialMediaLinks = [
   },
 ];
 
-export const products = [
+export const chickenProducts = [
   {
     id: 1,
     name: "Cook’s Freshly Frozen Premium Whole Chicken",
-    image: prod1,
+    image: chicken1,
   },
   {
     id: 2,
     name: "Cook’s Freshly Frozen Premium Chicken Wings",
-    image: prod2,
+    image: chicken2,
   },
   {
     id: 3,
     name: "Cook’s Freshly Frozen Premium Chicken Breast",
-    image: prod3,
+    image: chicken3,
   },
   {
     id: 4,
     name: "Cook’s Freshly Frozen Premium Chicken Thigh",
-    image: prod4,
+    image: chicken4,
   },
   {
     id: 5,
     name: "Cook’s Premium Whole Chicken",
-    image: prod5,
+    image: chicken5,
   },
   {
     id: 6,
     name: "Chicken Gizzards",
-    image: prod6,
+    image: chicken6,
   },
   {
     id: 7,
     name: "Chicken Drumsticks",
-    image: prod7,
+    image: chicken7,
   },
   {
     id: 8,
     name: "Chicken Neck",
-    image: prod8,
+    image: chicken8,
   },
   {
     id: 9,
     name: "Chicken Wings",
-    image: prod9,
+    image: chicken9,
   },
   {
     id: 10,
     name: "Chicken Ballotine",
-    image: prod10,
+    image: chicken10,
   },
   {
     id: 11,
     name: "Chicken Thigh",
-    image: prod11,
+    image: chicken11,
   },
   {
     id: 12,
     name: "Chicken Breast",
-    image: prod12,
+    image: chicken12,
   },
   {
     id: 13,
     name: "Chicken Liver",
-    image: prod13,
+    image: chicken13,
+  },
+];
+
+export const beefProducts = [
+  {
+    id: 1,
+    name: "Beef Trimmings",
+    image: beef1,
+  },
+  {
+    id: 2,
+    name: "Beef Striploin",
+    image: beef2,
+  },
+  {
+    id: 3,
+    name: "Beef Short ribs bone-in",
+    image: beef3,
+  },
+  {
+    id: 4,
+    name: "Beef Shank/Shin bone in",
+    image: beef4,
+  },
+  {
+    id: 5,
+    name: "Beef Full Forequarter",
+    image: beef5,
+  },
+  {
+    id: 6,
+    name: "Beef Boneless Tenderloin",
+    image: beef6,
+  },
+  {
+    id: 7,
+    name: "Beef Boneless Rib-Eye",
+    image: beef7,
+  },
+  {
+    id: 8,
+    name: "Beef Boneless Short Ribs",
+    image: beef8,
+  },
+  {
+    id: 9,
+    name: "Beef Boneless Hanging Tender",
+    image: beef9,
+  },
+  {
+    id: 10,
+    name: "Beef Shortplate",
+    image: beef10,
+  },
+];
+
+export const porkProducts = [
+  {
+    id: 1,
+    name: "Pork Tenderloin",
+    image: pork1,
+  },
+  {
+    id: 2,
+    name: "Pork Shoulder BLSL",
+    image: pork2,
+  },
+  {
+    id: 3,
+    name: "Pork Loin BLSL",
+    image: pork3,
+  },
+  {
+    id: 4,
+    name: "Pork Loin Ribs",
+    image: pork4,
+  },
+  {
+    id: 5,
+    name: "Pork Belly BLSL",
+    image: pork5,
+  },
+  {
+    id: 6,
+    name: "Pork Belly BISO",
+    image: pork6,
+  },
+  {
+    id: 7,
+    name: "Pork  Back fat skinless",
+    image: pork7,
+  },
+  {
+    id: 8,
+    name: "Collar Butt BLSL",
+    image: pork8,
   },
 ];
 

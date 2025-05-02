@@ -72,3 +72,16 @@
 .header-products-paragraph {
   @apply text-[12px] md:text-[15px] lg:text-[20px] font-semibold;
 }
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 25s linear infinite;
+}

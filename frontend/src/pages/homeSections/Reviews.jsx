@@ -51,7 +51,7 @@ const Reviews = () => {
                 <img
                   src={content.images}
                   alt={content.name}
-                  className="h-48 w-full object-cover object-center md:h-full md:w-48"
+                  className="h-48 w-full object-cover md:object-fill object-center md:h-full md:w-48"
                 />
               </div>
               <div className="py-4 px-5">
