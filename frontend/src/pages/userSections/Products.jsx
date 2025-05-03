@@ -1,4 +1,4 @@
-import ProductCard from "../../components/Cards/ProductCard";
+import { ProductCard } from "../../components";
 import { beefProducts, chickenProducts, porkProducts } from "../../constants";
 import { GiShoppingCart } from "react-icons/gi";
 import { useState } from "react";

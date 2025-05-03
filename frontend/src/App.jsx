@@ -4,13 +4,12 @@ import Nav from "./Nav";
 import { Route, Routes } from "react-router-dom";
 
 import Footer from "./Footer";
-import { Home, Products, Services, About } from "./pages/userSections";
+import { Home, Products, Services, Contact, About } from "./pages/userSections";
 
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import { Dashboard, Orders, Users, AdminProducts } from "./pages/adminSections";
 import ScrollTop from "../ScrollTop";
-
 const App = () => {
   const role = "user";
   return (
@@ -23,6 +22,7 @@ const App = () => {
           <Route path="/" element={<Home to="/home" replace />} />
           <Route path="/products" element={<Products />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />

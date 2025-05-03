@@ -10,10 +10,6 @@ export const sec11 = buildSrc({ urlEndpoint, src: "/sec11.jpg" });
 export const sec12 = buildSrc({ urlEndpoint, src: "/sec12.jpg" });
 export const sec13 = buildSrc({ urlEndpoint, src: "/sec13.jpeg" });
 
-export const dp1 = buildSrc({ urlEndpoint, src: "/dp1.jpg" });
-export const dp2 = buildSrc({ urlEndpoint, src: "/dp2.jpg" });
-export const dp3 = buildSrc({ urlEndpoint, src: "/dp3.jpg" });
-
 export const beefBg = buildSrc({ urlEndpoint, src: "/beefBg.png" });
 export const chickenBg = buildSrc({ urlEndpoint, src: "/chickenBg.png" });
 export const porkBg = buildSrc({ urlEndpoint, src: "/porkBg.png" });

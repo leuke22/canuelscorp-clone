@@ -1,6 +1,6 @@
 import { team } from "../../assets/canuelsImage";
 import { sec13 } from "../../assets/images";
-import ChooseCard from "../../components/Cards/ChooseCard";
+import { ChooseCard } from "../../components";
 import { coreValues } from "../../constants";
 import { motion } from "framer-motion";
 import { fadeIn, slideIn } from "../../utils/motion";

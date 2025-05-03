@@ -40,7 +40,7 @@ const Footer = () => {
         <div className="flex flex-col flex-1/2 gap-4">
           <h1 className="shared-header-footer">Service</h1>
           <p>09171234567</p>
-          <p>chickentastic@example.com</p>
+          <p>canuelscorp@gmail.com</p>
         </div>
         <div className="flex flex-col flex-1/3 ml-5 gap-4">
           <h1 className="shared-header-footer">Legal</h1>

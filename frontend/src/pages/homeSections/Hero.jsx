@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { bgSec1 } from "../../assets/canuelsImage";
-import { ShopButton, InquireCard } from "../../components";
 import { motion } from "framer-motion";
 import { fadeIn, textVariant } from "../../utils/motion";
+import { InquireCard, ShopButton } from "../../components";
 
 const Hero = () => {
   return (

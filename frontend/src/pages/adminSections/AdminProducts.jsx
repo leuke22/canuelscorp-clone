@@ -1,9 +1,12 @@
-import { FaEdit } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
 import { useState, useRef } from "react";
-import AddProduct from "../../components/Modal/AddProduct";
-import EditProduct from "../../components/Modal/EditProduct";
+import {
+  AddProduct,
+  EditProduct,
+  AdminProductCard,
+  AdminProductsTable,
+} from "../../components";
 
 const Products = () => {
   const [editProductId, setEditProductId] = useState(null);
@@ -63,8 +66,8 @@ const Products = () => {
   const isDeleteDisabled = selectedProducts.length === 0;
 
   return (
-    <section className="flex flex-col h-screen w-full bg-gray-100 p-10">
-      <div className="flex justify-between py-5">
+    <section className="flex flex-col md:h-screen w-full bg-gray-100 p-4 md:p-10">
+      <div className="flex flex-col md:flex-row items-center justify-between py-5 gap-5">
         <h1 className="text-3xl font-bold">Products</h1>
         <div className="flex items-center space-x-4">
           <button
@@ -129,104 +132,24 @@ const Products = () => {
           </div>
         </div>
         <div className="overflow-x-auto flex-1 pl-10 pr-5 hidden md:block">
-          <table className="table">
-            <thead>
-              <tr>
-                <th>
-                  <input
-                    type="checkbox"
-                    className="checkbox checkbox-info"
-                    checked={selectAll}
-                    onChange={handleSelectAll}
-                  />
-                </th>
-                <th>ID</th>
-                <th>Product</th>
-                <th>Description</th>
-                <th>Edit</th>
-              </tr>
-            </thead>
-            <tbody>
-              {products.map((product) => (
-                <tr
-                  key={product.id}
-                  className={
-                    selectedProducts.includes(product.id) ? "bg-base-200" : ""
-                  }
-                >
-                  <th>
-                    <input
-                      type="checkbox"
-                      className="checkbox checkbox-info"
-                      checked={selectedProducts.includes(product.id)}
-                      onChange={() => handleSelectProduct(product.id)}
-                    />
-                  </th>
-                  <td>{product.id}</td>
-                  <td className="flex items-center gap-3">
-                    <div className="avatar">
-                      <div className="mask mask-squircle w-12 h-12">
-                        <img src={product.image} alt="Product" />
-                      </div>
-                    </div>
-                    <span className="font-semibold text-xl">
-                      {product.name}
-                    </span>
-                  </td>
-                  <td className="text-gray-500">{product.description}</td>
-                  <td>
-                    <button
-                      className="btn btn-square btn-soft btn-secondary"
-                      onClick={() => handleEditClick(product)}
-                    >
-                      <FaEdit size={25} />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <AdminProductsTable
+            products={products}
+            selectAll={selectAll}
+            handleSelectAll={handleSelectAll}
+            selectedProducts={selectedProducts}
+            handleSelectProduct={handleSelectProduct}
+            handleEditClick={handleEditClick}
+          />
         </div>
-        <div className="md:hidden space-y-4 px-4 py-2 overflow-y-auto">
+        <div className="md:hidden space-y-4 px-4 py-2 overflow-y-auto h-auto">
           {products.map((product) => (
-            <div
+            <AdminProductCard
+              product={product}
               key={product.id}
-              className={`card card-side bg-base-100 shadow-sm relative ${
-                selectedProducts.includes(product.id)
-                  ? "border-2 border-info"
-                  : ""
-              }`}
-            >
-              <div className="flex flex-col gap-2">
-                <div className="p-4 pb-0">
-                  <input
-                    type="checkbox"
-                    className="checkbox checkbox-info"
-                    checked={selectedProducts.includes(product.id)}
-                    onChange={() => handleSelectProduct(product.id)}
-                  />
-                </div>
-                <figure className="pl-4">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-24 h-24 object-cover rounded-lg"
-                  />
-                </figure>
-              </div>
-              <div className="card-body">
-                <h2 className="card-title">{product.name}</h2>
-                <p>{product.description}</p>
-                <div className="card-actions justify-end pb-2">
-                  <button
-                    className="btn btn-secondary"
-                    onClick={() => handleEditClick(product)}
-                  >
-                    <FaEdit size={18} /> Edit
-                  </button>
-                </div>
-              </div>
-            </div>
+              selectedProducts={selectedProducts}
+              handleSelectProduct={handleSelectProduct}
+              handleEditClick={handleEditClick}
+            />
           ))}
           {products.length === 0 && (
             <div className="text-center py-8 text-gray-500">

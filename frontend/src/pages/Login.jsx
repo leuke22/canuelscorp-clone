@@ -1,9 +1,7 @@
-import Form from "../components/Form";
+import { Form } from "../components";
 
 const Login = () => {
-  return (
-    <Form signupPage={false} loginPage={true}/>
-  );
+  return <Form signupPage={false} loginPage={true} />;
 };
 
 export default Login;

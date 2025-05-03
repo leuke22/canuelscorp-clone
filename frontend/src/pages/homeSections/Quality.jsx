@@ -2,7 +2,7 @@ import { deliverDescription } from "../../constants";
 
 import { motion } from "framer-motion";
 import { fadeIn } from "../../utils/motion";
-import FadeCard from "../../components/Cards/FadeCard";
+import { FadeCard } from "../../components";
 
 const Quality = () => {
   return (

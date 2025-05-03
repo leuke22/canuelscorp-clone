@@ -1,9 +1,6 @@
 import {
   sec3,
   sec4,
-  dp1,
-  dp2,
-  dp3,
   sec11,
   sec12,
   beefBg,
@@ -62,21 +59,28 @@ import { TbTruckDelivery } from "react-icons/tb";
 import { GiMeatCleaver, GiMeat, GiPathDistance } from "react-icons/gi";
 import { BiSolidDiscount } from "react-icons/bi";
 import { RiSecurePaymentLine } from "react-icons/ri";
-import { FaFacebook, FaInstagram, FaHandHoldingHeart } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaInstagram,
+  FaHandHoldingHeart,
+  FaPhoneAlt,
+} from "react-icons/fa";
 import { AiFillTikTok } from "react-icons/ai";
 import {
   FaSquareXTwitter,
   FaGlobe,
   FaRegHandshake,
   FaPeopleRoof,
+  FaMapLocationDot,
 } from "react-icons/fa6";
 import { LiaHandsHelpingSolid } from "react-icons/lia";
-import { MdWorkspacePremium } from "react-icons/md";
+import { MdWorkspacePremium, MdEmail } from "react-icons/md";
 
 export const navLinks = [
   { href: "/", label: "Home" },
   { href: "/products", label: "Products" },
   { href: "/services", label: "Services" },
+  { href: "/contact", label: "Contact" },
   { href: "/about", label: "About Us" },
 ];
 
@@ -490,6 +494,51 @@ export const services = [
   },
 ];
 
+export const contactInfo = [
+  {
+    id: 1,
+    Icons: FaMapLocationDot,
+    description: "1234 st.dominic st. Quezon City",
+  },
+  {
+    id: 2,
+    Icons: MdEmail,
+    description: "canuelscorp@gmail.com",
+  },
+  {
+    id: 3,
+    Icons: FaPhoneAlt,
+    description: "+639123456789",
+  },
+];
+
+export const deliveryLocation = [
+  {
+    id: 1,
+    location: "Quezon City",
+  },
+  {
+    id: 2,
+    location: "Manila",
+  },
+  {
+    id: 3,
+    location: "Caloocan",
+  },
+  {
+    id: 4,
+    location: "Makati",
+  },
+  {
+    id: 5,
+    location: "Pasig",
+  },
+  {
+    id: 6,
+    location: "Marikina",
+  },
+];
+
 export const coreValues = [
   {
     id: 1,
@@ -532,5 +581,26 @@ export const coreValues = [
     title: "Journey",
     description:
       "Honesty and Integrity are fundamental to our operations. We uphold honesty, highest ethical standards, transparently communicating with integrity, and accountability in all our interactions, decisions, and commitments.",
+  },
+];
+
+export const dashboard = [
+  {
+    id: 1,
+    imageUrl: "https://img.icons8.com/bubbles/100/purchase-order.png",
+    title: "Total Orders",
+    name: "Orders",
+  },
+  {
+    id: 2,
+    imageUrl: "https://img.icons8.com/bubbles/100/user.png",
+    title: "Total Customers",
+    name: "Customers",
+  },
+  {
+    id: 3,
+    imageUrl: "https://img.icons8.com/bubbles/100/apple-stocks.png",
+    title: "Total Products",
+    name: "Products",
   },
 ];
