@@ -498,7 +498,7 @@ export const contactInfo = [
   {
     id: 1,
     Icons: FaMapLocationDot,
-    description: "1234 st.dominic st. Quezon City",
+    description: "21 Engineer St, Novaliches, Quezon City, 1116 Metro Manila",
   },
   {
     id: 2,

@@ -10,8 +10,12 @@ import { fadeIn } from "../utils/motion";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
+import { useNavigate } from "react-router-dom";
+
 const Form = ({ signupPage = false, loginPage = false }) => {
   const [show, setShow] = useState(false);
+
+  const navigate = useNavigate();
 
   const initialData = signupPage
     ? { email: "", username: "", password: "" }
@@ -26,6 +30,7 @@ const Form = ({ signupPage = false, loginPage = false }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
+    navigate("/email-verification");
   };
 
   const handleInputChange = (e) => {
@@ -52,7 +57,7 @@ const Form = ({ signupPage = false, loginPage = false }) => {
         variants={fadeIn("down", 0.4)}
         initial="hidden"
         whileInView="show"
-        className="relative z-10 w-full max-w-md flex flex-col gap-5 items-center"
+        className="relative z-10 w-full max-w-md flex flex-col gap-5 items-center p-5"
       >
         <h1 className="text-2xl font-semibold text-white ">
           Welcome to Canuels Corporation

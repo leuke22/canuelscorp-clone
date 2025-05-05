@@ -7,7 +7,7 @@ import { fadeIn, slideIn } from "../../utils/motion";
 
 const About = () => {
   return (
-    <section className="p-10 overflow-hidden">
+    <section className="p-5 lg:p-10 overflow-hidden">
       <motion.section
         variants={fadeIn("up", 0.5)}
         initial="hidden"

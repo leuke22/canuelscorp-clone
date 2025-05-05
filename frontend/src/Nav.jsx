@@ -6,6 +6,7 @@ import { navLinks, adminLinks } from "./constants";
 import { HiMenu, HiX } from "react-icons/hi";
 import { motion } from "framer-motion";
 import { fadeIn } from "./utils/motion";
+import { set } from "mongoose";
 
 const Nav = ({ role }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,6 +16,8 @@ const Nav = ({ role }) => {
   useEffect(() => {
     setActiveLink(location.pathname);
   }, [location]);
+
+  const [isUserAuth, setIsUserAuth] = useState(true);
 
   return (
     <motion.nav
@@ -69,14 +72,46 @@ const Nav = ({ role }) => {
               ))}
         </ul>
 
-        <div className="hidden lg:flex items-center justify-center gap-5">
-          <Link to="/login" className="btn btn-outline btn-primary w-32">
-            Login
-          </Link>
+        <div className="hidden lg:flex items-center">
+          {isUserAuth ? (
+            <div className="dropdown dropdown-end">
+              <div tabIndex={0}>
+                <div className="avatar">
+                  <div className="w-15 rounded-full">
+                    <img src="https://img.daisyui.com/images/profile/demo/yellingcat@192.webp" />
+                  </div>
+                </div>
+              </div>
+              <ul
+                tabIndex={0}
+                className="menu dropdown-content bg-base-200 rounded-box z-1 mt-4 w-32 p-2 shadow-sm"
+              >
+                <li>
+                  <Link to="/profile">Profile</Link>
+                </li>
+                <li>
+                  <Link
+                    to={"/login"}
+                    onClick={() => {
+                      setIsUserAuth(false);
+                    }}
+                  >
+                    Logout
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          ) : (
+            <div className="flex items-center justify-center gap-5">
+              <Link to="/login" className="btn btn-outline btn-primary w-32">
+                Login
+              </Link>
 
-          <Link to="/signup" className="btn btn-secondary w-32">
-            Signup
-          </Link>
+              <Link to="/signup" className="btn btn-secondary w-32">
+                Signup
+              </Link>
+            </div>
+          )}
         </div>
 
         <section className="flex flex-row gap-5 items-center mr-10 sm:gap-14">
@@ -113,6 +148,21 @@ const Nav = ({ role }) => {
               {item.label}
             </Link>
           ))}
+          <Link
+            to={"/login"}
+            className="btn btn-primary w-32"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Login
+          </Link>
+          <div className="divider">or</div>
+          <Link
+            to={"/signup"}
+            className="btn btn-secondary w-32"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Signup
+          </Link>
         </div>
       </div>
     </motion.nav>

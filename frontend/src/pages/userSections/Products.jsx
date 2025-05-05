@@ -7,7 +7,7 @@ const Products = () => {
   const [category, setCategory] = useState("Chicken");
 
   return (
-    <section className="pt-5 text-black">
+    <section className="pt-5 text-black ">
       <div className="text-center mb-5">
         <h1 className="text-2xl font-bold">Fresh and Premium Chicken</h1>
         <p className="text-gray-600">

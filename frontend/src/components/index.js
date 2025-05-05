@@ -12,6 +12,7 @@ import FadeCard from "./Cards/FadeCard";
 import InquireCard from "./Cards/InquireCard";
 import OrderCard from "./Cards/OrderCard";
 import ProductCard from "./Cards/ProductCard";
+import UserOrdersCard from "./Cards/UserOrdersCard";
 
 import AddProduct from "./Modal/AddProduct";
 import CheckOrder from "./Modal/CheckOrder";
@@ -35,6 +36,7 @@ export {
   InquireCard,
   OrderCard,
   ProductCard,
+  UserOrdersCard,
   AddProduct,
   CheckOrder,
   EditProduct,

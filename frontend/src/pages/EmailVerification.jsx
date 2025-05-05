@@ -1,0 +1,89 @@
+import { useEffect, useRef, useState } from "react";
+import { bgSec2 } from "../assets/canuelsImage";
+
+const EmailVerification = () => {
+  const [code, setCode] = useState(["", "", "", "", "", ""]);
+  const inputRefs = useRef([]);
+
+  const handleChange = (index, value) => {
+    const newCode = [...code];
+
+    if (value.length > 1) {
+      const pastedCode = value.slice(0, 6).split("");
+      for (let i = 0; i < 6; i++) {
+        newCode[i] = pastedCode[i] || "";
+      }
+      setCode(newCode);
+
+      const lastFilledIndex = newCode.findLastIndex((digit) => digit !== "");
+      const focusIndex = lastFilledIndex < 5 ? lastFilledIndex + 1 : 5;
+      inputRefs.current[focusIndex].focus();
+    } else {
+      newCode[index] = value;
+      setCode(newCode);
+
+      if (value && index < 5) {
+        inputRefs.current[index + 1].focus();
+      }
+    }
+  };
+
+  const handleKeyDown = (index, e) => {
+    if (e.key === "Backspace" && !code[index] && index > 0) {
+      inputRefs.current[index - 1].focus();
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  };
+
+  useEffect(() => {
+    if (code.every((digit) => digit !== "")) {
+      handleSubmit(new Event("submit"));
+    }
+  }, [code]);
+
+  return (
+    <section className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden">
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: `url(${bgSec2})` }}
+      />
+      <div className="absolute inset-0 bg-black opacity-50" />
+
+      <div className="relative z-10 w-full max-w-md flex flex-col gap-5 items-center p-5">
+        <div className="relative z-10 w-full max-w-md p-8 bg-white shadow-md rounded-lg">
+          <h2 className="text-3xl font-bold mb-6 text-center bg-black text-transparent bg-clip-text">
+            Verify Your Email
+          </h2>
+          <p className="text-center text-gray-500 mb-6">
+            Enter the 6-digit code sent to your email address. If you did not
+            receive the code, check your spam folder.
+          </p>
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="flex justify-between">
+              {code.map((digit, index) => (
+                <input
+                  key={index}
+                  ref={(el) => (inputRefs.current[index] = el)}
+                  type="text"
+                  maxLength="6"
+                  value={digit}
+                  onChange={(e) => handleChange(index, e.target.value)}
+                  onKeyDown={(e) => handleKeyDown(index, e)}
+                  className="w-12 h-12 text-center text-2xl font-bold bg-white text-black 
+                  border-2 border-gray-500 rounded-lg focus:border-green-500 focus:outline-none"
+                />
+              ))}
+            </div>
+            <button className="w-full btn btn-secondary">Verify</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default EmailVerification;
