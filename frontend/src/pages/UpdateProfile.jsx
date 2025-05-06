@@ -1,6 +1,13 @@
 import React from "react";
-import { UserOrdersCard } from "../components";
+import { CheckOrder, UserOrdersCard } from "../components";
 import { useState } from "react";
+import {
+  MdOutlineEmail,
+  MdOutlineLocationOn,
+  MdOutlinePhone,
+  MdOutlineDateRange,
+} from "react-icons/md";
+import { ItemInfo, UpdateUserModal } from "../components";
 
 const UpdateProfile = () => {
   const [orders, setOrders] = useState([
@@ -29,25 +36,82 @@ const UpdateProfile = () => {
       ],
     },
   ]);
+
+  const user = {
+    fullname: "John Doe",
+    username: "johndoe123",
+    email: "johndoe123@gmail.com",
+    address: {
+      street: "1235 Bulacan St.",
+      city: "San Juan",
+      province: "Metro Manila",
+      postalCode: "1600",
+    },
+    phone: "09223456789",
+    dateJoining: "2025-01-01",
+  };
+
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleUpdateUser = (updatedData) => {
+    console.log("Updated user data:", updatedData);
+  };
+
+  const formatAddress = (address) => {
+    return `${address.street}, ${address.city}, ${address.province}, ${address.postalCode}`;
+  };
+
   return (
-    <section className="py-10 px-50">
+    <section className="lg:py-10 lg:px-50 px-10 py-5">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
         <div>
-          <div className="avatar">
+          <div className="avatar mb-5">
             <div className="w-50 rounded-full">
               <img src="https://img.daisyui.com/images/profile/demo/yellingcat@192.webp" />
             </div>
           </div>
-          <h1>John Doe</h1>
-          <p>johndoe123</p>
-          <button className="w-full btn btn-secondary">Edit Profile</button>
+          <h1 className="text-3xl font-bold">{user.fullname}</h1>
+          <p className="text-gray-600">{user.username}</p>
+          <button
+            className="w-full btn btn-secondary my-5"
+            onClick={() => setIsModalOpen(true)}
+          >
+            Edit Profile
+          </button>
+          <div className="flex flex-col gap-2">
+            <ItemInfo icon={MdOutlineEmail} text={user.email} />
+            <ItemInfo icon={MdOutlinePhone} text={user.phone} />
+            <ItemInfo
+              icon={MdOutlineLocationOn}
+              text={formatAddress(user.address)}
+            />
+            <ItemInfo icon={MdOutlineDateRange} text={user.dateJoining} />
+          </div>
         </div>
-        <div className="col-span-2">
+        <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-10">
+          <h1 className="text-3xl font-bold md:col-span-2">Your Orders</h1>
           {orders.map((order) => (
-            <UserOrdersCard order={order} key={order.id} />
+            <UserOrdersCard
+              order={order}
+              key={order.id}
+              setSelectedOrder={setSelectedOrder}
+            />
           ))}
         </div>
+
+        <CheckOrder
+          selectedOrder={selectedOrder}
+          setSelectedOrder={setSelectedOrder}
+        />
       </div>
+
+      <UpdateUserModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        user={user}
+        onUpdateUser={handleUpdateUser}
+      />
     </section>
   );
 };

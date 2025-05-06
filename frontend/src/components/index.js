@@ -1,6 +1,7 @@
 import Form from "./Form";
 import OrderTableHeader from "./OrderTableHeader";
 import TextField from "./TextField";
+import ItemInfo from "./ItemInfo";
 
 import ShopButton from "./Buttons/ShopButton";
 import SubmitButton from "./Buttons/SubmitButton";
@@ -18,6 +19,7 @@ import AddProduct from "./Modal/AddProduct";
 import CheckOrder from "./Modal/CheckOrder";
 import EditProduct from "./Modal/EditProduct";
 import OrderHistory from "./Modal/OrderHistory";
+import UpdateUserModal from "./Modal/UpdateUserModal";
 
 import AdminProductsTable from "./Tables/AdminProductsTable";
 import DashboardTable from "./Tables/DashboardTable";
@@ -27,6 +29,7 @@ export {
   Form,
   OrderTableHeader,
   TextField,
+  ItemInfo,
   ShopButton,
   SubmitButton,
   AdminProductCard,
@@ -41,6 +44,7 @@ export {
   CheckOrder,
   EditProduct,
   OrderHistory,
+  UpdateUserModal,
   AdminProductsTable,
   DashboardTable,
   OrdersTable,

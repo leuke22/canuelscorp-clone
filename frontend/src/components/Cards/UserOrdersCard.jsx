@@ -1,7 +1,4 @@
-import { useState } from "react";
-
-const UserOrdersCard = ({ order }) => {
-  const [selectedOrder, setSelectedOrder] = useState(null);
+const UserOrdersCard = ({ order, setSelectedOrder }) => {
   return (
     <div className="card bg-base-100 shadow-sm ">
       <div className="card-body">
@@ -23,15 +20,9 @@ const UserOrdersCard = ({ order }) => {
             {order.status}
           </div>
         </div>
-        <div className="divide-y">
-          <div className="py-2">
-            <p className="text-sm font-medium">Customer</p>
-            <p className="text-lg">{order.name}</p>
-          </div>
-          <div className="py-2">
-            <p className="text-sm font-medium">Date</p>
-            <p>{order.date}</p>
-          </div>
+        <div className="py-2">
+          <p className="text-sm font-medium">Date</p>
+          <p>{order.date}</p>
         </div>
         <div className="card-actions justify-between">
           <button

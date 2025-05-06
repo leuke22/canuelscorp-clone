@@ -76,6 +76,7 @@ import {
 import { LiaHandsHelpingSolid } from "react-icons/lia";
 import { MdWorkspacePremium, MdEmail } from "react-icons/md";
 
+
 export const navLinks = [
   { href: "/", label: "Home" },
   { href: "/products", label: "Products" },

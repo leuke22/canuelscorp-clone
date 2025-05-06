@@ -6,7 +6,6 @@ import { navLinks, adminLinks } from "./constants";
 import { HiMenu, HiX } from "react-icons/hi";
 import { motion } from "framer-motion";
 import { fadeIn } from "./utils/motion";
-import { set } from "mongoose";
 
 const Nav = ({ role }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
