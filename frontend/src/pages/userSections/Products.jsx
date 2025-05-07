@@ -5,6 +5,7 @@ import { useState } from "react";
 
 const Products = () => {
   const [category, setCategory] = useState("Chicken");
+  const [isUserAuth, setIsUserAuth] = useState(false);
 
   return (
     <section className="pt-5 text-black ">
@@ -20,23 +21,26 @@ const Products = () => {
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="select w-full md:flex-1"
+            className="select md:w-50"
           >
             <option disabled={true}>Select one..</option>
             <option value={"Chicken"}>Chicken</option>
             <option value={"Beef"}>Beef</option>
             <option value={"Pork"}>Pork</option>
           </select>
-          <button className="btn btn-secondary w-full md:flex-1">
-            <GiShoppingCart size={30} />
-            Check your Order
-          </button>
+          {isUserAuth && (
+            <button className="btn btn-secondary w-full md:flex-1">
+              <GiShoppingCart size={30} />
+              Check your Order
+            </button>
+          )}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 lg:gap-10 place-items-center">
           {category === "Chicken"
             ? chickenProducts.map((chickenProduct) => (
                 <ProductCard
                   key={chickenProduct.id}
+                  isUserAuth={isUserAuth}
                   productId={chickenProduct.id}
                   productName={chickenProduct.name}
                   productImage={chickenProduct.image}
@@ -46,6 +50,7 @@ const Products = () => {
             ? beefProducts.map((beefProduct) => (
                 <ProductCard
                   key={beefProduct.id}
+                  isUserAuth={isUserAuth}
                   productId={beefProduct.id}
                   productName={beefProduct.name}
                   productImage={beefProduct.image}
@@ -55,6 +60,7 @@ const Products = () => {
             ? porkProducts.map((porkProduct) => (
                 <ProductCard
                   key={porkProduct.id}
+                  isUserAuth={isUserAuth}
                   productId={porkProduct.id}
                   productName={porkProduct.name}
                   productImage={porkProduct.image}
