@@ -1,4 +1,3 @@
-import Form from "./Form";
 import OrderTableHeader from "./OrderTableHeader";
 import TextField from "./TextField";
 import ItemInfo from "./ItemInfo";
@@ -15,6 +14,14 @@ import OrderCard from "./Cards/OrderCard";
 import ProductCard from "./Cards/ProductCard";
 import UserOrdersCard from "./Cards/UserOrdersCard";
 
+import Fullname from "./InputField/Fullname";
+import Email from "./InputField/Email";
+import Username from "./InputField/Username";
+import Password from "./InputField/Password";
+import ConfirmPassword from "./InputField/ConfirmPassword";
+import PhoneNumber from "./InputField/PhoneNumber";
+import TermsConditions from "./InputField/TermsConditions";
+
 import AddProduct from "./Modal/AddProduct";
 import CheckOrder from "./Modal/CheckOrder";
 import EditProduct from "./Modal/EditProduct";
@@ -27,7 +34,6 @@ import DashboardTable from "./Tables/DashboardTable";
 import OrdersTable from "./Tables/OrdersTable";
 
 export {
-  Form,
   OrderTableHeader,
   TextField,
   ItemInfo,
@@ -41,6 +47,13 @@ export {
   OrderCard,
   ProductCard,
   UserOrdersCard,
+  Fullname,
+  Email,
+  Username,
+  Password,
+  ConfirmPassword,
+  PhoneNumber,
+  TermsConditions,
   AddProduct,
   CheckOrder,
   EditProduct,

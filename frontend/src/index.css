@@ -85,3 +85,12 @@
 .animate-marquee {
   animation: marquee 25s linear infinite;
 }
+
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none !important;
+}
+
+input[type="password"]::-webkit-textfield-decoration-button {
+  display: none !important;
+}

@@ -5,7 +5,7 @@ import { useState } from "react";
 
 const Products = () => {
   const [category, setCategory] = useState("Chicken");
-  const [isUserAuth, setIsUserAuth] = useState(false);
+  const [isUserAuth, setIsUserAuth] = useState(true);
 
   return (
     <section className="pt-5 text-black ">

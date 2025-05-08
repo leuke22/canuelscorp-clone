@@ -16,7 +16,7 @@ const Nav = ({ role }) => {
     setActiveLink(location.pathname);
   }, [location]);
 
-  const [isUserAuth, setIsUserAuth] = useState(true);
+  const [isUserAuth, setIsUserAuth] = useState(false);
 
   return (
     <motion.nav
