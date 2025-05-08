@@ -15,6 +15,7 @@ import {
   Username,
   PhoneNumber,
 } from "../components";
+import { useUserAuth } from "../fetch/useUserAuth";
 
 const Signup = () => {
   const [signupFormData, setSignupFormData] = useState({
@@ -26,23 +27,27 @@ const Signup = () => {
     phone: "",
   });
 
+  const { signup, isLoading } = useUserAuth();
+
   const [signupPassShow, setSignupPassShow] = useState(false);
   const [signupConfirmPassShow, setSignupConfirmPassShow] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(signupFormData);
-    navigate("/email-verification");
+    try {
+      await signup(signupFormData);
+      navigate("/email-verification");
+    } catch (error) {
+      console.log("Did not navigate because signup failed:", error);
+    }
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setSignupFormData((prev) => ({ ...prev, [name]: value }));
   };
-
-  const isError = false;
 
   return (
     <motion.section
@@ -108,9 +113,9 @@ const Signup = () => {
             <TermsConditions />
 
             <button type="submit" className="btn btn-primary mt-4">
-              Create an Account
+              {isLoading ? "Loading..." : "Create an Account"}
+              {isLoading && <span className="loading loading-spinner"></span>}
             </button>
-            {isError && <p className="text-red-500">Something went wrong</p>}
 
             <p className="text-[13px] text-center mt-4">
               Already have an account?{" "}

@@ -6,6 +6,7 @@ import { fadeIn } from "../utils/motion";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Email, Password } from "../components";
+import { useUserAuth } from "../fetch/useUserAuth";
 
 const Login = () => {
   const [loginFormData, setLoginFormData] = useState({
@@ -15,17 +16,17 @@ const Login = () => {
 
   const [loginPassShow, setLoginPassShow] = useState(false);
 
+  const { login, isLoading } = useUserAuth();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(loginFormData);
+    login(loginFormData);
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setLoginFormData((prev) => ({ ...prev, [name]: value }));
   };
-
-  const isError = false;
 
   return (
     <motion.section
@@ -65,10 +66,14 @@ const Login = () => {
               show={loginPassShow}
               setShow={setLoginPassShow}
             />
-            <button type="submit" className="btn btn-primary mt-4">
-              Login
+            <button
+              type="submit"
+              className="btn btn-primary mt-4"
+              disabled={isLoading}
+            >
+              {isLoading ? "Loading..." : "Login your Account"}
+              {isLoading && <span className="loading loading-spinner"></span>}
             </button>
-            {isError && <p className="text-red-500">Something went wrong</p>}
 
             <p className="text-[13px] text-center mt-4">
               Don't have an account?

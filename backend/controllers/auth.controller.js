@@ -97,15 +97,15 @@ export const signup = async (req, res) => {
       message: "Verification OTP has been sent to your email",
     });
   } catch (error) {
-    console.log("Error in signup controller", error.message);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error("Error in signup controller", error.message);
+    res.status(500).json({ message: error.message });
   }
 };
 
 export const login = async (req, res) => {
   try {
-    const { username, password } = req.body;
-    const user = await User.findOne({ username });
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
 
     if (user && (await user.comparePassword(password))) {
       const { accessToken, refreshToken } = generateTokens(user._id);
@@ -205,7 +205,7 @@ export const sendVerificationOtp = async (req, res) => {
   }
 };
 
-export const verifyAccount = async (req, res) => {
+export const verifyOtp = async (req, res) => {
   try {
     const { email, otp } = req.body;
 

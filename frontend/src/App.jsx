@@ -1,14 +1,16 @@
 import "./index.css";
 import Nav from "./Nav";
+import Footer from "./Footer";
 
 import { Route, Routes } from "react-router-dom";
 
-import Footer from "./Footer";
 import { Home, Products, Services, Contact, About } from "./pages/userSections";
 
 import { Login, Signup, EmailVerification, UpdateProfile } from "./pages";
 import { Dashboard, Orders, Users, AdminProducts } from "./pages/adminSections";
 import ScrollTop from "../ScrollTop";
+
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const role = "user";
@@ -36,6 +38,7 @@ const App = () => {
         </Routes>
       </section>
       <Footer />
+      <Toaster />
     </main>
   );
 };
