@@ -76,7 +76,6 @@ import {
 import { LiaHandsHelpingSolid } from "react-icons/lia";
 import { MdWorkspacePremium, MdEmail } from "react-icons/md";
 
-
 export const navLinks = [
   { href: "/", label: "Home" },
   { href: "/products", label: "Products" },
@@ -86,6 +85,7 @@ export const navLinks = [
 ];
 
 export const adminLinks = [
+  { href: "/", label: "Home" },
   { href: "/admin", label: "Dashboard" },
   { href: "/admin/products", label: "Products" },
   { href: "/admin/orders", label: "Orders" },

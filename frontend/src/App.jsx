@@ -2,7 +2,7 @@ import "./index.css";
 import Nav from "./Nav";
 import Footer from "./Footer";
 
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import { Home, Products, Services, Contact, About } from "./pages/userSections";
 
@@ -10,18 +10,44 @@ import { Login, Signup, EmailVerification, UpdateProfile } from "./pages";
 import { Dashboard, Orders, Users, AdminProducts } from "./pages/adminSections";
 import ScrollTop from "../ScrollTop";
 
+import { ProtectedRoute, RedirectAuthRoute } from "./pages/protectedRoutes";
+
 import { Toaster } from "react-hot-toast";
+import { useUserAuth } from "./fetch/useUserAuth";
+import { useEffect } from "react";
 
 const App = () => {
-  const role = "user";
+  const { user, getProfile, checkingAuth } = useUserAuth();
+
+  useEffect(() => {
+    getProfile();
+  }, [getProfile]);
+
+  const isUserAdmin = user?.role === "admin" || user?.role === "supervisor";
+
+  if (checkingAuth) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <span className="loading loading-spinner loading-xl"></span>
+      </div>
+    );
+  }
+
   return (
     <main>
       <ScrollTop />
-      <Nav role={role} />
+      <Nav />
       <div className="bg-white h-[100px] w-full"></div>
       <section>
         <Routes>
-          <Route path="/" element={<Home to="/home" replace />} />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Home to="/home" replace />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/products" element={<Products />} />
           <Route path="/services" element={<Services />} />
           <Route path="/contact" element={<Contact />} />

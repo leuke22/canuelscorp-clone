@@ -7,10 +7,48 @@ import { useNavigate } from "react-router-dom";
 const EmailVerification = () => {
   const [code, setCode] = useState(["", "", "", "", "", ""]);
   const inputRefs = useRef([]);
-
-  const { isLoading, userEmail, verifyOtp, isUserAuth } = useUserAuth();
-
   const navigate = useNavigate();
+
+  const {
+    user,
+    isLoading,
+    userEmail,
+    verifyOtp,
+    isUserAuth,
+    sendVerificationOtp,
+  } = useUserAuth();
+
+  const RESEND_INTERVAL = 60;
+  const [resendTimer, setResendTimer] = useState(0);
+
+  console.log(user);
+
+  useEffect(() => {
+    let timer;
+    if (resendTimer > 0) {
+      timer = setInterval(() => {
+        setResendTimer((prev) => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [resendTimer]);
+
+  useEffect(() => {
+    if (code.every((digit) => digit !== "")) {
+      handleSubmit(new Event("submit"));
+    }
+  }, [code]);
+
+  const handleResend = async () => {
+    if (resendTimer > 0) return;
+    try {
+      await sendVerificationOtp({ email: user.email });
+      toast.success("OTP code resent to your email.");
+      setResendTimer(RESEND_INTERVAL);
+    } catch (error) {
+      toast.error("Failed to resend OTP. Please try again.");
+    }
+  };
 
   const handleChange = (index, value) => {
     const newCode = [...code];
@@ -44,7 +82,7 @@ const EmailVerification = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await verifyOtp({
-      email: userEmail,
+      email: userEmail || user.email,
       otp: code.join(""),
     });
     if (isUserAuth) {
@@ -52,12 +90,6 @@ const EmailVerification = () => {
       toast.success("Verification successful!");
     }
   };
-
-  useEffect(() => {
-    if (code.every((digit) => digit !== "")) {
-      handleSubmit(new Event("submit"));
-    }
-  }, [code]);
 
   return (
     <section className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden">
@@ -98,6 +130,20 @@ const EmailVerification = () => {
                   />
                 ))}
               </div>
+
+              <p className="text-center text-gray-500">
+                Didn't receive the code?{" "}
+                <span
+                  onClick={handleResend}
+                  className={`underline cursor-pointer ${
+                    resendTimer > 0
+                      ? "text-gray-400 cursor-not-allowed"
+                      : "text-blue-500"
+                  }`}
+                >
+                  {resendTimer > 0 ? `Resend in ${resendTimer}s` : "Resend"}
+                </span>
+              </p>
               <button
                 className="w-full btn btn-secondary"
                 disabled={isLoading || code.some((digit) => !digit)}
