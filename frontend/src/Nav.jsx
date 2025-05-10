@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
-import { useLocation, Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { canuelsLogo } from "./assets/canuelsImage";
 import { navLinks, adminLinks } from "./constants";
 import { HiMenu, HiX } from "react-icons/hi";
@@ -12,16 +12,11 @@ import toast from "react-hot-toast";
 const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("/home");
-  const location = useLocation();
 
-  const { user, logout } = useUserAuth();
+  const { user, logout, isAuthenticated } = useUserAuth();
   const isRoleAdmin = user?.role === "admin" || user?.role === "supervisor";
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    setActiveLink(location.pathname);
-  }, [location]);
 
   const logoutHandler = async () => {
     try {
@@ -88,16 +83,18 @@ const Nav = () => {
         <div className="hidden lg:flex items-center">
           {user ? (
             <>
-              <p className="mr-5">{user.fullname}</p>
+              <p className="mr-5">
+                {!user?.fullname ? "User Fullname" : user?.fullname}
+              </p>
               <div className="dropdown dropdown-end">
                 <div tabIndex={0}>
                   <div className="avatar">
                     <div className="w-15 rounded-full">
                       <img
                         src={
-                          user.profileImg === ""
+                          !user?.profileImg || user?.profileImg === ""
                             ? "https://img.daisyui.com/images/profile/demo/yellingcat@192.webp"
-                            : user.profileImg
+                            : user?.profileImg
                         }
                       />
                     </div>
@@ -111,13 +108,13 @@ const Nav = () => {
                     <Link
                       to="/profile"
                       className={
-                        !user?.isAdmin
+                        !isAuthenticated
                           ? "disabled cursor-not-allowed opacity-50"
                           : undefined
                       }
-                      aria-disabled={!user?.isAdmin}
+                      aria-disabled={!isAuthenticated}
                       onClick={(e) => {
-                        if (!user?.isAdmin) {
+                        if (!isAuthenticated) {
                           e.preventDefault();
                         }
                       }}

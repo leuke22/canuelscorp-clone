@@ -2,7 +2,7 @@ import "./index.css";
 import Nav from "./Nav";
 import Footer from "./Footer";
 
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import { Home, Products, Services, Contact, About } from "./pages/userSections";
 
@@ -10,20 +10,18 @@ import { Login, Signup, EmailVerification, UpdateProfile } from "./pages";
 import { Dashboard, Orders, Users, AdminProducts } from "./pages/adminSections";
 import ScrollTop from "../ScrollTop";
 
-import { ProtectedRoute, RedirectAuthRoute } from "./pages/protectedRoutes";
+import { AdminRoute, AuthRoute, ProtectedRoute, EmailRoute } from "./pages/protectedRoutes";
 
 import { Toaster } from "react-hot-toast";
 import { useUserAuth } from "./fetch/useUserAuth";
 import { useEffect } from "react";
 
 const App = () => {
-  const { user, getProfile, checkingAuth } = useUserAuth();
+  const { getProfile, checkingAuth } = useUserAuth();
 
   useEffect(() => {
     getProfile();
   }, [getProfile]);
-
-  const isUserAdmin = user?.role === "admin" || user?.role === "supervisor";
 
   if (checkingAuth) {
     return (
@@ -40,27 +38,20 @@ const App = () => {
       <div className="bg-white h-[100px] w-full"></div>
       <section>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <Home to="/home" replace />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/products" element={<Products />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/email-verification" element={<EmailVerification />} />
-          <Route path="/profile" element={<UpdateProfile />} />
+          <Route path="/" element={ <ProtectedRoute allowFirstVisit={true}> <Home to="/home" replace /> </ProtectedRoute> } />
+          <Route path="/products" element={ <ProtectedRoute allowFirstVisit={true}> <Products /> </ProtectedRoute> } />
+          <Route path="/services" element={ <ProtectedRoute allowFirstVisit={true}> <Services /> </ProtectedRoute> } />
+          <Route path="/contact" element={ <ProtectedRoute allowFirstVisit={true}> <Contact /> </ProtectedRoute> } />
+          <Route path="/about" element={ <ProtectedRoute allowFirstVisit={true}> <About /> </ProtectedRoute> } />
+          <Route path="/login" element={ <AuthRoute> <Login /> </AuthRoute> } />
+          <Route path="/signup" element={ <AuthRoute> <Signup /> </AuthRoute> }/>
+          <Route path="/email-verification" element={<EmailRoute><EmailVerification /></EmailRoute>  } />
+          <Route path="/profile" element={  <UpdateProfile /> } />
 
-          <Route path="/admin" element={<Dashboard />} />
-          <Route path="/admin/products" element={<AdminProducts />} />
-          <Route path="/admin/orders" element={<Orders />} />
-          <Route path="/admin/users" element={<Users />} />
+          <Route path="/admin" element={ <AdminRoute> <Dashboard /> </AdminRoute> } />
+          <Route path="/admin/products" element={ <AdminRoute> <AdminProducts /> </AdminRoute> } />
+          <Route path="/admin/orders" element={ <AdminRoute> <Orders /> </AdminRoute> } />
+          <Route path="/admin/users" element={ <AdminRoute> <Users /> </AdminRoute> } />
         </Routes>
       </section>
       <Footer />

@@ -1,4 +1,6 @@
 import ProtectedRoute from "./ProtectedRoute";
-import RedirectAuthRoute from "./RedirectAuthRoute";
+import AdminRoute from "./AdminRoute";
+import AuthRoute from "./AuthRoute";
+import EmailRoute from "./EmailRoute";
 
-export { ProtectedRoute, RedirectAuthRoute };
+export { ProtectedRoute, AdminRoute, AuthRoute, EmailRoute };

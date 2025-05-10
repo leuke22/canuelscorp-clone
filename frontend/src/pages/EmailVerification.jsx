@@ -9,19 +9,36 @@ const EmailVerification = () => {
   const inputRefs = useRef([]);
   const navigate = useNavigate();
 
+  const effectRan = useRef(false);
+
   const {
     user,
     isLoading,
     userEmail,
     verifyOtp,
-    isUserAuth,
     sendVerificationOtp,
+    isVerifiedOtpSuccess,
   } = useUserAuth();
 
   const RESEND_INTERVAL = 60;
   const [resendTimer, setResendTimer] = useState(0);
 
-  console.log(user);
+  useEffect(() => {
+    if (isVerifiedOtpSuccess) {
+      navigate("/");
+    }
+  }, [isVerifiedOtpSuccess, navigate]);
+
+  useEffect(() => {
+    if (effectRan.current === false) {
+      const shouldSendCode = user?.email && !user.isAccountVerified;
+      if (shouldSendCode) {
+        handleSendCodeInEmail();
+      }
+
+      effectRan.current = true;
+    }
+  }, [user]);
 
   useEffect(() => {
     let timer;
@@ -39,11 +56,20 @@ const EmailVerification = () => {
     }
   }, [code]);
 
+  const handleSendCodeInEmail = async () => {
+    if (resendTimer > 0) return;
+    try {
+      await sendVerificationOtp({ email: user.email });
+      setResendTimer(RESEND_INTERVAL);
+    } catch (error) {
+      toast.error("Failed to send OTP. Please try again.");
+    }
+  };
+
   const handleResend = async () => {
     if (resendTimer > 0) return;
     try {
       await sendVerificationOtp({ email: user.email });
-      toast.success("OTP code resent to your email.");
       setResendTimer(RESEND_INTERVAL);
     } catch (error) {
       toast.error("Failed to resend OTP. Please try again.");
@@ -81,13 +107,16 @@ const EmailVerification = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await verifyOtp({
-      email: userEmail || user.email,
-      otp: code.join(""),
-    });
-    if (isUserAuth) {
+    try {
+      await verifyOtp({
+        email: userEmail || user.email,
+        otp: code.join(""),
+      });
+      toast.success("OTP verified successfully!");
+
       navigate("/");
-      toast.success("Verification successful!");
+    } catch (error) {
+      toast.error("Verification failed. Please try again.");
     }
   };
 

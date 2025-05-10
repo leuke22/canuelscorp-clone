@@ -8,6 +8,7 @@ import {
   MdOutlineDateRange,
 } from "react-icons/md";
 import { ItemInfo, UpdateUserModal } from "../components";
+//import { useUserAuth } from "../fetch/useUserAuth";
 
 const UpdateProfile = () => {
   const [orders, setOrders] = useState([
@@ -50,6 +51,8 @@ const UpdateProfile = () => {
     phone: "09223456789",
     dateJoining: "2025-01-01",
   };
+
+  //const { user } = useUserAuth();
 
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);

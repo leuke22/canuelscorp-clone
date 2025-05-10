@@ -6,8 +6,10 @@ export const useUserAuth = create((set) => ({
   user: null,
   isLoading: false,
   checkingAuth: true,
+  isUserFirstVisit: true,
   isAuthenticated: false,
   userEmail: null,
+  isVerifiedOtpSuccess: false,
 
   signup: async ({
     fullname,
@@ -32,15 +34,14 @@ export const useUserAuth = create((set) => ({
         password,
         phone,
       });
-      console.log(res.data);
       set({
         user: res.data,
         userEmail: res.data.email,
         isAuthenticated: true,
         isLoading: false,
+        isUserFirstVisit: false,
       });
       toast.success(res.data.message || "Signup successful!");
-      return;
     } catch (error) {
       set({ isLoading: false });
       const toastMessage =
@@ -56,7 +57,13 @@ export const useUserAuth = create((set) => ({
     set({ isLoading: true });
     try {
       const res = await axios.post("/auth/verifyOtp", { email, otp });
-      set({ user: res.data, isAuthenticated: true, isLoading: false });
+      set({
+        user: res.data,
+        isLoading: false,
+        isUserFirstVisit: false,
+        isAuthenticated: true, 
+        isVerifiedOtpSuccess: true,
+      });
     } catch (error) {
       set({ isLoading: false });
       const toastMessage =
@@ -71,7 +78,13 @@ export const useUserAuth = create((set) => ({
     set({ isLoading: true });
     try {
       const res = await axios.post("/auth/login", { email, password });
-      set({ user: res.data, isAuthenticated: true, isLoading: false });
+      set({
+        user: res.data,
+        userEmail: res.data.email,
+        isAuthenticated: true,
+        isLoading: false,
+        isUserFirstVisit: false,
+      });
       toast.success(res.data.message || "Login successful!");
     } catch (error) {
       set({ isLoading: false });
@@ -105,15 +118,11 @@ export const useUserAuth = create((set) => ({
     set({ checkingAuth: true });
     try {
       const res = await axios.get("/auth/profile");
-      set({ user: res.data, checkingAuth: false });
+      set({ user: res.data, checkingAuth: false, isAuthenticated: true });
     } catch (error) {
-      set({ checkingAuth: false, user: null });
-      if (!error.response || error.response.status !== 401) {
-        const toastMessage =
-          error.response?.data?.error ||
-          error.response?.data?.message ||
-          "An error occurred in getting profile";
-        toast.error(toastMessage);
+      set({ checkingAuth: false, user: null, isAuthenticated: false });
+      if (error.response?.status !== 401) {
+        console.error("Profile fetch error:", error);
       }
       throw error;
     }
@@ -123,7 +132,7 @@ export const useUserAuth = create((set) => ({
     set({ isLoading: true });
     try {
       const res = await axios.post("/auth/sendVerification", { email });
-      set({ userEmail: res.data.email, isUserAuth: true, isLoading: false });
+      set({ userEmail: res.data.email, isLoading: false });
       toast.success(res.data.message || "OTP sent successfully!");
     } catch (error) {
       set({ isLoading: false });
@@ -132,7 +141,6 @@ export const useUserAuth = create((set) => ({
         error.response.data.message ||
         "An error occurred in sending OTP";
       toast.error(toastMessage);
-      throw error;
     }
   },
 }));

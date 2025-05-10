@@ -52,23 +52,6 @@ export const signup = async (req, res) => {
         .json({ error: "Phone number is already registered" });
     }
 
-    const otp = generateOTP();
-    const otpExpiry = Date.now() + 15 * 60 * 1000;
-
-    const signupMail = {
-      from: `Canuels Corp <${process.env.SMTP_EMAIL}>`,
-      to: email,
-      subject: "Account Verification OTP",
-      html: `
-        <h1>Welcome to Our Platform!</h1>
-        <p>Thank you for signing up. To verify your account, please use the following OTP:</p>
-        <p><strong>${otp}</strong></p>
-        <p>This OTP will expire in 15 minutes.</p>
-      `,
-    };
-
-    await transporter.sendMail(signupMail);
-
     const newUser = await User.create({
       fullname,
       username,
@@ -76,8 +59,6 @@ export const signup = async (req, res) => {
       phone,
       password,
       role,
-      verifyOtp: otp,
-      verifyOtpExpireAt: otpExpiry,
     });
 
     const { accessToken, refreshToken } = generateTokens(newUser._id);
@@ -94,8 +75,8 @@ export const signup = async (req, res) => {
       role: newUser.role,
       isAccountVerified: newUser.isAccountVerified,
       profileImg: newUser.profileImg,
-      message:
-        "Signup Successful! Account Verification OTP has been sent to your email",
+      address: newUser.address,
+      message: "Signup Successful!",
     });
   } catch (error) {
     console.error("Error in signup controller", error.message);
@@ -122,6 +103,7 @@ export const login = async (req, res) => {
         role: user.role,
         isAccountVerified: user.isAccountVerified,
         profileImg: user.profileImg,
+        address: user.address,
         message: "Login Successful!",
       });
     } else {

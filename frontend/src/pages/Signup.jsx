@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { fadeIn } from "../utils/motion";
 
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import {
   Fullname,
@@ -32,16 +32,9 @@ const Signup = () => {
   const [signupPassShow, setSignupPassShow] = useState(false);
   const [signupConfirmPassShow, setSignupConfirmPassShow] = useState(false);
 
-  const navigate = useNavigate();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await signup(signupFormData);
-      navigate("/email-verification");
-    } catch (error) {
-      console.log("Did not navigate because signup failed:", error);
-    }
+    await signup(signupFormData);
   };
 
   const handleInputChange = (e) => {

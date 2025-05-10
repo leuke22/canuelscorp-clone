@@ -41,15 +41,19 @@ const userSchema = new mongoose.Schema(
     address: {
       street: {
         type: String,
+        default: "",
       },
       city: {
         type: String,
+        default: "",
       },
       province: {
         type: String,
+        default: "",
       },
       postalCode: {
         type: String,
+        default: "",
       },
     },
     verifyOtp: {
