@@ -1,4 +1,3 @@
-import React from "react";
 import { CheckOrder, UserOrdersCard } from "../components";
 import { useState } from "react";
 import {
@@ -8,7 +7,7 @@ import {
   MdOutlineDateRange,
 } from "react-icons/md";
 import { ItemInfo, UpdateUserModal } from "../components";
-//import { useUserAuth } from "../fetch/useUserAuth";
+import { useUserAuth } from "../fetch/useUserAuth";
 
 const UpdateProfile = () => {
   const [orders, setOrders] = useState([
@@ -38,31 +37,15 @@ const UpdateProfile = () => {
     },
   ]);
 
-  const user = {
-    fullname: "John Doe",
-    username: "johndoe123",
-    email: "johndoe123@gmail.com",
-    address: {
-      street: "1235 Bulacan St.",
-      city: "San Juan",
-      province: "Metro Manila",
-      postalCode: "1600",
-    },
-    phone: "09223456789",
-    dateJoining: "2025-01-01",
-  };
-
-  //const { user } = useUserAuth();
+  const { user } = useUserAuth();
 
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleUpdateUser = (updatedData) => {
-    console.log("Updated user data:", updatedData);
-  };
-
   const formatAddress = (address) => {
-    return `${address.street}, ${address.city}, ${address.province}, ${address.postalCode}`;
+    return `${address.street || "1235 Bulacan St."}, ${
+      address.city || "Quezon City"
+    }, ${address.province || "Metro Manila"}, ${address.postalCode || "1116"}`;
   };
 
   return (
@@ -71,7 +54,13 @@ const UpdateProfile = () => {
         <div>
           <div className="avatar mb-5">
             <div className="w-50 rounded-full">
-              <img src="https://img.daisyui.com/images/profile/demo/yellingcat@192.webp" />
+              <img
+                src={
+                  !user?.profileImg
+                    ? "https://img.daisyui.com/images/profile/demo/yellingcat@192.webp"
+                    : user.profileImg
+                }
+              />
             </div>
           </div>
           <h1 className="text-3xl font-bold">{user.fullname}</h1>
@@ -89,7 +78,10 @@ const UpdateProfile = () => {
               icon={MdOutlineLocationOn}
               text={formatAddress(user.address)}
             />
-            <ItemInfo icon={MdOutlineDateRange} text={user.dateJoining} />
+            <ItemInfo
+              icon={MdOutlineDateRange}
+              text={user.dateJoining || "2025-01-01"}
+            />
           </div>
         </div>
         <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -113,7 +105,6 @@ const UpdateProfile = () => {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         user={user}
-        onUpdateUser={handleUpdateUser}
       />
     </section>
   );

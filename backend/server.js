@@ -5,7 +5,6 @@ import cors from "cors";
 import { v2 as cloudinary } from "cloudinary";
 
 import authRoutes from "./routes/auth.routes.js";
-import userRoutes from "./routes/user.route.js";
 import adminRoutes from "./routes/admin.route.js";
 import productRoutes from "./routes/product.route.js";
 import cartRoutes from "./routes/cart.route.js";
@@ -31,7 +30,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
-app.use("/api/users", userRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);

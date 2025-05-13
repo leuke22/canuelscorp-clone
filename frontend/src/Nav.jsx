@@ -81,7 +81,7 @@ const Nav = () => {
         </ul>
 
         <div className="hidden lg:flex items-center">
-          {user ? (
+          {user && isAuthenticated ? (
             <>
               <p className="mr-5">
                 {!user?.fullname ? "User Fullname" : user?.fullname}
@@ -102,19 +102,21 @@ const Nav = () => {
                 </div>
                 <ul
                   tabIndex={0}
-                  className="menu dropdown-content bg-base-200 rounded-box z-1 mt-4 w-32 p-2 shadow-sm"
+                  className="menu dropdown-content bg-base-200 rounded-box z-1 mt-4 w-42 p-2 shadow-sm"
                 >
                   <li>
                     <Link
                       to="/profile"
                       className={
-                        !isAuthenticated
+                        !isAuthenticated || !user?.isAccountVerified
                           ? "disabled cursor-not-allowed opacity-50"
                           : undefined
                       }
-                      aria-disabled={!isAuthenticated}
+                      aria-disabled={
+                        !isAuthenticated || !user?.isAccountVerified
+                      }
                       onClick={(e) => {
-                        if (!isAuthenticated) {
+                        if (!isAuthenticated || !user?.isAccountVerified) {
                           e.preventDefault();
                         }
                       }}

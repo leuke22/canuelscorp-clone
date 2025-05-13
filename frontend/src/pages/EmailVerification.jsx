@@ -66,16 +66,6 @@ const EmailVerification = () => {
     }
   };
 
-  const handleResend = async () => {
-    if (resendTimer > 0) return;
-    try {
-      await sendVerificationOtp({ email: user.email });
-      setResendTimer(RESEND_INTERVAL);
-    } catch (error) {
-      toast.error("Failed to resend OTP. Please try again.");
-    }
-  };
-
   const handleChange = (index, value) => {
     const newCode = [...code];
 
@@ -163,7 +153,7 @@ const EmailVerification = () => {
               <p className="text-center text-gray-500">
                 Didn't receive the code?{" "}
                 <span
-                  onClick={handleResend}
+                  onClick={handleSendCodeInEmail}
                   className={`underline cursor-pointer ${
                     resendTimer > 0
                       ? "text-gray-400 cursor-not-allowed"

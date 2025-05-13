@@ -6,7 +6,7 @@ import { Route, Routes } from "react-router-dom";
 
 import { Home, Products, Services, Contact, About } from "./pages/userSections";
 
-import { Login, Signup, EmailVerification, UpdateProfile } from "./pages";
+import { Login, Signup, EmailVerification, UpdateProfile, ChangePassword, ResetPassVerification } from "./pages";
 import { Dashboard, Orders, Users, AdminProducts } from "./pages/adminSections";
 import ScrollTop from "../ScrollTop";
 
@@ -34,9 +34,9 @@ const App = () => {
   return (
     <main>
       <ScrollTop />
-      <Nav />
       <div className="bg-white h-[100px] w-full"></div>
       <section>
+        <Nav />
         <Routes>
           <Route path="/" element={ <ProtectedRoute allowFirstVisit={true}> <Home to="/home" replace /> </ProtectedRoute> } />
           <Route path="/products" element={ <ProtectedRoute allowFirstVisit={true}> <Products /> </ProtectedRoute> } />
@@ -47,6 +47,8 @@ const App = () => {
           <Route path="/signup" element={ <AuthRoute> <Signup /> </AuthRoute> }/>
           <Route path="/email-verification" element={<EmailRoute><EmailVerification /></EmailRoute>  } />
           <Route path="/profile" element={  <UpdateProfile /> } />
+          <Route path="/change-password" element={  <ChangePassword /> } />
+          <Route path="/resetOtp-verification" element={ <ResetPassVerification/>} />
 
           <Route path="/admin" element={ <AdminRoute> <Dashboard /> </AdminRoute> } />
           <Route path="/admin/products" element={ <AdminRoute> <AdminProducts /> </AdminRoute> } />

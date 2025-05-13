@@ -4,28 +4,33 @@ import { motion } from "framer-motion";
 import { fadeIn } from "../utils/motion";
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Email, Password } from "../components";
+import { Link, useNavigate } from "react-router-dom";
+import { Email } from "../components";
 import { useUserAuth } from "../fetch/useUserAuth";
 
-const Login = () => {
-  const [loginFormData, setLoginFormData] = useState({
+const ChangePassword = () => {
+  const [resetFormData, setResetFormData] = useState({
     email: "",
-    password: "",
   });
 
-  const [loginPassShow, setLoginPassShow] = useState(false);
+  const { requestResetPassword, isLoading } = useUserAuth();
 
-  const { login, isLoading } = useUserAuth();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    login(loginFormData);
+
+    try {
+      await requestResetPassword(resetFormData.email);
+      navigate("/resetOtp-verification");
+    } catch (error) {
+      toast.error("Reset password request failed. Please try again.");
+    }
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setLoginFormData((prev) => ({ ...prev, [name]: value }));
+    setResetFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
@@ -47,47 +52,31 @@ const Login = () => {
         whileInView="show"
         className="relative z-10 w-full max-w-md flex flex-col gap-5 items-center p-5"
       >
-        <h1 className="text-2xl font-semibold text-white ">
-          Welcome to Canuels Corporation
-        </h1>
         <div className="relative z-10 w-full max-w-md p-8 bg-white shadow-md rounded-lg">
           <h1 className="text-2xl font-semibold text-center mb-6">
-            Login to your Account
+            Reset Password
           </h1>
           <form className="flex flex-col" onSubmit={handleSubmit}>
             <Email
               handleInputChange={handleInputChange}
-              formData={loginFormData}
+              formData={resetFormData}
             />
 
-            <Password
-              handleInputChange={handleInputChange}
-              formData={loginFormData}
-              show={loginPassShow}
-              setShow={setLoginPassShow}
-            />
             <button
               type="submit"
               className="btn btn-primary mt-4"
               disabled={isLoading}
             >
-              {isLoading ? "Loading..." : "Login your Account"}
+              {isLoading ? "Loading..." : "Reset Password"}
               {isLoading && <span className="loading loading-spinner"></span>}
             </button>
 
-              <p className="text-[13px] text-center mt-4">
-                Forgot Password?{" "}
-                <Link to="/change-password" className="text-blue-600 font-bold">
-                  Reset here
-                </Link>
-              </p>
-
-              <p className="text-[13px] text-center mt-2">
-                Don't have an account?{" "}
-                <Link to="/signup" className="text-blue-600 font-bold">
-                  Signup here
-                </Link>
-              </p>
+            <p className="text-[13px] text-center mt-4">
+              Remember your password?{" "}
+              <Link to="/login" className="text-blue-600 font-bold">
+                Login here
+              </Link>
+            </p>
           </form>
         </div>
       </motion.div>
@@ -95,4 +84,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ChangePassword;
