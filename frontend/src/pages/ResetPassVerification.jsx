@@ -106,7 +106,6 @@ const ResetPassVerification = () => {
         passwordData.confirmPassword
       );
 
-      console.log(passwordData.password, passwordData.confirmPassword);
       navigate("/login");
     } catch (error) {
       toast.error(

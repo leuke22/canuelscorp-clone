@@ -1,10 +1,19 @@
+import { useProducts } from "../../fetch/useProducts";
+
 const EditProduct = ({
   editDialogRef,
   editProductId,
   editName,
+  setEditName,
   editDescription,
+  setEditDescription,
   editImagePreview,
+  setEditImagePreview,
+  editCategory,
+  setEditCategory,
 }) => {
+  const { updateProduct, isLoading } = useProducts();
+
   const handleEditImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -13,21 +22,21 @@ const EditProduct = ({
       reader.readAsDataURL(file);
     }
   };
-  const handleEditSubmit = (e) => {
+
+  const handleEditSubmit = async (e) => {
     e.preventDefault();
-    setProducts(
-      products.map((p) =>
-        p.id === editProductId
-          ? {
-              ...p,
-              name: editName,
-              description: editDescription,
-              image: editImagePreview,
-            }
-          : p
-      )
-    );
-    editDialogRef.current.close();
+    try {
+      await updateProduct(
+        editProductId,
+        editImagePreview,
+        editName,
+        editCategory,
+        editDescription
+      );
+      editDialogRef.current.close();
+    } catch (error) {
+      toast.error(error);
+    }
   };
 
   return (
@@ -84,6 +93,24 @@ const EditProduct = ({
           </div>
           <div className="form-control w-full">
             <label className="label">
+              <span className="label-text">Category</span>
+            </label>
+            <select
+              value={editCategory}
+              onChange={(e) => setEditCategory(e.target.value)}
+              className="select select-bordered w-full"
+              required
+            >
+              <option value="" disabled>
+                Select Category...
+              </option>
+              <option value="Pork">Pork</option>
+              <option value="Chicken">Chicken</option>
+              <option value="Beef">Beef</option>
+            </select>
+          </div>
+          <div className="form-control w-full">
+            <label className="label">
               <span className="label-text">Product Description</span>
             </label>
             <textarea
@@ -102,7 +129,8 @@ const EditProduct = ({
               Cancel
             </button>
             <button type="submit" className="btn btn-secondary">
-              Save Changes
+              {isLoading ? "Saving..." : "Save"}
+              {isLoading && <span className="loading loading-spinner"></span>}
             </button>
           </div>
         </form>

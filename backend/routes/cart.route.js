@@ -6,6 +6,7 @@ import {
   clearCart,
   getCart,
   removeFromCart,
+  updateCartAddress,
   updateCartItem,
 } from "../controllers/cart.controller.js";
 
@@ -17,5 +18,7 @@ router.post("/add", protectRoute, userOnly, addToCart);
 router.post("/update", protectRoute, userOnly, updateCartItem);
 router.delete("/delete/:productId", protectRoute, userOnly, removeFromCart);
 router.delete("/clear", protectRoute, clearCart);
+
+router.post("/update-address", protectRoute, userOnly, updateCartAddress);
 
 export default router;

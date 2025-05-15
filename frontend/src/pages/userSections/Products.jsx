@@ -1,11 +1,33 @@
 import { ProductCard } from "../../components";
-import { beefProducts, chickenProducts, porkProducts } from "../../constants";
 import { GiShoppingCart } from "react-icons/gi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useProducts } from "../../fetch/useProducts";
+import { useUserAuth } from "../../fetch/useUserAuth";
+import { useCart } from "../../fetch/useCart";
+import { Link } from "react-router-dom";
 
 const Products = () => {
-  const [category, setCategory] = useState("Chicken");
-  const [isUserAuth, setIsUserAuth] = useState(true);
+  const [category, setCategory] = useState("All");
+
+  const { isAuthenticated, user } = useUserAuth();
+  const { products, getProducts, getCategory } = useProducts();
+  const { cart, itemCount, getCartItems } = useCart();
+
+  const isUserAnAuthenticated = isAuthenticated && user?.isAccountVerified;
+
+  useEffect(() => {
+    if (category === "All") {
+      getProducts();
+    } else {
+      getCategory(category);
+    }
+  }, [category, getProducts, getCategory]);
+
+  useEffect(() => {
+    if (isUserAnAuthenticated) {
+      getCartItems();
+    }
+  }, [isUserAnAuthenticated, getCartItems, cart]);
 
   return (
     <section className="pt-5 text-black ">
@@ -16,57 +38,37 @@ const Products = () => {
           food service establishments.
         </p>
       </div>
-      <div className="container mx-auto px-4 flex flex-col gap-5 items-center mb-10">
-        <div className="flex flex-col md:flex-row justify-between items-center min-w-full px-20 gap-5 md:gap-20 lg:gap-100 xl:gap-150">
+      <div className="container mx-auto flex flex-col gap-5 items-center mb-10">
+        <div className="flex flex-col md:flex-row justify-between items-center min-w-full px-20 gap-5 md:gap-20 lg:gap-100 xl:gap-180">
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             className="select md:w-50"
           >
             <option disabled={true}>Select one..</option>
+            <option value={"All"}>All</option>
             <option value={"Chicken"}>Chicken</option>
             <option value={"Beef"}>Beef</option>
             <option value={"Pork"}>Pork</option>
           </select>
-          {isUserAuth && (
-            <button className="btn btn-secondary w-full md:flex-1">
+          {isUserAnAuthenticated && (
+            <Link to="/cart" className="btn btn-secondary w-60 md:flex-1">
               <GiShoppingCart size={30} />
-              Check your Order
-            </button>
+              Check your Order <span>({itemCount || 0})</span>
+            </Link>
           )}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 lg:gap-10 place-items-center">
-          {category === "Chicken"
-            ? chickenProducts.map((chickenProduct) => (
-                <ProductCard
-                  key={chickenProduct.id}
-                  isUserAuth={isUserAuth}
-                  productId={chickenProduct.id}
-                  productName={chickenProduct.name}
-                  productImage={chickenProduct.image}
-                />
-              ))
-            : category === "Beef"
-            ? beefProducts.map((beefProduct) => (
-                <ProductCard
-                  key={beefProduct.id}
-                  isUserAuth={isUserAuth}
-                  productId={beefProduct.id}
-                  productName={beefProduct.name}
-                  productImage={beefProduct.image}
-                />
-              ))
-            : category === "Pork"
-            ? porkProducts.map((porkProduct) => (
-                <ProductCard
-                  key={porkProduct.id}
-                  isUserAuth={isUserAuth}
-                  productId={porkProduct.id}
-                  productName={porkProduct.name}
-                  productImage={porkProduct.image}
-                />
-              ))
-            : null}
+          {products.map((product) => (
+            <ProductCard
+              key={product._id}
+              isUserAuth={isUserAnAuthenticated}
+              productId={product._id}
+              productName={product.name}
+              productImage={product.image}
+              productDescription={product.description}
+            />
+          ))}
         </div>
       </div>
     </section>

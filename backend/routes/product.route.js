@@ -1,14 +1,12 @@
 import express from "express";
 
-import {
-  adminOnly,
-  adminOrSupervisor,
-  protectRoute,
-} from "../middleware/protectRoute.js";
+import { adminOrSupervisor, protectRoute } from "../middleware/protectRoute.js";
 
 import {
   createProduct,
+  deleteMultipleProducts,
   deleteProduct,
+  getCategory,
   getProducts,
   updateProduct,
 } from "../controllers/product.controller.js";
@@ -18,7 +16,14 @@ const router = express.Router();
 router.get("/", getProducts);
 
 router.post("/create", protectRoute, adminOrSupervisor, createProduct);
-router.post("/:id", protectRoute, adminOrSupervisor, updateProduct);
-router.delete("/:id", protectRoute, adminOrSupervisor, deleteProduct);
+router.post("/update/:id", protectRoute, adminOrSupervisor, updateProduct);
+router.delete("/delete/:id", protectRoute, adminOrSupervisor, deleteProduct);
+router.post(
+  "/delete-multiple",
+  protectRoute,
+  adminOrSupervisor,
+  deleteMultipleProducts
+);
+router.get("/category/:category", getCategory);
 
 export default router;

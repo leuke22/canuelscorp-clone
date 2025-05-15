@@ -7,9 +7,9 @@ const AdminProductCard = ({
 }) => {
   return (
     <div
-      key={product.id}
+      key={product._id}
       className={`card card-side bg-base-100 shadow-sm relative ${
-        selectedProducts.includes(product.id) ? "border-2 border-info" : ""
+        selectedProducts.includes(product._id) ? "border-2 border-info" : ""
       }`}
     >
       <div className="flex flex-col gap-2">
@@ -17,8 +17,8 @@ const AdminProductCard = ({
           <input
             type="checkbox"
             className="checkbox checkbox-info"
-            checked={selectedProducts.includes(product.id)}
-            onChange={() => handleSelectProduct(product.id)}
+            checked={selectedProducts.includes(product._id)}
+            onChange={() => handleSelectProduct(product._id)}
           />
         </div>
         <figure className="pl-4">
@@ -31,6 +31,7 @@ const AdminProductCard = ({
       </div>
       <div className="card-body">
         <h2 className="card-title">{product.name}</h2>
+        <p className="text-sm text-gray-500">Category: {product.category}</p>
         <p>{product.description}</p>
         <div className="card-actions justify-end pb-2">
           <button

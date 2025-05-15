@@ -26,11 +26,47 @@ const cartSchema = new mongoose.Schema(
       enum: ["Pending", "Shipped", "Delivered", "Cancelled"],
       default: "Pending",
     },
+    shippingAddress: {
+      street: {
+        type: String,
+        default: "",
+      },
+      city: {
+        type: String,
+        default: "",
+      },
+      province: {
+        type: String,
+        default: "",
+      },
+      postalCode: {
+        type: String,
+        default: "",
+      },
+    },
+    useDefaultAddress: {
+      type: Boolean,
+      default: true,
+    },
   },
   {
     timestamps: true,
   }
 );
+
+cartSchema.pre("save", async function (next) {
+  if (this.useDefaultAddress && !this.shippingAddress.street) {
+    try {
+      const user = await mongoose.model("User").findById(this.user);
+      if (user && user.address) {
+        this.shippingAddress = user.address;
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
+  next();
+});
 
 const Cart = mongoose.model("Cart", cartSchema);
 export default Cart;

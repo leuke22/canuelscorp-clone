@@ -202,7 +202,6 @@ export const useUserAuth = create((set, get) => ({
       toast.success(
         res.data.message || "Reset password OTP sent successfully!"
       );
-      console.log(res.data);
     } catch (error) {
       set({ isLoading: false });
       const toastMessage =

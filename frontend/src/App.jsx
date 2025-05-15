@@ -4,7 +4,7 @@ import Footer from "./Footer";
 
 import { Route, Routes } from "react-router-dom";
 
-import { Home, Products, Services, Contact, About } from "./pages/userSections";
+import { Home, Products, Services, Contact, About, Cart } from "./pages/userSections";
 
 import { Login, Signup, EmailVerification, UpdateProfile, ChangePassword, ResetPassVerification } from "./pages";
 import { Dashboard, Orders, Users, AdminProducts } from "./pages/adminSections";
@@ -17,7 +17,7 @@ import { useUserAuth } from "./fetch/useUserAuth";
 import { useEffect } from "react";
 
 const App = () => {
-  const { getProfile, checkingAuth } = useUserAuth();
+  const { getProfile, checkingAuth, user } = useUserAuth();
 
   useEffect(() => {
     getProfile();
@@ -49,6 +49,7 @@ const App = () => {
           <Route path="/profile" element={  <UpdateProfile /> } />
           <Route path="/change-password" element={  <ChangePassword /> } />
           <Route path="/resetOtp-verification" element={ <ResetPassVerification/>} />
+          <Route path="/cart" element={ <Cart/>} />
 
           <Route path="/admin" element={ <AdminRoute> <Dashboard /> </AdminRoute> } />
           <Route path="/admin/products" element={ <AdminRoute> <AdminProducts /> </AdminRoute> } />

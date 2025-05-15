@@ -1,23 +1,35 @@
 import { useState } from "react";
+import { useProducts } from "../../fetch/useProducts";
+import toast from "react-hot-toast";
+import { set } from "mongoose";
 
 const AddProduct = () => {
   const [productName, setProductName] = useState("");
   const [productDescription, setProductDescription] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
+  const [category, setCategory] = useState("");
 
-  const handleSubmit = (e) => {
+  const { createProducts, isLoading } = useProducts();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const newProduct = {
-      id: String(products.length + 1).padStart(2, "0"),
-      name: productName,
-      description: productDescription,
-      image: imagePreview,
-    };
-    setProducts([...products, newProduct]);
-    setProductName("");
-    setProductDescription("");
-    setImagePreview(null);
-    document.getElementById("my_modal_3").close();
+    try {
+      await createProducts(
+        imagePreview,
+        productName,
+        category,
+        productDescription
+      );
+
+      setProductName("");
+      setProductDescription("");
+      setImagePreview(null);
+      setCategory("");
+
+      document.getElementById("my_modal_3").close();
+    } catch (error) {
+      toast.error(error);
+    }
   };
 
   const handleImageChange = (e) => {
@@ -26,6 +38,8 @@ const AddProduct = () => {
       const reader = new FileReader();
       reader.onloadend = () => setImagePreview(reader.result);
       reader.readAsDataURL(file);
+    } else {
+      setImagePreview(null);
     }
   };
 
@@ -72,6 +86,24 @@ const AddProduct = () => {
           </div>
           <div className="form-control w-full">
             <label className="label">
+              <span className="label-text">Category</span>
+            </label>
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="select select-bordered w-full"
+              required
+            >
+              <option value="" disabled>
+                Select Category...
+              </option>
+              <option value="Pork">Pork</option>
+              <option value="Chicken">Chicken</option>
+              <option value="Beef">Beef</option>
+            </select>
+          </div>
+          <div className="form-control w-full">
+            <label className="label">
               <span className="label-text">Product Description</span>
             </label>
             <textarea
@@ -90,7 +122,8 @@ const AddProduct = () => {
               Cancel
             </button>
             <button type="submit" className="btn btn-secondary">
-              Create Product
+              {isLoading ? "Creating..." : "Create Product"}
+              {isLoading && <span className="loading loading-spinner"></span>}
             </button>
           </div>
         </form>

@@ -3,7 +3,7 @@ import Product from "../models/product.model.js";
 
 export const addToCart = async (req, res) => {
   try {
-    const { productId, quantity = 1 } = req.body;
+    const { productId, quantity } = req.body;
 
     const product = await Product.findById(productId);
     if (!product) {
@@ -30,7 +30,7 @@ export const addToCart = async (req, res) => {
 
     cart = await Cart.findById(cart._id).populate({
       path: "items.product",
-      select: "name description image",
+      select: "image name category",
     });
 
     res.status(200).json({ message: "Item added to cart", cart });
@@ -52,7 +52,8 @@ export const getCart = async (req, res) => {
       await cart.save();
     }
 
-    res.status(200).json(cart);
+    const itemCount = cart.items.length;
+    res.status(200).json({ cart, itemCount });
   } catch (error) {
     console.log("Error in getCart controller", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -161,6 +162,45 @@ export const clearCart = async (req, res) => {
     res.status(200).json({ message: "Cart cleared", cart });
   } catch (error) {
     console.log("Error in clearCart controller", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const updateCartAddress = async (req, res) => {
+  try {
+    const { street, city, province, postalCode, useDefaultAddress } = req.body;
+
+    let cart = await Cart.findOne({ user: req.user._id });
+    if (!cart) {
+      return res.status(404).json({ error: "Cart not found" });
+    }
+
+    if (useDefaultAddress) {
+      cart.useDefaultAddress = true;
+      cart.shippingAddress = req.user.address;
+    } else {
+      cart.useDefaultAddress = false;
+      cart.shippingAddress = {
+        street,
+        city,
+        province,
+        postalCode,
+      };
+    }
+
+    await cart.save();
+
+    cart = await Cart.findById(cart._id).populate({
+      path: "items.product",
+      select: "name description image",
+    });
+
+    res.status(200).json({
+      message: "Shipping address updated",
+      cart,
+    });
+  } catch (error) {
+    console.log("Error in updateCartAddress controller", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };

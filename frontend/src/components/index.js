@@ -1,6 +1,7 @@
 import OrderTableHeader from "./OrderTableHeader";
 import TextField from "./TextField";
 import ItemInfo from "./ItemInfo";
+import ProductInfo from "./ProductInfo";
 
 import ShopButton from "./Buttons/ShopButton";
 import SubmitButton from "./Buttons/SubmitButton";
@@ -13,6 +14,7 @@ import InquireCard from "./Cards/InquireCard";
 import OrderCard from "./Cards/OrderCard";
 import ProductCard from "./Cards/ProductCard";
 import UserOrdersCard from "./Cards/UserOrdersCard";
+import CartCard from "./Cards/CartCard";
 
 import Fullname from "./InputField/Fullname";
 import Email from "./InputField/Email";
@@ -37,6 +39,7 @@ export {
   OrderTableHeader,
   TextField,
   ItemInfo,
+  ProductInfo,
   ShopButton,
   SubmitButton,
   AdminProductCard,
@@ -47,6 +50,7 @@ export {
   OrderCard,
   ProductCard,
   UserOrdersCard,
+  CartCard,
   Fullname,
   Email,
   Username,
