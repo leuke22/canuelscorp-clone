@@ -7,10 +7,14 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { FaCartPlus } from "react-icons/fa";
 import { useUserAuth } from "../../fetch/useUserAuth";
+import { motion } from "framer-motion";
+import { fadeIn } from "../../utils/motion";
+import { useOrder } from "../../fetch/useOrder";
 
 const Cart = () => {
   const { getCartItems, cart, clearCart, updateCartAddress } = useCart();
   const { user } = useUserAuth();
+  const { placeOrder } = useOrder();
   const navigate = useNavigate();
 
   const [showModal, setShowModal] = useState(false);
@@ -20,8 +24,6 @@ const Cart = () => {
     province: "",
     postalCode: "",
   });
-
-  console.log(cart);
 
   useEffect(() => {
     getCartItems();
@@ -47,6 +49,15 @@ const Cart = () => {
     }
   };
 
+  const handlePlaceOrder = async () => {
+    try {
+      await placeOrder();
+      navigate("/products");
+    } catch (error) {
+      toast.error(error);
+    }
+  };
+
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
 
@@ -65,7 +76,7 @@ const Cart = () => {
     }
   };
 
-  if (!cart.items?.length) {
+  if (!cart?.items || cart.items.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-[80vh] gap-5">
         <FaCartPlus size={100} className="text-gray-300" />
@@ -85,8 +96,13 @@ const Cart = () => {
   }
 
   return (
-    <section className="p-10 flex flex-row gap-5 bg-gray-50">
-      <div className="basis-2/3 overflow-auto h-lvh">
+    <section className="p-10 flex flex-col md:flex-row gap-5 bg-gray-50">
+      <motion.div
+        variants={fadeIn("right", 0.5)}
+        initial="hidden"
+        whileInView="show"
+        className="md:basis-2/3 overflow-auto h-lvh"
+      >
         {cart.items?.map((items) => (
           <CartCard
             key={items._id}
@@ -97,9 +113,14 @@ const Cart = () => {
             quantity={items.quantity}
           />
         ))}
-      </div>
+      </motion.div>
 
-      <div className="flex flex-col basis-1/3 gap-5">
+      <motion.div
+        variants={fadeIn("up", 0.3)}
+        initial="hidden"
+        whileInView="show"
+        className="flex flex-col md:basis-1/3 gap-5"
+      >
         <div className="flex flex-col p-5 shadow-sm rounded-lg bg-white">
           <h1 className="text-xl text-primary font-bold mb-3">Order Summary</h1>
           <div className="flex flex-row justify-between text-lg font-semibold ">
@@ -116,7 +137,9 @@ const Cart = () => {
             ))}
           </div>
           <div className="divider"></div>
-          <button className="btn btn-secondary mb-3">Checkout</button>
+          <button onClick={handlePlaceOrder} className="btn btn-secondary mb-3">
+            Place your Order
+          </button>
           <button
             onClick={handleCancelCart}
             className="btn btn-outline btn-primary mb-5"
@@ -143,7 +166,11 @@ const Cart = () => {
             <p className="text-gray-500">{user?.fullname}</p>
           </div>
           <div className="mt-3">
-            <p className="font-semibold">Address</p>
+            <p className="font-semibold">Phone Number</p>
+            <p className="text-gray-500">{user?.phone}</p>
+          </div>
+          <div className="mt-3">
+            <p className="font-semibold">Shipping Address</p>
             <p className="text-gray-500">
               {cart?.shippingAddress.street}, {cart?.shippingAddress.city},{" "}
               {cart?.shippingAddress.province},{" "}
@@ -217,7 +244,7 @@ const Cart = () => {
             </form>
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };

@@ -5,6 +5,8 @@ import { useProducts } from "../../fetch/useProducts";
 import { useUserAuth } from "../../fetch/useUserAuth";
 import { useCart } from "../../fetch/useCart";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { fadeIn } from "../../utils/motion";
 
 const Products = () => {
   const [category, setCategory] = useState("All");
@@ -31,15 +33,25 @@ const Products = () => {
 
   return (
     <section className="pt-5 text-black ">
-      <div className="text-center mb-5">
+      <motion.div
+        variants={fadeIn("down", 0.2)}
+        initial="hidden"
+        whileInView="show"
+        className="text-center mb-5"
+      >
         <h1 className="text-2xl font-bold">Fresh and Premium Chicken</h1>
         <p className="text-gray-600">
           We provide premium-quality fresh chicken, perfect for restaurants and
           food service establishments.
         </p>
-      </div>
+      </motion.div>
       <div className="container mx-auto flex flex-col gap-5 items-center mb-10">
-        <div className="flex flex-col md:flex-row justify-between items-center min-w-full px-20 gap-5 md:gap-20 lg:gap-100 xl:gap-180">
+        <motion.div
+          variants={fadeIn("down", 0.2)}
+          initial="hidden"
+          whileInView="show"
+          className="flex flex-col md:flex-row justify-between items-center min-w-full px-20 gap-5 md:gap-20 lg:gap-100 xl:gap-180"
+        >
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
@@ -57,8 +69,13 @@ const Products = () => {
               Check your Order <span>({itemCount || 0})</span>
             </Link>
           )}
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 lg:gap-10 place-items-center">
+        </motion.div>
+        <motion.div
+          variants={fadeIn("up", 0.4)}
+          initial="hidden"
+          whileInView="show"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 lg:gap-10 place-items-center"
+        >
           {products.map((product) => (
             <ProductCard
               key={product._id}
@@ -69,7 +86,7 @@ const Products = () => {
               productDescription={product.description}
             />
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

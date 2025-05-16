@@ -3,11 +3,17 @@ import axios from "../utils/axios";
 import { toast } from "react-hot-toast";
 
 export const useCart = create((set, get) => ({
-  cart: [],
+  cart: {
+    items: [],
+    shippingAddress: {
+      street: "",
+      city: "",
+      province: "",
+      postalCode: "",
+    },
+  },
   isLoading: false,
   itemCount: 0,
-
-  isFetchLoading: false,
 
   addToCart: async (productId, quantity) => {
     set({ isLoading: true });
@@ -96,20 +102,17 @@ export const useCart = create((set, get) => ({
   clearCart: async () => {
     set({ isLoading: true });
     try {
-      const res = await axios.delete("/cart/clear");
+      await axios.delete("/cart/clear");
       set({
-        cart: res.data.cart,
-        itemCount: res.data.cart.items.length,
+        cart: [],
+        itemCount: 0,
         isLoading: false,
       });
-      toast.success("Cart cleared successfully!");
+      toast.success("Cancel order successfully!");
     } catch (error) {
       set({ isLoading: false });
-      const toastMessage =
-        error.response?.data?.error ||
-        error.response?.data?.message ||
-        "Error clearing cart";
-      toast.error(toastMessage);
+      const errorMessage = error.response?.data?.error || "Error clearing cart";
+      toast.error(errorMessage);
     }
   },
 

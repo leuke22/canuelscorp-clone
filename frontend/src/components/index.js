@@ -30,6 +30,7 @@ import EditProduct from "./Modal/EditProduct";
 import OrderHistory from "./Modal/OrderHistory";
 import UpdateUserModal from "./Modal/UpdateUserModal";
 import ShopNowProduct from "./Modal/ShopNowProduct";
+import DeleteConfirmation from "./Modal/DeleteConfirmation";
 
 import AdminProductsTable from "./Tables/AdminProductsTable";
 import DashboardTable from "./Tables/DashboardTable";
@@ -64,6 +65,7 @@ export {
   OrderHistory,
   UpdateUserModal,
   ShopNowProduct,
+  DeleteConfirmation,
   AdminProductsTable,
   DashboardTable,
   OrdersTable,

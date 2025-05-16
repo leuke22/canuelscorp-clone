@@ -6,6 +6,7 @@ import {
   EditProduct,
   AdminProductCard,
   AdminProductsTable,
+  DeleteConfirmation,
 } from "../../components";
 import { useProducts } from "../../fetch/useProducts";
 import toast from "react-hot-toast";
@@ -17,6 +18,7 @@ const AdminProducts = () => {
   const [editDescription, setEditDescription] = useState("");
   const [editImagePreview, setEditImagePreview] = useState(null);
   const editDialogRef = useRef(null);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const [categoryTable, setCategoryTable] = useState("All");
 
@@ -52,15 +54,19 @@ const AdminProducts = () => {
     setSelectAll(!selectAll);
   };
 
-  const handleDeleteSelected = async () => {
+  const handleDeleteClick = () => {
     if (!selectedProducts.length) return;
+    setShowConfirmModal(true);
+  };
 
+  const confirmDelete = async () => {
     try {
       await deleteProduct(selectedProducts);
       setSelectedProducts([]);
       setSelectAll(false);
+      setShowConfirmModal(false);
     } catch (error) {
-      toast.error(error);
+      toast.error(error.message || "Failed to delete products");
     }
   };
 
@@ -82,7 +88,7 @@ const AdminProducts = () => {
         <div className="flex items-center space-x-4">
           <button
             className="btn btn-error"
-            onClick={handleDeleteSelected}
+            onClick={handleDeleteClick}
             disabled={isDeleteDisabled}
           >
             <MdDelete size={20} />
@@ -98,6 +104,14 @@ const AdminProducts = () => {
           >
             <IoMdAdd size={25} /> Add Product
           </button>
+
+          <DeleteConfirmation
+            showConfirmModal={showConfirmModal}
+            setShowConfirmModal={setShowConfirmModal}
+            selectedOrders={selectedProducts}
+            confirmDelete={confirmDelete}
+            sectionName="product"
+          />
         </div>
       </div>
 

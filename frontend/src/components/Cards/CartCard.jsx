@@ -59,8 +59,8 @@ const CartCard = ({
   };
 
   return (
-    <div className="flex md:flex-row items-center gap-5 shadow-sm rounded-md overflow-hidden h-40 mb-5 mr-2 bg-white">
-      <div className="w-50 h-full ">
+    <div className="flex flex-col md:flex-row items-center md:gap-5 shadow-sm rounded-md overflow-hidden h-80 md:h-40 mb-5 mr-2 bg-white">
+      <div className="w-50 h-40 md:h-full ">
         <img
           src={
             productImage ||
@@ -71,8 +71,8 @@ const CartCard = ({
         />
       </div>
 
-      <div className="flex flex-row justify-between w-full h-full">
-        <div className="flex flex-col justify-center p-4">
+      <div className="flex flex-col md:flex-row md:justify-between w-full h-full">
+        <div className="flex flex-col justify-center px-4 md:p-4">
           <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
             {productName || "Error Getting Product Name"}
           </h5>
@@ -80,7 +80,7 @@ const CartCard = ({
             {productDescription || "Error Getting Product Description"}
           </p>
         </div>
-        <div className="flex flex-row gap-10">
+        <div className="flex flex-col md:flex-row md:gap-10">
           {isEditing ? (
             <div className="flex flex-col items-center justify-center gap-2">
               <div className="flex items-center join gap-2">
@@ -123,7 +123,7 @@ const CartCard = ({
               </div>
             </div>
           ) : (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 px-4">
               <p className="text-lg font-semibold">
                 Quantity: <span className="text-gray-500">{qty}</span>
               </p>
@@ -138,7 +138,7 @@ const CartCard = ({
 
           <div
             onClick={handleDeleteClick}
-            className="h-full hover:bg-gray-100 hover:cursor-pointer flex items-center active:bg-gray-200 px-5"
+            className="md:h-full w-full md:w-auto hover:bg-gray-100 hover:cursor-pointer flex items-center active:bg-gray-200 mt-2 md:mt-0 px-3 md:px-5"
             aria-label="Delete Product"
           >
             <MdDeleteOutline color="red" size={25} />

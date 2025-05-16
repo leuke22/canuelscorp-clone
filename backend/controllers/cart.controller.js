@@ -42,14 +42,24 @@ export const addToCart = async (req, res) => {
 
 export const getCart = async (req, res) => {
   try {
-    let cart = await Cart.findOne({ user: req.user._id }).populate({
+    const cart = await Cart.findOne({ user: req.user._id }).populate({
       path: "items.product",
       select: "name description image",
     });
 
     if (!cart) {
-      cart = new Cart({ user: req.user._id, items: [] });
-      await cart.save();
+      return res.status(200).json({
+        cart: {
+          items: [],
+          shippingAddress: {
+            street: "",
+            city: "",
+            province: "",
+            postalCode: "",
+          },
+        },
+        itemCount: 0,
+      });
     }
 
     const itemCount = cart.items.length;
@@ -151,15 +161,16 @@ export const removeFromCart = async (req, res) => {
 
 export const clearCart = async (req, res) => {
   try {
-    const cart = await Cart.findOne({ user: req.user._id });
-    if (!cart) {
+    const deletedCart = await Cart.findOneAndDelete({ user: req.user._id });
+
+    if (!deletedCart) {
       return res.status(404).json({ error: "Cart not found" });
     }
 
-    cart.items = [];
-    await cart.save();
-
-    res.status(200).json({ message: "Cart cleared", cart });
+    res.status(200).json({
+      message: "Cart deleted successfully",
+      cart: null,
+    });
   } catch (error) {
     console.log("Error in clearCart controller", error);
     res.status(500).json({ error: "Internal Server Error" });

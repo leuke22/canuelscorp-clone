@@ -1,12 +1,51 @@
+import Order from "../models/orders.model.js";
 import Cart from "../models/cart.model.js";
+
+export const placeOrder = async (req, res) => {
+  try {
+    const userId = req.user._id;
+
+    const cart = await Cart.findOne({ user: userId }).populate({
+      path: "items.product",
+      select: "name description image",
+    });
+
+    if (!cart || cart.items.length === 0) {
+      return res.status(400).json({ error: "Cart is empty" });
+    }
+
+    const newOrder = new Order({
+      user: userId,
+      items: cart.items,
+      status: "Pending",
+      shippingAddress: cart.shippingAddress,
+    });
+
+    await newOrder.save();
+    await Cart.findOneAndDelete({ user: userId });
+
+    const populatedOrder = await Order.findById(newOrder._id).populate({
+      path: "items.product",
+      select: "name description image",
+    });
+
+    res.status(201).json({
+      message: "Order placed successfully",
+      order: populatedOrder,
+    });
+  } catch (error) {
+    console.error("Error in placeOrder:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 
 export const getUserOrder = async (req, res) => {
   try {
-    const orders = await Cart.find()
+    const orders = await Order.find()
       .sort({ createdAt: -1 })
       .populate({
         path: "user",
-        select: "username email firstName lastName",
+        select: "username email fullname",
       })
       .populate({
         path: "items.product",
@@ -21,9 +60,9 @@ export const getUserOrder = async (req, res) => {
     }
 
     res.status(200).json({
-      success: true,
+      message: "Orders fetched successfully",
       count: filteredOrders.length,
-      orders: filteredOrders,
+      order: filteredOrders,
     });
   } catch (error) {
     console.log("Error in getUserOrder controller", error);
@@ -45,7 +84,7 @@ export const updateOrderStatus = async (req, res) => {
   }
 
   try {
-    const order = await Cart.findById(orderId);
+    const order = await Order.findById(orderId);
 
     if (!order) {
       return res.status(404).json({
@@ -75,7 +114,7 @@ export const deleteOrder = async (req, res) => {
   const { orderId } = req.params;
 
   try {
-    const order = await Cart.findById(orderId);
+    const order = await Order.findById(orderId);
 
     if (!order) {
       return res.status(404).json({
@@ -84,7 +123,7 @@ export const deleteOrder = async (req, res) => {
       });
     }
 
-    await Cart.findByIdAndDelete(orderId);
+    await Order.findByIdAndDelete(orderId);
 
     res.status(200).json({
       success: true,

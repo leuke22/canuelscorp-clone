@@ -1,24 +1,31 @@
 import { MdDelete } from "react-icons/md";
+import { useOrder } from "../fetch/useOrder";
+import { useState } from "react";
+import { DeleteConfirmation } from "../components";
 
 const OrderTableHeader = ({
   orders,
   selectedOrders,
-  setOrders,
   setSelectedOrders,
   setSelectAll,
 }) => {
-  const handleDeleteSelected = () => {
-    if (selectedOrders.length === 0) {
-      return;
+  const { deleteOrders } = useOrder();
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+
+  const handleBulkDelete = async () => {
+    if (selectedOrders.length === 0) return;
+    setShowConfirmModal(true);
+  };
+
+  const confirmDelete = async () => {
+    try {
+      await deleteOrders(selectedOrders);
+      setSelectedOrders([]);
+      setSelectAll(false);
+      setShowConfirmModal(false);
+    } catch (error) {
+      console.error("Failed to delete orders:", error);
     }
-
-    const remainingOrders = orders.filter(
-      (order) => !selectedOrders.includes(order.id)
-    );
-
-    setOrders(remainingOrders);
-    setSelectedOrders([]);
-    setSelectAll(false);
   };
 
   const isDeleteDisabled = selectedOrders.length === 0;
@@ -38,7 +45,7 @@ const OrderTableHeader = ({
       <div className="flex flex-row gap-5">
         <button
           className={`btn btn-error ${isDeleteDisabled ? "opacity-50" : ""}`}
-          onClick={handleDeleteSelected}
+          onClick={handleBulkDelete}
           disabled={isDeleteDisabled}
         >
           <MdDelete size={20} />
@@ -47,6 +54,14 @@ const OrderTableHeader = ({
             {selectedOrders.length > 0 ? ` (${selectedOrders.length})` : ""}
           </span>
         </button>
+
+        <DeleteConfirmation
+          showConfirmModal={showConfirmModal}
+          setShowConfirmModal={setShowConfirmModal}
+          selectedOrders={selectedOrders}
+          confirmDelete={confirmDelete}
+          sectionName="order"
+        />
         <label className="input lg:w-64">
           <svg
             className="h-4 opacity-50"

@@ -1,34 +1,80 @@
 import { MdDelete } from "react-icons/md";
 import { useState } from "react";
-const OrderHistory = ({ orders, setOrders }) => {
-  const [selectedOrderId, setSelectedOrderId] = useState("");
+import { useOrder } from "../../fetch/useOrder";
+import { toast } from "react-hot-toast";
+import DeleteConfirmation from "./DeleteConfirmation";
 
-  const handleDeleteOrder = () => {
+const OrderHistory = ({ isOpen, setIsOpen }) => {
+  const { orders, deleteOrders, isFetchLoading } = useOrder();
+  const [selectedOrderId, setSelectedOrderId] = useState("");
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+
+  const completedOrders =
+    orders?.filter(
+      (order) => order.status === "Delivered" || order.status === "Cancelled"
+    ) || [];
+
+  const formatDateTime = (isoString) => {
+    const dt = new Date(isoString);
+    return dt.toLocaleString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+  };
+
+  const handleDeleteClick = () => {
     if (!selectedOrderId) {
-      alert("Please select an order to delete");
+      toast.error("Please select an order to delete");
       return;
     }
+    setShowConfirmModal(true);
+  };
 
-    console.log(`Deleting order: ${selectedOrderId}`);
+  const confirmDelete = async () => {
+    try {
+      await deleteOrders([selectedOrderId]);
+      setSelectedOrderId("");
+      setShowConfirmModal(false);
+    } catch (error) {
+      console.error("Failed to delete order:", error);
+      toast.error("Failed to delete order");
+    }
+  };
 
-    setOrders(orders.filter((order) => order.id !== selectedOrderId));
+  const handleClose = () => {
+    setIsOpen(false);
     setSelectedOrderId("");
   };
 
   return (
-    <dialog id="my_modal_3" className="modal">
+    <dialog className="modal" open={isOpen}>
       <div className="modal-box w-11/12 max-w-5xl">
         <form method="dialog">
-          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+          <button
+            onClick={handleClose}
+            className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+          >
             ✕
           </button>
         </form>
         <h3 className="font-bold text-lg">Orders History</h3>
         <div className="divider" />
 
-        {orders.length === 0 ? (
+        {isFetchLoading ? (
+          <tr key="loading">
+            <td colSpan="7">
+              <span className="loading loading-spinner loading-xs"></span>
+            </td>
+          </tr>
+        ) : completedOrders?.length === 0 ? (
           <div className="text-center py-4">
-            <p className="text-gray-500">No orders found</p>
+            <p className="text-gray-500">
+              No delivered or cancelled orders found
+            </p>
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -43,26 +89,26 @@ const OrderHistory = ({ orders, setOrders }) => {
                 </tr>
               </thead>
               <tbody>
-                {orders.map((order) => (
+                {completedOrders?.map((order) => (
                   <tr
-                    key={order.id}
+                    key={order._id}
                     className={`hover ${
-                      selectedOrderId === order.id ? "bg-primary/20" : ""
+                      selectedOrderId === order._id ? "bg-primary/20" : ""
                     }`}
-                    onClick={() => setSelectedOrderId(order.id)}
+                    onClick={() => setSelectedOrderId(order._id)}
                   >
                     <th>
                       <input
                         type="radio"
                         name="selectedOrder"
                         className="radio radio-sm"
-                        checked={selectedOrderId === order.id}
-                        onChange={() => setSelectedOrderId(order.id)}
+                        checked={selectedOrderId === order._id}
+                        onChange={() => setSelectedOrderId(order._id)}
                       />
                     </th>
-                    <td>{order.id}</td>
-                    <td>{order.name}</td>
-                    <td>{order.date}</td>
+                    <td>{order._id}</td>
+                    <td>{order.user.fullname}</td>
+                    <td>{formatDateTime(order.createdAt)}</td>
                     <td>{order.status}</td>
                   </tr>
                 ))}
@@ -75,18 +121,26 @@ const OrderHistory = ({ orders, setOrders }) => {
           <button
             type="button"
             className="btn btn-outline"
-            onClick={() => document.getElementById("my_modal_3").close()}
+            onClick={handleClose}
           >
             Close
           </button>
           <button
             type="button"
             className="btn btn-error"
-            onClick={handleDeleteOrder}
+            onClick={handleDeleteClick}
             disabled={!selectedOrderId}
           >
             <MdDelete className="mr-1" /> Delete Order
           </button>
+
+          <DeleteConfirmation
+            showConfirmModal={showConfirmModal}
+            setShowConfirmModal={setShowConfirmModal}
+            selectedOrders={[selectedOrderId]}
+            confirmDelete={confirmDelete}
+            sectionName="order"
+          />
         </div>
       </div>
     </dialog>
