@@ -1,4 +1,4 @@
-import User from "../models/user.model.js";
+import User from "../models/auth.model.js";
 import transporter from "../lib/utils/nodemailer.js";
 import { generateOTP } from "../lib/utils/generateOTP.js";
 import { redis } from "../lib/utils/redis.js";

@@ -1,10 +1,8 @@
 import OrderTableHeader from "./OrderTableHeader";
-import TextField from "./TextField";
 import ItemInfo from "./ItemInfo";
 import ProductInfo from "./ProductInfo";
 
 import ShopButton from "./Buttons/ShopButton";
-import SubmitButton from "./Buttons/SubmitButton";
 
 import AdminProductCard from "./Cards/AdminProductCard";
 import ChooseCard from "./Cards/ChooseCard";
@@ -15,6 +13,7 @@ import OrderCard from "./Cards/OrderCard";
 import ProductCard from "./Cards/ProductCard";
 import UserOrdersCard from "./Cards/UserOrdersCard";
 import CartCard from "./Cards/CartCard";
+import MessageModal from "./Modal/MessageModal";
 
 import Fullname from "./InputField/Fullname";
 import Email from "./InputField/Email";
@@ -38,11 +37,9 @@ import OrdersTable from "./Tables/OrdersTable";
 
 export {
   OrderTableHeader,
-  TextField,
   ItemInfo,
   ProductInfo,
   ShopButton,
-  SubmitButton,
   AdminProductCard,
   ChooseCard,
   DashboardCard,
@@ -52,6 +49,7 @@ export {
   ProductCard,
   UserOrdersCard,
   CartCard,
+  MessageModal,
   Fullname,
   Email,
   Username,

@@ -3,8 +3,13 @@ import { bgSec1 } from "../../assets/canuelsImage";
 import { motion } from "framer-motion";
 import { fadeIn } from "../../utils/motion";
 import { InquireCard, ShopButton } from "../../components";
+import { useUserAuth } from "../../fetch/useUserAuth";
 
 const Hero = () => {
+  const { user } = useUserAuth();
+
+  const isUserAdmin = user?.role === "admin" || user?.role === "supervisor";
+
   return (
     <section className="relative w-full min-h-screen overflow-hidden">
       <div
@@ -42,9 +47,11 @@ const Hero = () => {
             <ShopButton />
           </motion.div>
         </div>
-        <div className="w-full">
-          <InquireCard />
-        </div>
+        {isUserAdmin ? null : (
+          <div className="w-full">
+            <InquireCard />
+          </div>
+        )}
       </div>
     </section>
   );

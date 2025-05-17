@@ -10,14 +10,15 @@ import { Login, Signup, EmailVerification, UpdateProfile, ChangePassword, ResetP
 import { Dashboard, Orders, Users, AdminProducts } from "./pages/adminSections";
 import ScrollTop from "../ScrollTop";
 
-import { AdminRoute, AuthRoute, ProtectedRoute, EmailRoute } from "./pages/protectedRoutes";
+import { AdminRoute, AuthRoute, ProtectedRoute, EmailRoute, UserRoute } from "./pages/protectedRoutes";
 
 import { Toaster } from "react-hot-toast";
 import { useUserAuth } from "./fetch/useUserAuth";
 import { useEffect } from "react";
+import UsersInquire from "./pages/adminSections/UsersInquire";
 
 const App = () => {
-  const { getProfile, checkingAuth, user } = useUserAuth();
+  const { getProfile, checkingAuth } = useUserAuth();
 
   useEffect(() => {
     getProfile();
@@ -46,15 +47,16 @@ const App = () => {
           <Route path="/login" element={ <AuthRoute> <Login /> </AuthRoute> } />
           <Route path="/signup" element={ <AuthRoute> <Signup /> </AuthRoute> }/>
           <Route path="/email-verification" element={<EmailRoute><EmailVerification /></EmailRoute>  } />
-          <Route path="/profile" element={  <UpdateProfile /> } />
+          <Route path="/profile" element={ <UserRoute> <UpdateProfile /> </UserRoute> } />
           <Route path="/change-password" element={  <ChangePassword /> } />
           <Route path="/resetOtp-verification" element={ <ResetPassVerification/>} />
-          <Route path="/cart" element={ <Cart/>} />
+          <Route path="/cart" element={<UserRoute><Cart/></UserRoute> } />
 
           <Route path="/admin" element={ <AdminRoute> <Dashboard /> </AdminRoute> } />
           <Route path="/admin/products" element={ <AdminRoute> <AdminProducts /> </AdminRoute> } />
           <Route path="/admin/orders" element={ <AdminRoute> <Orders /> </AdminRoute> } />
           <Route path="/admin/users" element={ <AdminRoute> <Users /> </AdminRoute> } />
+          <Route path="/admin/inquiries" element={ <AdminRoute> <UsersInquire/> </AdminRoute> } />
         </Routes>
       </section>
       <Footer />

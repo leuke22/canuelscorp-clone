@@ -9,6 +9,7 @@ import adminRoutes from "./routes/admin.route.js";
 import productRoutes from "./routes/product.route.js";
 import cartRoutes from "./routes/cart.route.js";
 import orderRoutes from "./routes/order.route.js";
+import userInquireRoutes from "./routes/user.route.js";
 
 import connectMongoDB from "./db/connectMongoDB.js";
 
@@ -35,6 +36,7 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/userinquire", userInquireRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

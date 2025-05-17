@@ -56,30 +56,7 @@ export const adminLinks = [
   { href: "/admin/products", label: "Products" },
   { href: "/admin/orders", label: "Orders" },
   { href: "/admin/users", label: "Users" },
-];
-
-export const formFields = [
-  {
-    id: 1,
-    name: "Name",
-    label: "Your First Name",
-    type: "text",
-    required: false,
-  },
-  {
-    id: 2,
-    name: "Email*",
-    label: "Your Email Address",
-    type: "email",
-    required: true,
-  },
-  {
-    id: 3,
-    name: "Phone Number*",
-    label: "Enter your phone number",
-    type: "tel",
-    required: true,
-  },
+  { href: "/admin/inquiries", label: "Inquiries" },
 ];
 
 export const chickenDescription = [
@@ -386,5 +363,3 @@ export const coreValues = [
       "Honesty and Integrity are fundamental to our operations. We uphold honesty, highest ethical standards, transparently communicating with integrity, and accountability in all our interactions, decisions, and commitments.",
   },
 ];
-
-

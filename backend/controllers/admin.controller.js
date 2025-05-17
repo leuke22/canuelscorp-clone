@@ -1,4 +1,4 @@
-import User from "../models/user.model.js";
+import User from "../models/auth.model.js";
 
 export const getUsers = async (req, res) => {
   const requestingUser = req.user;
@@ -12,7 +12,7 @@ export const getUsers = async (req, res) => {
     }
 
     let users;
-    const { role } = req.query; 
+    const { role } = req.query;
 
     let query = { role: { $ne: "admin" } };
 
