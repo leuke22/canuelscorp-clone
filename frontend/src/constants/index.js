@@ -387,23 +387,4 @@ export const coreValues = [
   },
 ];
 
-export const dashboard = [
-  {
-    id: 1,
-    imageUrl: "https://img.icons8.com/bubbles/100/purchase-order.png",
-    title: "Total Orders",
-    name: "Orders",
-  },
-  {
-    id: 2,
-    imageUrl: "https://img.icons8.com/bubbles/100/user.png",
-    title: "Total Customers",
-    name: "Customers",
-  },
-  {
-    id: 3,
-    imageUrl: "https://img.icons8.com/bubbles/100/apple-stocks.png",
-    title: "Total Products",
-    name: "Products",
-  },
-];
+

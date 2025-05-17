@@ -1,7 +1,44 @@
+import { useEffect } from "react";
 import { DashboardCard, DashboardTable } from "../../components";
-import { dashboard } from "../../constants";
+import { useAdmin } from "../../fetch/useAdmin";
+import { useOrder } from "../../fetch/useOrder";
+import { useProducts } from "../../fetch/useProducts";
 
 const Dashboard = () => {
+  const { userCount, getUsers } = useAdmin();
+  const { orderItemCount, getOrders } = useOrder();
+  const { productCount, getProducts } = useProducts();
+
+  useEffect(() => {
+    getUsers();
+    getOrders();
+    getProducts();
+  }, [getUsers, getOrders, getProducts]);
+
+  const dashboard = [
+    {
+      id: 1,
+      imageUrl: "https://img.icons8.com/bubbles/100/purchase-order.png",
+      title: "Total Orders",
+      count: orderItemCount,
+      name: "Orders",
+    },
+    {
+      id: 2,
+      imageUrl: "https://img.icons8.com/bubbles/100/user.png",
+      title: "Total Customers",
+      count: userCount,
+      name: "Customers",
+    },
+    {
+      id: 3,
+      imageUrl: "https://img.icons8.com/bubbles/100/apple-stocks.png",
+      title: "Total Products",
+      count: productCount,
+      name: "Products",
+    },
+  ];
+
   return (
     <section className="bg-gray-100 p-10 gap-10 flex flex-col">
       <div className="flex flex-col gap-5">

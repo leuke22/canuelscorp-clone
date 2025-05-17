@@ -8,8 +8,10 @@ const OrderTableHeader = ({
   selectedOrders,
   setSelectedOrders,
   setSelectAll,
+  searchQuery,
+  setSearchQuery,
 }) => {
-  const { deleteOrders } = useOrder();
+  const { deleteOrders, isLoading } = useOrder();
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const handleBulkDelete = async () => {
@@ -61,7 +63,9 @@ const OrderTableHeader = ({
           selectedOrders={selectedOrders}
           confirmDelete={confirmDelete}
           sectionName="order"
+          isLoading={isLoading}
         />
+
         <label className="input lg:w-64">
           <svg
             className="h-4 opacity-50"
@@ -79,7 +83,13 @@ const OrderTableHeader = ({
               <path d="m21 21-4.3-4.3"></path>
             </g>
           </svg>
-          <input type="search" placeholder="Search" />
+          <input
+            type="search"
+            placeholder="Search by ID or name..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full focus:outline-none"
+          />
         </label>
       </div>
     </div>

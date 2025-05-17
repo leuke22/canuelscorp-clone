@@ -17,6 +17,8 @@ const Orders = () => {
   const [isCheckOrderOpen, setIsCheckOrderOpen] = useState(false);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
 
+  const [searchQuery, setSearchQuery] = useState("");
+
   useEffect(() => {
     const fetchOrders = async () => {
       try {
@@ -31,6 +33,14 @@ const Orders = () => {
   if (!Array.isArray(orders)) {
     return <span className="loading loading-dots loading-lg"></span>;
   }
+
+  const filteredOrders = orders.filter((order) => {
+    const query = searchQuery.toLowerCase();
+    return (
+      order._id.toLowerCase().includes(query) ||
+      order.user.fullname.toLowerCase().includes(query)
+    );
+  });
 
   const handleSelectOrder = (orderId) => {
     if (selectedOrders.includes(orderId)) {
@@ -80,16 +90,18 @@ const Orders = () => {
       <div className="bg-gray-100 md:bg-base-100 md:rounded-box md:shadow-md h-[calc(100vh-8rem)] flex flex-col">
         <div className="flex-none">
           <OrderTableHeader
-            orders={orders}
+            orders={filteredOrders}
             selectedOrders={selectedOrders}
             setSelectedOrders={setSelectedOrders}
             setSelectAll={setSelectAll}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
           />
         </div>
 
         <div className="overflow-x-auto flex-1 pl-10 pr-5 hidden md:block">
           <OrdersTable
-            orders={orders}
+            orders={filteredOrders}
             selectAll={selectAll}
             handleSelectAll={handleSelectAll}
             selectedOrders={selectedOrders}
@@ -100,8 +112,8 @@ const Orders = () => {
         </div>
 
         <div className="md:hidden space-y-4 px-4 py-2 overflow-y-auto">
-          {orders && orders.length > 0 ? (
-            orders.map((order) => (
+          {filteredOrders && filteredOrders.length > 0 ? (
+            filteredOrders.map((order) => (
               <OrderCard
                 key={order._id}
                 order={order}
@@ -113,7 +125,9 @@ const Orders = () => {
             ))
           ) : (
             <div className="text-center py-8 text-gray-500">
-              No orders available
+              {searchQuery
+                ? "No orders found matching your search"
+                : "No orders available"}
             </div>
           )}
         </div>

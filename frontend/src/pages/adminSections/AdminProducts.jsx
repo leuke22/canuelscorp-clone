@@ -20,6 +20,8 @@ const AdminProducts = () => {
   const editDialogRef = useRef(null);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
+  const [searchQuery, setSearchQuery] = useState("");
+
   const [categoryTable, setCategoryTable] = useState("All");
 
   const {
@@ -31,6 +33,15 @@ const AdminProducts = () => {
     getCategory,
   } = useProducts();
 
+  const filteredProducts = products.filter((product) => {
+    const searchLower = searchQuery.toLowerCase();
+    return (
+      product.name.toLowerCase().includes(searchLower) ||
+      product.description.toLowerCase().includes(searchLower) ||
+      product.category.toLowerCase().includes(searchLower)
+    );
+  });
+
   useEffect(() => {
     if (categoryTable === "All") {
       getProducts();
@@ -41,6 +52,10 @@ const AdminProducts = () => {
 
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
+
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+  };
 
   const handleSelectProduct = (productId) => {
     if (selectedProducts.includes(productId))
@@ -111,6 +126,7 @@ const AdminProducts = () => {
             selectedOrders={selectedProducts}
             confirmDelete={confirmDelete}
             sectionName="product"
+            isLoading={isDeleteLoading}
           />
         </div>
       </div>
@@ -136,7 +152,9 @@ const AdminProducts = () => {
           <div className="flex flex-col md:flex-row justify-between items-center px-10 py-5 gap-5">
             <p className="text-xl font-bold text-gray-700">
               All products list:{" "}
-              <span className="text-xl text-gray-400">{products.length}</span>
+              <span className="text-xl text-gray-400">
+                {filteredProducts.length}
+              </span>
               {selectedProducts.length > 0 && (
                 <span className="text-xl text-secondary">
                   {" "}
@@ -178,7 +196,13 @@ const AdminProducts = () => {
                     <path d="m21 21-4.3-4.3"></path>
                   </g>
                 </svg>
-                <input type="search" placeholder="Search" />
+                <input
+                  type="search"
+                  placeholder="Search products..."
+                  value={searchQuery}
+                  onChange={handleSearch}
+                  className="w-full focus:outline-none"
+                />
               </label>
             </div>
           </div>
@@ -190,7 +214,7 @@ const AdminProducts = () => {
             </div>
           ) : (
             <AdminProductsTable
-              products={products}
+              products={filteredProducts}
               selectAll={selectAll}
               handleSelectAll={handleSelectAll}
               selectedProducts={selectedProducts}
@@ -206,7 +230,7 @@ const AdminProducts = () => {
             </div>
           ) : (
             <>
-              {products.map((product) => (
+              {filteredProducts.map((product) => (
                 <AdminProductCard
                   product={product}
                   key={product._id}
@@ -215,9 +239,11 @@ const AdminProducts = () => {
                   handleEditClick={handleEditClick}
                 />
               ))}
-              {products.length === 0 && (
+              {filteredProducts.length === 0 && (
                 <div className="text-center py-8 text-gray-500">
-                  No products available
+                  {searchQuery
+                    ? "No products found matching your search"
+                    : "No products available"}
                 </div>
               )}
             </>

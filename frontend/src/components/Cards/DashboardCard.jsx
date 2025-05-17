@@ -10,7 +10,7 @@ const DashboardCard = ({ items }) => {
       </figure>
       <div className="card-body">
         <h2 className="text-3xl font-bold">
-          {12} {items.name}
+          {items.count} {items.name}
         </h2>
         <p className="text-gray-500">{items.title}</p>
       </div>

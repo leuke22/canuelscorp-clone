@@ -51,10 +51,24 @@ const Cart = () => {
 
   const handlePlaceOrder = async () => {
     try {
+      if (
+        !cart?.shippingAddress ||
+        !cart.shippingAddress.street ||
+        !cart.shippingAddress.city ||
+        !cart.shippingAddress.province ||
+        !cart.shippingAddress.postalCode
+      ) {
+        toast.error(
+          "Please complete your shipping address before placing the order"
+        );
+        return;
+      }
+
       await placeOrder();
+      toast.success("Order placed successfully!");
       navigate("/products");
     } catch (error) {
-      toast.error(error);
+      console.error("Failed to place order:", error);
     }
   };
 

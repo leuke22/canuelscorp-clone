@@ -15,22 +15,14 @@ export const useOrder = create((set, get) => ({
     set({ isLoading: true });
     try {
       const res = await axios.post("/orders/place-order");
-      set({
-        orders: res.data.order,
-        isLoading: false,
-      });
-
-      useCart.setState({
-        cart: [],
-        itemCount: 0,
-      });
-
-      toast.success("Order placed successfully!");
-      toast.success("Thank you for shopping with us!");
+      set({ isLoading: false });
+      return res.data;
     } catch (error) {
       set({ isLoading: false });
-      toast.error(error.response?.data?.error || "Error placing order");
-      throw error;
+      const errorMessage =
+        error.response?.data?.message || "Failed to place order";
+      toast.error(errorMessage);
+      throw new Error(errorMessage);
     }
   },
 

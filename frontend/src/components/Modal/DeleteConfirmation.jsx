@@ -4,6 +4,7 @@ const DeleteConfirmation = ({
   selectedOrders,
   confirmDelete,
   sectionName,
+  isLoading,
 }) => {
   return (
     <dialog className={`modal ${showConfirmModal ? "modal-open" : ""}`}>
@@ -33,11 +34,20 @@ const DeleteConfirmation = ({
           <button
             className="btn btn-outline"
             onClick={() => setShowConfirmModal(false)}
+            disabled={isLoading}
           >
             Cancel
           </button>
-          <button className="btn btn-error" onClick={confirmDelete}>
-            Delete
+          <button
+            className="btn btn-error"
+            onClick={confirmDelete}
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <span className="loading loading-spinner loading-sm"></span>
+            ) : (
+              "Delete"
+            )}
           </button>
         </div>
       </div>

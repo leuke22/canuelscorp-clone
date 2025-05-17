@@ -11,14 +11,33 @@ export const placeOrder = async (req, res) => {
     });
 
     if (!cart || cart.items.length === 0) {
-      return res.status(400).json({ error: "Cart is empty" });
+      return res.status(400).json({ message: "Cart is empty" });
+    }
+
+    const { shippingAddress } = cart;
+    if (
+      !shippingAddress ||
+      !shippingAddress.street ||
+      !shippingAddress.city ||
+      !shippingAddress.province ||
+      !shippingAddress.postalCode
+    ) {
+      return res.status(400).json({
+        message:
+          "Please complete your shipping address before placing the order",
+      });
     }
 
     const newOrder = new Order({
       user: userId,
       items: cart.items,
       status: "Pending",
-      shippingAddress: cart.shippingAddress,
+      shippingAddress: {
+        street: shippingAddress.street,
+        city: shippingAddress.city,
+        province: shippingAddress.province,
+        postalCode: shippingAddress.postalCode,
+      },
     });
 
     await newOrder.save();
@@ -35,7 +54,9 @@ export const placeOrder = async (req, res) => {
     });
   } catch (error) {
     console.error("Error in placeOrder:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({
+      message: error.message || "Failed to place order",
+    });
   }
 };
 

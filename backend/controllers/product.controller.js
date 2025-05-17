@@ -1,4 +1,5 @@
 import Product from "../models/product.model.js";
+import Order from "../models/orders.model.js";
 import { v2 as cloudinary } from "cloudinary";
 import dotenv from "dotenv";
 
@@ -47,7 +48,11 @@ export const createProduct = async (req, res) => {
 export const getProducts = async (req, res) => {
   try {
     const products = await Product.find().sort({ createdAt: -1 });
-    res.status(200).json({ products });
+    res.status(200).json({
+      products,
+      count: products.length,
+      message: "Products fetched successfully",
+    });
   } catch (error) {
     console.log("Error in getProducts controller", error.message);
     res.status(500).json({ error: "Internal Server Error" });
@@ -178,9 +183,74 @@ export const getCategory = async (req, res) => {
   const { category } = req.params;
   try {
     const products = await Product.find({ category });
-    res.status(200).json({ products });
+    res.status(200).json({
+      products,
+      count: products.length,
+      message: "Category products fetched successfully",
+    });
   } catch (error) {
     console.log("Error in getCategory controller", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const getBestSellingProducts = async (req, res) => {
+  try {
+    const bestSelling = await Order.aggregate([
+      // First unwind the items array to get individual product entries
+      { $unwind: "$items" },
+
+      // Group by product to sum quantities and count orders
+      {
+        $group: {
+          _id: "$items.product",
+          totalQuantity: { $sum: "$items.quantity" },
+          // Count unique orders containing this product
+          totalOrders: { $addToSet: "$_id" },
+        },
+      },
+
+      // Add product details
+      {
+        $lookup: {
+          from: "products",
+          localField: "_id",
+          foreignField: "_id",
+          as: "productDetails",
+        },
+      },
+
+      // Unwind the product details
+      { $unwind: "$productDetails" },
+
+      {
+        $project: {
+          _id: "$productDetails._id",
+          name: "$productDetails.name",
+          description: "$productDetails.description",
+          image: "$productDetails.image",
+          category: "$productDetails.category",
+          totalQuantity: 1,
+          totalOrders: { $size: "$totalOrders" },
+        },
+      },
+
+      {
+        $sort: {
+          totalQuantity: -1,
+          totalOrders: -1,
+        },
+      },
+
+      { $limit: 5 },
+    ]);
+
+    res.status(200).json({
+      products: bestSelling,
+      message: "Best selling products fetched successfully",
+    });
+  } catch (error) {
+    console.error("Error in getBestSellingProducts controller:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };

@@ -7,8 +7,12 @@ export const useProducts = create((set, get) => ({
   isLoading: false,
 
   isFetchLoading: false,
+  productCount: 0,
 
   isDeleteLoading: false,
+
+  bestSelling: [],
+  isBestSellingLoading: false,
 
   setProducts: (products) => set({ products }),
 
@@ -65,14 +69,16 @@ export const useProducts = create((set, get) => ({
     set({ isFetchLoading: true });
     try {
       const res = await axios.get("/products");
-      set({ products: res.data.products, isFetchLoading: false });
+      set({
+        products: res.data.products || [],
+        productCount: res.data.count || 0,
+        isFetchLoading: false,
+      });
     } catch (error) {
-      set({ isFetchLoading: false });
-      const toastMessage =
-        error.response.data.error ||
-        error.response.data.message ||
-        "An error occurred in fetching products";
-      toast.error(toastMessage);
+      set({ isFetchLoading: false, products: [] });
+      console.error("Error fetching products:", error);
+      toast.error(error.response?.data?.message || "Failed to fetch products");
+      throw error;
     }
   },
 
@@ -103,44 +109,26 @@ export const useProducts = create((set, get) => ({
     }
   },
 
-  deleteProduct: async (ids) => {
-    set({ isDeleteLoading: true });
+  deleteProducts: async (productIds) => {
+    set({ isLoading: true });
     try {
-      if (Array.isArray(ids)) {
-        if (ids.length === 0) {
-          set({ isDeleteLoading: false });
-          return;
-        }
+      const res = await axios.delete("/products", {
+        data: { ids: productIds },
+      });
 
-        const res = await axios.post("/products/delete-multiple", { ids });
+      set((state) => ({
+        products: state.products.filter(
+          (product) => !productIds.includes(product._id)
+        ),
+        productCount: state.products.length,
+        isLoading: false,
+      }));
 
-        set((state) => ({
-          products: state.products.filter(
-            (product) => !ids.includes(product._id)
-          ),
-          isDeleteLoading: false,
-        }));
-
-        toast.success(
-          res.data.message || `${ids.length} products deleted successfully!`
-        );
-      } else {
-        const res = await axios.delete(`/products/delete/${ids}`);
-
-        set((state) => ({
-          products: state.products.filter((product) => product._id !== ids),
-          isDeleteLoading: false,
-        }));
-
-        toast.success(res.data.message || "Product deleted successfully!");
-      }
+      toast.success(res.data.message);
     } catch (error) {
-      set({ isDeleteLoading: false });
-      const toastMessage =
-        error.response?.data?.error ||
-        error.response?.data?.message ||
-        "An error occurred in deleting product";
-      toast.error(toastMessage);
+      set({ isLoading: false });
+      toast.error(error.response?.data?.message || "Failed to delete products");
+      throw error;
     }
   },
 
@@ -148,14 +136,32 @@ export const useProducts = create((set, get) => ({
     set({ isFetchLoading: true });
     try {
       const res = await axios.get(`/products/category/${category}`);
-      set({ products: res.data.products, isFetchLoading: false });
+      set({
+        products: res.data.products || [],
+        productCount: res.data.count || 0,
+        isFetchLoading: false,
+      });
     } catch (error) {
-      set({ isFetchLoading: false });
-      const toastMessage =
-        error.response.data.error ||
-        error.response.data.message ||
-        "An error occurred in fetching products";
-      toast.error(toastMessage);
+      set({ isFetchLoading: false, products: [] });
+      toast.error(
+        error.response?.data?.message || "Failed to fetch category products"
+      );
+      throw error;
+    }
+  },
+
+  getBestSelling: async () => {
+    set({ isBestSellingLoading: true });
+    try {
+      const res = await axios.get("/products/best-selling");
+      set({
+        bestSelling: res.data.products || [],
+        isBestSellingLoading: false,
+      });
+    } catch (error) {
+      set({ isBestSellingLoading: false, bestSelling: [] });
+      console.error("Error fetching best selling products:", error);
+      throw error;
     }
   },
 }));

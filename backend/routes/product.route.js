@@ -6,6 +6,7 @@ import {
   createProduct,
   deleteMultipleProducts,
   deleteProduct,
+  getBestSellingProducts,
   getCategory,
   getProducts,
   updateProduct,
@@ -25,5 +26,6 @@ router.post(
   deleteMultipleProducts
 );
 router.get("/category/:category", getCategory);
+router.get("/best-selling", getBestSellingProducts);
 
 export default router;
