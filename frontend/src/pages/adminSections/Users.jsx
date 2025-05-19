@@ -326,7 +326,7 @@ const Users = () => {
                     />
                   </div>
                   <div className="card-body">
-                    <div className="flex justify-between items-center">
+                    <div className="flex flex-col gap-2">
                       <h2 className="card-title">{user._id}</h2>
                       <div className="badge p-3 badge-primary">{user.role}</div>
                     </div>

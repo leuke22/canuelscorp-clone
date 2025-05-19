@@ -1,5 +1,5 @@
 import { CheckOrder, UserOrdersCard } from "../components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   MdOutlineEmail,
   MdOutlineLocationOn,
@@ -8,39 +8,36 @@ import {
 } from "react-icons/md";
 import { ItemInfo, UpdateUserModal } from "../components";
 import { useUserAuth } from "../fetch/useUserAuth";
+import { Link } from "react-router-dom";
+import { useOrder } from "../fetch/useOrder";
 
 const UpdateProfile = () => {
-  const [orders, setOrders] = useState([
-    {
-      id: "ORD-001",
-      date: "2025-04-25",
-      status: "Delivered",
-      items: [
-        { id: "P-01", product: "Fresh Whole Chicken - 1kg", quantity: 2 },
-        { id: "P-02", product: "Organic Eggs - 12pcs", quantity: 1 },
-      ],
-    },
-    {
-      id: "ORD-002",
-      date: "2025-04-22",
-      status: "Processing",
-      items: [{ id: "P-03", product: "Dio Lupa Coffee Beans", quantity: 1 }],
-    },
-    {
-      id: "ORD-003",
-      date: "2025-04-20",
-      status: "Shipped",
-      items: [
-        { id: "P-04", product: "Organic Apples - 1kg", quantity: 1 },
-        { id: "P-05", product: "Fresh Bread", quantity: 2 },
-      ],
-    },
-  ]);
-
   const { user } = useUserAuth();
-
-  const [selectedOrder, setSelectedOrder] = useState(null);
+  const { orders, getOrders, isFetchLoading } = useOrder();
+  const [userOrders, setUserOrders] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        await getOrders();
+      } catch (error) {
+        console.error("Error fetching orders:", error);
+      }
+    };
+    fetchOrders();
+  }, [getOrders]);
+
+  useEffect(() => {
+    if (orders.length > 0 && user?._id) {
+      const filteredOrders = orders.filter(
+        (order) => order.user._id === user._id
+      );
+      setUserOrders(filteredOrders);
+    }
+  }, [orders, user]);
 
   const formatAddress = (address) => {
     return `${address.street || "1235 Bulacan St."}, ${
@@ -84,20 +81,82 @@ const UpdateProfile = () => {
             />
           </div>
         </div>
+
         <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-10">
-          <h1 className="text-3xl font-bold md:col-span-2">Your Orders</h1>
-          {orders.map((order) => (
-            <UserOrdersCard
-              order={order}
-              key={order.id}
-              setSelectedOrder={setSelectedOrder}
-            />
-          ))}
+          {user?.role === "user" ? (
+            <div className="grid md:col-span-2 gap-5">
+              <h1 className="text-3xl font-bold">Your Orders</h1>
+              {isFetchLoading ? (
+                <div className="md:col-span-2">
+                  <span className="loading loading-spinner loading-lg"></span>
+                </div>
+              ) : userOrders.length > 0 ? (
+                <div className="h-[calc(100vh-200px)] overflow-y-auto pr-4">
+                  <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                    {userOrders.map((order) => (
+                      <UserOrdersCard
+                        order={order}
+                        key={order._id}
+                        setSelectedOrder={setSelectedOrder}
+                        setIsOrderModalOpen={setIsOrderModalOpen}
+                      />
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className="md:col-span-2">No orders found</div>
+              )}
+            </div>
+          ) : user?.role === "admin" ? (
+            <>
+              <h1 className="text-3xl font-bold md:col-span-2">
+                Welcome Admin
+              </h1>
+              <div className="flex flex-col gap-4 md:col-span-2">
+                <Link to="/admin/users" className="btn btn-primary w-full">
+                  View Users
+                </Link>
+                <Link to="/admin/products" className="btn btn-primary w-full">
+                  View Products
+                </Link>
+                <Link to="/admin/orders" className="btn btn-primary w-full">
+                  View Orders
+                </Link>
+                <Link to="/admin/inquiries" className="btn btn-primary w-full">
+                  Check Inquiries
+                </Link>
+              </div>
+            </>
+          ) : user?.role === "supervisor" ? (
+            <>
+              <h1 className="text-3xl font-bold md:col-span-2">
+                Welcome Supervisor
+              </h1>
+              <div className="flex flex-col gap-4 md:col-span-2">
+                <Link to="/admin/users" className="btn btn-primary w-full">
+                  View Users
+                </Link>
+                <Link to="/admin/products" className="btn btn-primary w-full">
+                  View Products
+                </Link>
+                <Link to="/admin/orders" className="btn btn-primary w-full">
+                  View Orders
+                </Link>
+                <Link to="/admin/inquiries" className="btn btn-primary w-full">
+                  Check Inquiries
+                </Link>
+              </div>
+            </>
+          ) : (
+            <div className="md:col-span-2">No orders found</div>
+          )}
         </div>
 
         <CheckOrder
           selectedOrder={selectedOrder}
           setSelectedOrder={setSelectedOrder}
+          isOpen={isOrderModalOpen}
+          setIsOpen={setIsOrderModalOpen}
         />
       </div>
 

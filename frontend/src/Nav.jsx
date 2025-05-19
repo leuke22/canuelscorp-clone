@@ -163,35 +163,113 @@ const Nav = () => {
         }`}
       >
         <div className="bg-white/90 backdrop-blur-sm shadow-sm h-dvh flex flex-col items-center gap-4 p-5">
-          {navLinks.map((item, index) => (
-            <Link
-              to={item.href}
-              key={index}
-              onClick={() => setIsMenuOpen(false)}
-              className={`block text-lg font-medium py-2 w-full text-center ${
-                activeLink === item.href
-                  ? "text-bgHeaderNav"
-                  : "text-gray-600 hover:text-gray-900"
-              }`}
-            >
-              {item.label}
-            </Link>
-          ))}
-          <Link
-            to={"/login"}
-            className="btn btn-primary w-32"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Login
-          </Link>
-          <div className="divider">or</div>
-          <Link
-            to={"/signup"}
-            className="btn btn-secondary w-32"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Signup
-          </Link>
+          {user && isAuthenticated ? (
+            <>
+              <div className="flex flex-col items-center gap-3 w-full mb-4">
+                <div className="avatar">
+                  <div className="w-20 rounded-full">
+                    <img
+                      src={
+                        !user?.profileImg || user?.profileImg === ""
+                          ? "https://img.daisyui.com/images/profile/demo/yellingcat@192.webp"
+                          : user?.profileImg
+                      }
+                      alt="profile"
+                    />
+                  </div>
+                </div>
+                <p className="text-center font-medium">
+                  {!user?.fullname ? "User Fullname" : user?.fullname}
+                </p>
+              </div>
+              {isRoleAdmin
+                ? adminLinks.map((item, index) => (
+                    <Link
+                      to={item.href}
+                      key={index}
+                      onClick={() => setIsMenuOpen(false)}
+                      className={`block text-lg font-medium py-2 w-full text-center ${
+                        activeLink === item.href
+                          ? "text-bgHeaderNav"
+                          : "text-gray-600 hover:text-gray-900"
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  ))
+                : navLinks.map((item, index) => (
+                    <Link
+                      to={item.href}
+                      key={index}
+                      onClick={() => setIsMenuOpen(false)}
+                      className={`block text-lg font-medium py-2 w-full text-center ${
+                        activeLink === item.href
+                          ? "text-bgHeaderNav"
+                          : "text-gray-600 hover:text-gray-900"
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+              <Link
+                to="/profile"
+                className={`block text-lg font-medium py-2 w-full text-center btn btn-outline btn-primary ${
+                  !isAuthenticated || !user?.isAccountVerified
+                    ? "disabled cursor-not-allowed opacity-50"
+                    : ""
+                }`}
+                onClick={(e) => {
+                  if (!isAuthenticated || !user?.isAccountVerified) {
+                    e.preventDefault();
+                  }
+                  setIsMenuOpen(false);
+                }}
+              >
+                Profile
+              </Link>
+              <button
+                onClick={() => {
+                  logoutHandler();
+                  setIsMenuOpen(false);
+                }}
+                className="btn btn-secondary w-full"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              {navLinks.map((item, index) => (
+                <Link
+                  to={item.href}
+                  key={index}
+                  onClick={() => setIsMenuOpen(false)}
+                  className={`block text-lg font-medium py-2 w-full text-center ${
+                    activeLink === item.href
+                      ? "text-bgHeaderNav"
+                      : "text-gray-600 hover:text-gray-900"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              ))}
+              <Link
+                to={"/login"}
+                className="btn btn-primary w-32"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Login
+              </Link>
+              <div className="divider">or</div>
+              <Link
+                to={"/signup"}
+                className="btn btn-secondary w-32"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Signup
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </motion.nav>
