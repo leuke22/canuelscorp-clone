@@ -39,6 +39,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cookieParser());
 
+app.get("/", (req, res) => res.status(200).json({ message: "Hello Backend" }));
+
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/products", productRoutes);
