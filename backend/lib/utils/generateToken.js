@@ -22,21 +22,21 @@ const storeRefreshToken = async (userId, refreshToken) => {
     refreshToken,
     "EX",
     7 * 24 * 60 * 60
-  ); // 7days
+  );
 };
 
 const setCookies = (res, accessToken, refreshToken) => {
   res.cookie("accessToken", accessToken, {
-    httpOnly: true, // prevent XSS attacks, cross site scripting attack
+    httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "strict", // prevents CSRF attack, cross-site request forgery attack
-    maxAge: 15 * 60 * 1000, // 15 minutes
+    sameSite: "strict",
+    maxAge: 15 * 60 * 1000,
   });
   res.cookie("refreshToken", refreshToken, {
-    httpOnly: true, // prevent XSS attacks, cross site scripting attack
+    httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "strict", // prevents CSRF attack, cross-site request forgery attack
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    sameSite: "strict",
+    maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 };
 
