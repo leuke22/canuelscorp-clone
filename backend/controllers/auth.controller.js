@@ -1,6 +1,6 @@
 import User from "../models/auth.model.js";
 import transporter from "../lib/utils/nodemailer.js";
-import { generateOTP } from "../lib/utils/generateOTP.js";
+import { generateOtp } from "../lib/utils/generateOtp.js";
 import { redis } from "../lib/utils/redis.js";
 import { v2 as cloudinary } from "cloudinary";
 import bcrypt from "bcryptjs";
@@ -164,7 +164,7 @@ export const sendVerificationOtp = async (req, res) => {
       return res.status(400).json({ error: "Account already verified" });
     }
 
-    const otp = generateOTP();
+    const otp = generateOtp();
 
     const expiryTime = Date.now() + 15 * 60 * 1000;
 
@@ -345,7 +345,7 @@ export const requestPasswordResetOtp = async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    const otp = generateOTP();
+    const otp = generateOtp();
     const expiryTime = Date.now() + 15 * 60 * 1000;
 
     user.resetOtp = otp;
