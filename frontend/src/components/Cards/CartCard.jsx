@@ -3,6 +3,7 @@ import { MdDeleteOutline } from "react-icons/md";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { useCart } from "../../fetch/useCart";
 import { CiEdit } from "react-icons/ci";
+import toast from "react-hot-toast";
 
 const CartCard = ({
   productId,
@@ -41,7 +42,7 @@ const CartCard = ({
       await updateCartQuantity(productId, qty);
       setIsEditing(false);
     } catch (error) {
-      console.error("Error updating quantity:", error);
+      toast.error("Error updating quantity:", error);
     }
   };
 
@@ -54,7 +55,7 @@ const CartCard = ({
     try {
       await deleteProductItem(productId);
     } catch (error) {
-      console.error("Error deleting item:", error);
+      toast.error("Error deleting item:", error);
     }
   };
 

@@ -8,6 +8,7 @@ import {
   OrdersTable,
 } from "../../components";
 import { useOrder } from "../../fetch/useOrder";
+import toast from "react-hot-toast";
 
 const Orders = () => {
   const { orders = [], getOrders, updateOrderStatus } = useOrder();
@@ -63,7 +64,7 @@ const Orders = () => {
     try {
       await updateOrderStatus(orderId, newStatus);
     } catch (error) {
-      console.error("Failed to update order status:", error);
+      toast.error("Failed to update order status:", error);
     }
   };
 

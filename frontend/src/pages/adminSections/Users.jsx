@@ -4,6 +4,7 @@ import { useAdmin } from "../../fetch/useAdmin";
 import { useEffect } from "react";
 import { DeleteConfirmation } from "../../components";
 import { useUserAuth } from "../../fetch/useUserAuth";
+import toast from "react-hot-toast";
 
 const Users = () => {
   const {
@@ -77,7 +78,7 @@ const Users = () => {
       setSelectAll(false);
       setShowConfirmModal(false);
     } catch (error) {
-      console.error("Failed to delete users:", error);
+      toast.error("Failed to delete users:", error);
     }
   };
 
@@ -110,7 +111,7 @@ const Users = () => {
       delete updatedChanges[userId];
       setPendingChanges(updatedChanges);
     } catch (error) {
-      console.error("Failed to update role:", error);
+      toast.error("Failed to update role:", error);
     }
   };
 

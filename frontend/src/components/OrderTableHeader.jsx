@@ -2,6 +2,7 @@ import { MdDelete } from "react-icons/md";
 import { useOrder } from "../fetch/useOrder";
 import { useState } from "react";
 import { DeleteConfirmation } from "../components";
+import toast from "react-hot-toast";
 
 const OrderTableHeader = ({
   orders,
@@ -26,7 +27,7 @@ const OrderTableHeader = ({
       setSelectAll(false);
       setShowConfirmModal(false);
     } catch (error) {
-      console.error("Failed to delete orders:", error);
+      toast.error("Failed to delete orders" || error.message);
     }
   };
 

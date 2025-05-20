@@ -78,7 +78,7 @@ const UsersInquire = () => {
       setSelectAll(false);
       setShowConfirmModal(false);
     } catch (error) {
-      console.error("Failed to delete inquiries:", error);
+      toast.error("Failed to delete inquiries:", error);
     }
   };
 

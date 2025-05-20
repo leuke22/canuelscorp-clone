@@ -40,7 +40,6 @@ const OrderHistory = ({ isOpen, setIsOpen }) => {
       setSelectedOrderId("");
       setShowConfirmModal(false);
     } catch (error) {
-      console.error("Failed to delete order:", error);
       toast.error("Failed to delete order");
     }
   };

@@ -10,6 +10,7 @@ import { ItemInfo, UpdateUserModal } from "../components";
 import { useUserAuth } from "../fetch/useUserAuth";
 import { Link } from "react-router-dom";
 import { useOrder } from "../fetch/useOrder";
+import toast from "react-hot-toast";
 
 const UpdateProfile = () => {
   const { user } = useUserAuth();
@@ -24,7 +25,7 @@ const UpdateProfile = () => {
       try {
         await getOrders();
       } catch (error) {
-        console.error("Error fetching orders:", error);
+        toast.error("Error fetching orders:", error);
       }
     };
     fetchOrders();

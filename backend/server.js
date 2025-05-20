@@ -28,7 +28,7 @@ app.use(
   cors({
     origin:
       process.env.NODE_ENV === "production"
-        ? "https://canuelscorp.com"
+        ? process.env.CLIENT_URL
         : "http://localhost:5173",
     credentials: true,
   })
