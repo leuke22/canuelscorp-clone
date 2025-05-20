@@ -1,10 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL:
-    import.meta.env.NODE_ENV === "development"
-      ? "http://localhost:5000/api"
-      : import.meta.env.SERVER_URL + "/api",
+  baseURL: "https://canuelscorp.onrender.com/api",
   withCredentials: true,
 });
 
