@@ -27,6 +27,8 @@ const Nav = () => {
     }
   };
 
+  const DEFAULT_PROFILE_IMAGE = "/src/assets/profile.jpg";
+
   return (
     <motion.nav
       variants={fadeIn("down", 0.2)}
@@ -93,7 +95,7 @@ const Nav = () => {
                       <img
                         src={
                           !user?.profileImg || user?.profileImg === ""
-                            ? "https://img.daisyui.com/images/profile/demo/yellingcat@192.webp"
+                            ? DEFAULT_PROFILE_IMAGE
                             : user?.profileImg
                         }
                       />
@@ -171,7 +173,7 @@ const Nav = () => {
                     <img
                       src={
                         !user?.profileImg || user?.profileImg === ""
-                          ? "https://img.daisyui.com/images/profile/demo/yellingcat@192.webp"
+                          ? DEFAULT_PROFILE_IMAGE
                           : user?.profileImg
                       }
                       alt="profile"
