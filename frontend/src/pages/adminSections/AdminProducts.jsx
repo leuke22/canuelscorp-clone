@@ -28,7 +28,7 @@ const AdminProducts = () => {
     products,
     isFetchLoading,
     getProducts,
-    deleteProduct,
+    deleteProducts,
     isDeleteLoading,
     getCategory,
   } = useProducts();
@@ -76,7 +76,7 @@ const AdminProducts = () => {
 
   const confirmDelete = async () => {
     try {
-      await deleteProduct(selectedProducts);
+      await deleteProducts(selectedProducts);
       setSelectedProducts([]);
       setSelectAll(false);
       setShowConfirmModal(false);

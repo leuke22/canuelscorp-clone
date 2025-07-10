@@ -50,10 +50,8 @@ export const useProducts = create((set, get) => ({
         category,
         description,
       });
-      set((state) => ({
-        products: [...state.products, res.data.product],
-        isLoading: false,
-      }));
+      await get().getProducts();
+      set({ isLoading: false });
       toast.success(res.data.message || "Product created successfully!");
     } catch (error) {
       set({ isLoading: false });
