@@ -33,12 +33,12 @@ This project is a full-stack e-commerce application built using the **MERN Stack
 
 | Layer       | Technology               |
 |-------------|---------------------------|
-| Frontend    | React.js, Redux Toolkit, Axios |
-| Backend     | Node.js, Express.js       |
-| Database    | MongoDB (Mongoose ODM)    |
+| Frontend    | React.js, TailwindCSS, DaisyUI, Framer Motion, Imagekit, Axios |
+| Backend     | Node.js, Express.js, Cloudinary, NodeMailer|
+| Database    | MongoDB (Mongoose ODM), Redis |
 | Authentication | JWT, Nodemailer, bcrypt |
 | Admin UI    | React Admin Panel or custom interface |
-| Deployment  | Vercel / Render / Railway (Optional) |
+| Deployment  | Render on Server, Hostinger for Client |
 
 
 ## 📁 Folder Structure
