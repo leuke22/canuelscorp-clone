@@ -40,9 +40,6 @@ This project is a full-stack e-commerce application built using the **MERN Stack
 | Admin UI    | React Admin Panel or custom interface |
 | Deployment  | Render on Server, Hostinger for Client |
 
-
-## 📁 Folder Structure
-
 # MERN Stack E-Commerce Clone with Advanced Features
 
 ## 📋 Project Overview
