@@ -9,7 +9,6 @@ const Email = ({ handleInputChange, formData }) => {
         <input
           type="email"
           name="email"
-          required
           placeholder="e.g. username@email.com"
           title="Only letters, numbers or dash"
           onChange={handleInputChange}

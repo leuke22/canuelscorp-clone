@@ -9,7 +9,6 @@ const PhoneNumber = ({ handleInputChange, formData }) => {
         <input
           type="tel"
           name="phone"
-          required
           placeholder="e.g. +639171234567 or 09171234567"
           pattern="^(\+63|0)9\d{9}$"
           title="Must start with +63 or 09, followed by 9 digits (e.g. +639171234567 or 09171234567)"

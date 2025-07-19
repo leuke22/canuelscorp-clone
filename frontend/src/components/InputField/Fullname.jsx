@@ -9,7 +9,6 @@ const Fullname = ({ handleInputChange, formData }) => {
         <input
           type="text"
           name="fullname"
-          required
           placeholder="e.g. Juan Dela Cruz"
           title="Only letters, spaces, apostrophes or hyphens allowed"
           onChange={handleInputChange}

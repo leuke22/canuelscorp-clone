@@ -64,11 +64,9 @@ const OrderHistory = ({ isOpen, setIsOpen }) => {
         <div className="divider" />
 
         {isFetchLoading ? (
-          <tr key="loading">
-            <td colSpan="7">
-              <span className="loading loading-spinner loading-xs"></span>
-            </td>
-          </tr>
+          <div className="flex justify-center items-center py-8">
+            <span className="loading loading-spinner loading-xs"></span>
+          </div>
         ) : completedOrders?.length === 0 ? (
           <div className="text-center py-4">
             <p className="text-gray-500">
@@ -106,7 +104,7 @@ const OrderHistory = ({ isOpen, setIsOpen }) => {
                       />
                     </th>
                     <td>{order._id}</td>
-                    <td>{order.user.fullname}</td>
+                    <td>{order.user?.fullname}</td>
                     <td>{formatDateTime(order.createdAt)}</td>
                     <td>{order.status}</td>
                   </tr>

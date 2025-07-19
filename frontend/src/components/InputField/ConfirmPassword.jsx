@@ -9,7 +9,6 @@ const ConfirmPassword = ({ handleInputChange, formData, show, setShow, isResetPa
         <input
           type={show ? "text" : "password"}
           name="confirmPassword"
-          required
           placeholder="●●●●●●●●●"
           onChange={handleInputChange}
           value={formData.confirmPassword}

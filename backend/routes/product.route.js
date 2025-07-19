@@ -19,8 +19,8 @@ router.get("/", getProducts);
 router.post("/create", protectRoute, adminOrSupervisor, createProduct);
 router.post("/update/:id", protectRoute, adminOrSupervisor, updateProduct);
 router.delete("/delete/:id", protectRoute, adminOrSupervisor, deleteProduct);
-router.post(
-  "/delete-multiple",
+router.delete(
+  "/",
   protectRoute,
   adminOrSupervisor,
   deleteMultipleProducts

@@ -77,7 +77,7 @@ const OrderCard = ({
         <div className="divide-y">
           <div className="py-2">
             <p className="text-sm font-medium">Customer</p>
-            <p className="text-lg">{order.user.fullname}</p>
+            <p className="text-lg">{order.user?.fullname}</p>
           </div>
           <div className="py-2">
             <p className="text-sm font-medium">Date</p>

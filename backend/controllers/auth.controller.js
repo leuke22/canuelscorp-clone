@@ -1,4 +1,5 @@
 import User from "../models/auth.model.js";
+import UserInquire from "../models/user.model.js";
 import transporter from "../lib/utils/nodemailer.js";
 import { generateOtp } from "../lib/utils/generateOtp.js";
 import { redis } from "../lib/utils/redis.js";
@@ -91,7 +92,11 @@ export const login = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
 
-    if (user && (await user.comparePassword(password))) {
+    if (!user) {
+      return res.status(400).json({ message: "Invalid email or password" });
+    }
+
+    if (await user.comparePassword(password)) {
       const { accessToken, refreshToken } = generateTokens(user._id);
       await storeRefreshToken(user._id, refreshToken);
       setCookies(res, accessToken, refreshToken);
@@ -469,7 +474,6 @@ export const refreshToken = async (req, res) => {
   }
 };
 
-//This function is only inquire the customer and not having an authentication
 export const userInquire = async (req, res) => {
   try {
     const { name, email, phone, message } = req.body;

@@ -100,7 +100,7 @@ const OrdersTable = ({
                 />
               </th>
               <td className="tabular-nums font-medium">{order._id}</td>
-              <td>{order.user.fullname}</td>
+              <td>{order.user?.fullname}</td>
               <td>{formatDateTime(order.createdAt)}</td>
               <td>
                 <button

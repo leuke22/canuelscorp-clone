@@ -9,7 +9,6 @@ const Username = ({ handleInputChange, formData }) => {
         <input
           type="input"
           name="username"
-          required
           placeholder="e.g. username123"
           onChange={handleInputChange}
           value={formData.username}

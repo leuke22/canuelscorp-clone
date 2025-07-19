@@ -20,6 +20,7 @@
   "homepage": "https://github.com/leuke22/canuelscorp-app#readme",
   "description": "",
   "dependencies": {
+    "@upstash/redis": "^1.35.1",
     "bcryptjs": "^3.0.2",
     "cloudinary": "^2.6.0",
     "cookie-parser": "^1.4.7",

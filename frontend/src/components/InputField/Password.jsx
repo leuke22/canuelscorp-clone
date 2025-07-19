@@ -10,7 +10,6 @@ const Password = ({ handleInputChange, formData, show, setShow, isResetPass = fa
         <input
           type={show ? "text" : "password"}
           name="password"
-          required
           placeholder="●●●●●●●●●"
           onChange={handleInputChange}
           value={formData.password}

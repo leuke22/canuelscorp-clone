@@ -27,7 +27,6 @@ export const getUsers = async (req, res) => {
     users = await User.find(query).select("-password -verifyOtp -resetOtp");
 
     res.status(200).json({
-      message: "Users fetched successfully",
       users,
       count: users.length,
     });
